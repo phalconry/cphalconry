@@ -1,0 +1,58 @@
+phalconry.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry.c -o phalconry.lo 
+kernel/main.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/main.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/main.c -o kernel/main.lo 
+kernel/memory.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/memory.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/memory.c -o kernel/memory.lo 
+kernel/exception.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/exception.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/exception.c -o kernel/exception.lo 
+kernel/hash.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/hash.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/hash.c -o kernel/hash.lo 
+kernel/debug.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/debug.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/debug.c -o kernel/debug.lo 
+kernel/backtrace.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/backtrace.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/backtrace.c -o kernel/backtrace.lo 
+kernel/object.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/object.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/object.c -o kernel/object.lo 
+kernel/array.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/array.c -o kernel/array.lo 
+kernel/extended/array.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/extended/array.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/extended/array.c -o kernel/extended/array.lo 
+kernel/string.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/string.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/string.c -o kernel/string.lo 
+kernel/fcall.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/fcall.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/fcall.c -o kernel/fcall.lo 
+kernel/require.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/require.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/require.c -o kernel/require.lo 
+kernel/file.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/file.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/file.c -o kernel/file.lo 
+kernel/operators.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/operators.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/operators.c -o kernel/operators.lo 
+kernel/concat.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/concat.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/concat.c -o kernel/concat.lo 
+kernel/variables.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/variables.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/variables.c -o kernel/variables.lo 
+kernel/filter.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/filter.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/filter.c -o kernel/filter.lo 
+kernel/iterator.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/iterator.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/iterator.c -o kernel/iterator.lo 
+kernel/exit.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/exit.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/kernel/exit.c -o kernel/exit.lo 
+phalconry/arrayobject.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/arrayobject.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/arrayobject.zep.c -o phalconry/arrayobject.lo 
+phalconry/mvc/application.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/application.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/application.zep.c -o phalconry/mvc/application.lo 
+phalconry/mvc/dispatcher.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/dispatcher.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/dispatcher.zep.c -o phalconry/mvc/dispatcher.lo 
+phalconry/mvc/env.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/env.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/env.zep.c -o phalconry/mvc/env.lo 
+phalconry/mvc/module.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/module.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/mvc/module.zep.c -o phalconry/mvc/module.lo 
+phalconry/util.lo: /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/util.zep.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/Applications/MAMP/wells/zephir_ext/phalconry/ext $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /Applications/MAMP/wells/zephir_ext/phalconry/ext/phalconry/util.zep.c -o phalconry/util.lo 
+$(phplibdir)/phalconry.la: ./phalconry.la
+	$(LIBTOOL) --mode=install cp ./phalconry.la $(phplibdir)
+
+./phalconry.la: $(shared_objects_phalconry) $(PHALCONRY_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_phalconry) $(PHALCONRY_SHARED_LIBADD)
+

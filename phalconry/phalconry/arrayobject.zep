@@ -12,13 +12,11 @@ class ArrayObject extends \ArrayObject implements \JsonSerializable
 	{
 		
 		string arrayFunc;
-		
 		let arrayFunc = "array_" . \Phalcon\Text::uncamelize(func);
 		
 		if function_exists(arrayFunc) {
 			
 			var fnArgs;
-			
 			let fnArgs = array_merge([this->getArrayCopy()], args);
 			
 			return call_user_func_array(arrayFunc, fnArgs);
