@@ -55,7 +55,7 @@
     "name": "phalconry",
     "description": "An extension for PhalconPHP",
     "author": "wells5609",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "verbose": false,
     "requires": {
         "extensions": [

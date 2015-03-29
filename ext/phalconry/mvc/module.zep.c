@@ -58,7 +58,7 @@ PHP_METHOD(Phalconry_Mvc_Module, getDI) {
 
 	ZEPHIR_MM_GROW();
 
-	phalcon_phalcon_di = zend_fetch_class(SL("\\Phalcon\\DI"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+	phalcon_phalcon_di = zend_fetch_class(SL("\\Phalcon\\Di"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 	ZEPHIR_RETURN_CALL_CE_STATIC(phalcon_phalcon_di, "getdefault", NULL);
 	zephir_check_call_status();
 	RETURN_MM();
@@ -160,7 +160,7 @@ PHP_METHOD(Phalconry_Mvc_Module, getApp) {
 	ZEPHIR_OBS_VAR(_0);
 	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Module is not active", "phalconry/mvc/module.zep", 79);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Module is not active", "phalconry/mvc/module.zep", 83);
 		return;
 	}
 	RETURN_MM_MEMBER(this_ptr, "_application");
@@ -174,8 +174,13 @@ PHP_METHOD(Phalconry_Mvc_Module, getApp) {
  */
 PHP_METHOD(Phalconry_Mvc_Module, isLoaded) {
 
+	zval *_0;
 
-	RETURN_BOOL(zephir_isset_property(this_ptr, SS("_application") TSRMLS_CC));
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_OBS_VAR(_0);
+	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
+	RETURN_MM_BOOL(Z_TYPE_P(_0) == IS_OBJECT);
 
 }
 
@@ -196,7 +201,7 @@ PHP_METHOD(Phalconry_Mvc_Module, isPrimary) {
 	if (zephir_is_true(_0)) {
 		ZEPHIR_CALL_METHOD(&_1, this_ptr, "getapp", NULL);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_2, _1, "getprimarymodule", NULL);
+		ZEPHIR_CALL_METHOD(&_2, _1, "getmoduleobject", NULL);
 		zephir_check_call_status();
 		RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(this_ptr, _2));
 	}
@@ -233,10 +238,57 @@ PHP_METHOD(Phalconry_Mvc_Module, isDefault) {
 
 /**
  * Register separate autoloaders for the module, if any
+ *
+ * @param \Phalcon\DiInterface
  */
 PHP_METHOD(Phalconry_Mvc_Module, registerAutoloaders) {
 
+	zend_bool _0;
+	zval *di = NULL;
 
+	zephir_fetch_params(0, 0, 1, &di);
+
+	if (!di) {
+		di = ZEPHIR_GLOBAL(global_null);
+	}
+
+
+	_0 = Z_TYPE_P(di) != IS_NULL;
+	if (_0) {
+		_0 = !(zephir_is_instance_of(di, SL("Phalcon\\DiInterface") TSRMLS_CC));
+	}
+	if (_0) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'di' must be an instance of 'Phalcon\\DiInterface'", "", 0);
+		return;
+	}
+
+}
+
+/**
+ * Register services for the module
+ *
+ * @param \Phalcon\DiInterface
+ */
+PHP_METHOD(Phalconry_Mvc_Module, registerServices) {
+
+	zend_bool _0;
+	zval *di = NULL;
+
+	zephir_fetch_params(0, 0, 1, &di);
+
+	if (!di) {
+		di = ZEPHIR_GLOBAL(global_null);
+	}
+
+
+	_0 = Z_TYPE_P(di) != IS_NULL;
+	if (_0) {
+		_0 = !(zephir_is_instance_of(di, SL("Phalcon\\DiInterface") TSRMLS_CC));
+	}
+	if (_0) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'di' must be an instance of 'Phalcon\\DiInterface'", "", 0);
+		return;
+	}
 
 }
 

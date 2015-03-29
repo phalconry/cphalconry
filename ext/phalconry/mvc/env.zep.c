@@ -18,9 +18,10 @@
 #include "kernel/operators.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
-#include "kernel/hash.h"
 #include "kernel/object.h"
+#include "kernel/hash.h"
 #include "kernel/concat.h"
+#include "kernel/string.h"
 
 
 ZEPHIR_INIT_CLASS(Phalconry_Mvc_Env) {
@@ -149,20 +150,18 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 	if (!(zephir_array_isset_string(config, SS("paths")))) {
 		ZEPHIR_INIT_VAR(_3);
 		object_init_ex(_3, zephir_get_internal_ce(SS("phalcon\\registry") TSRMLS_CC));
-		if (zephir_has_constructor(_3 TSRMLS_CC)) {
-			ZEPHIR_CALL_METHOD(NULL, _3, "__construct", NULL);
-			zephir_check_call_status();
-		}
+		ZEPHIR_CALL_METHOD(NULL, _3, "__construct", NULL);
+		zephir_check_call_status();
 		zephir_array_update_string(&config, SL("paths"), &_3, PH_COPY | PH_SEPARATE);
 	}
 	ZEPHIR_CALL_PARENT(NULL, phalconry_mvc_env_ce, this_ptr, "__construct", NULL, config);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_4, config, SL("locale"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 88 TSRMLS_CC);
+	zephir_array_fetch_string(&_4, config, SL("locale"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 91 TSRMLS_CC);
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_LONG(&_0, 0);
 	ZEPHIR_CALL_FUNCTION(NULL, "setlocale", &_5, &_0, _4);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_6, config, SL("timezone"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 91 TSRMLS_CC);
+	zephir_array_fetch_string(&_6, config, SL("timezone"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 94 TSRMLS_CC);
 	ZEPHIR_CALL_FUNCTION(NULL, "date_default_timezone_set", NULL, _6);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
@@ -170,9 +169,142 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 }
 
 /**
+ * Sets the environment name
+ *
+ * @param string env
+ * @return \Phalconry\Mvc\Env
+ */
+PHP_METHOD(Phalconry_Mvc_Env, setEnvironment) {
+
+	zval *env_param = NULL;
+	zval *env = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &env_param);
+
+	if (unlikely(Z_TYPE_P(env_param) != IS_STRING && Z_TYPE_P(env_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'env' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(env_param) == IS_STRING)) {
+		zephir_get_strval(env, env_param);
+	} else {
+		ZEPHIR_INIT_VAR(env);
+		ZVAL_EMPTY_STRING(env);
+	}
+
+
+	zephir_update_property_this(this_ptr, SL("env"), env TSRMLS_CC);
+	RETURN_THIS();
+
+}
+
+/**
+ * Returns the environment name
+ *
+ * @return string
+ */
+PHP_METHOD(Phalconry_Mvc_Env, getEnvironment) {
+
+
+	RETURN_MEMBER(this_ptr, "env");
+
+}
+
+/**
+ * Sets the timezone
+ *
+ * @param string timezone
+ * @return \Phalconry\Mvc\Env
+ */
+PHP_METHOD(Phalconry_Mvc_Env, setTimezone) {
+
+	zval *timezone_param = NULL;
+	zval *timezone = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &timezone_param);
+
+	if (unlikely(Z_TYPE_P(timezone_param) != IS_STRING && Z_TYPE_P(timezone_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'timezone' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(timezone_param) == IS_STRING)) {
+		zephir_get_strval(timezone, timezone_param);
+	} else {
+		ZEPHIR_INIT_VAR(timezone);
+		ZVAL_EMPTY_STRING(timezone);
+	}
+
+
+	zephir_update_property_this(this_ptr, SL("timezone"), timezone TSRMLS_CC);
+	RETURN_THIS();
+
+}
+
+/**
+ * Returns the timezone
+ *
+ * @return string
+ */
+PHP_METHOD(Phalconry_Mvc_Env, getTimezone) {
+
+
+	RETURN_MEMBER(this_ptr, "timezone");
+
+}
+
+/**
+ * Sets the locale
+ *
+ * @param string locale
+ * @return \Phalconry\Mvc\Env
+ */
+PHP_METHOD(Phalconry_Mvc_Env, setLocale) {
+
+	zval *locale_param = NULL;
+	zval *locale = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 1, 0, &locale_param);
+
+	if (unlikely(Z_TYPE_P(locale_param) != IS_STRING && Z_TYPE_P(locale_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'locale' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(locale_param) == IS_STRING)) {
+		zephir_get_strval(locale, locale_param);
+	} else {
+		ZEPHIR_INIT_VAR(locale);
+		ZVAL_EMPTY_STRING(locale);
+	}
+
+
+	zephir_update_property_this(this_ptr, SL("locale"), locale TSRMLS_CC);
+	RETURN_THIS();
+
+}
+
+/**
+ * Returns the environment name
+ *
+ * @return string
+ */
+PHP_METHOD(Phalconry_Mvc_Env, getLocale) {
+
+
+	RETURN_MEMBER(this_ptr, "locale");
+
+}
+
+/**
  * Sets the directory paths
  *
  * @param array $paths Array of directory paths
+ * @return \Phalconry\Mvc\Env
  */
 PHP_METHOD(Phalconry_Mvc_Env, setPaths) {
 
@@ -189,7 +321,7 @@ PHP_METHOD(Phalconry_Mvc_Env, setPaths) {
 	zephir_get_arrval(paths, paths_param);
 
 
-	zephir_is_iterable(paths, &_1, &_0, 0, 0, "phalconry/mvc/env.zep", 105);
+	zephir_is_iterable(paths, &_1, &_0, 0, 0, "phalconry/mvc/env.zep", 179);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -199,7 +331,7 @@ PHP_METHOD(Phalconry_Mvc_Env, setPaths) {
 		ZEPHIR_CALL_METHOD(NULL, this_ptr, "setpath", &_3, key, value);
 		zephir_check_call_status();
 	}
-	ZEPHIR_MM_RESTORE();
+	RETURN_THIS();
 
 }
 
@@ -220,6 +352,7 @@ PHP_METHOD(Phalconry_Mvc_Env, getPaths) {
  *
  * @param string $name
  * @param string $path
+ * @return \Phalconry\Mvc\Env
  */
 PHP_METHOD(Phalconry_Mvc_Env, setPath) {
 
@@ -240,7 +373,7 @@ PHP_METHOD(Phalconry_Mvc_Env, setPath) {
 	ZEPHIR_INIT_VAR(_2);
 	ZEPHIR_CONCAT_VS(_2, _0, "/");
 	zephir_update_property_array(this_ptr, SL("paths"), name, _2 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
+	RETURN_THIS();
 
 }
 
@@ -262,7 +395,7 @@ PHP_METHOD(Phalconry_Mvc_Env, getPath) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("paths"), PH_NOISY_CC);
-	zephir_array_fetch(&_1, _0, name, PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 136 TSRMLS_CC);
+	zephir_array_fetch(&_1, _0, name, PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 214 TSRMLS_CC);
 	RETURN_CTOR(_1);
 
 }
@@ -276,7 +409,8 @@ PHP_METHOD(Phalconry_Mvc_Env, getPath) {
  */
 PHP_METHOD(Phalconry_Mvc_Env, getFrom) {
 
-	zval *section_param = NULL, *key_param = NULL, *_0, *_1;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *section_param = NULL, *key_param = NULL, *_0 = NULL, *_1, *_2;
 	zval *section = NULL, *key = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -287,13 +421,61 @@ PHP_METHOD(Phalconry_Mvc_Env, getFrom) {
 
 
 	ZEPHIR_INIT_VAR(_0);
-	if (zephir_array_isset(this_ptr, section)) {
-		zephir_array_fetch(&_1, this_ptr, section, PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 148 TSRMLS_CC);
-		zephir_array_fetch(&_0, _1, key, PH_NOISY, "phalconry/mvc/env.zep", 148 TSRMLS_CC);
+	ZEPHIR_OBS_VAR(_1);
+	zephir_read_property_zval(&_1, this_ptr, section, PH_NOISY_CC);
+	if (Z_TYPE_P(_1) == IS_OBJECT) {
+		ZEPHIR_OBS_VAR(_2);
+		zephir_read_property_zval(&_2, this_ptr, section, PH_NOISY_CC);
+		ZEPHIR_CALL_METHOD(&_0, _2, "get", NULL, key);
+		zephir_check_call_status();
 	} else {
 		ZVAL_NULL(_0);
 	}
 	RETURN_CCTOR(_0);
+
+}
+
+/**
+ * Magic call
+ */
+PHP_METHOD(Phalconry_Mvc_Env, __call) {
+
+	int ZEPHIR_LAST_CALL_STATUS;
+	zephir_nts_static zephir_fcall_cache_entry *_3 = NULL;
+	zval *args = NULL;
+	zval *func_param = NULL, *args_param = NULL, _0, _1, *_2 = NULL;
+	zval *func = NULL;
+
+	ZEPHIR_MM_GROW();
+	zephir_fetch_params(1, 2, 0, &func_param, &args_param);
+
+	if (unlikely(Z_TYPE_P(func_param) != IS_STRING && Z_TYPE_P(func_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'func' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(func_param) == IS_STRING)) {
+		zephir_get_strval(func, func_param);
+	} else {
+		ZEPHIR_INIT_VAR(func);
+		ZVAL_EMPTY_STRING(func);
+	}
+	args = args_param;
+
+
+
+	if (zephir_end_with_str(func, SL("Path"))) {
+		ZEPHIR_SINIT_VAR(_0);
+		ZVAL_LONG(&_0, 0);
+		ZEPHIR_SINIT_VAR(_1);
+		ZVAL_LONG(&_1, (zephir_fast_strlen_ev(func) - 4));
+		ZEPHIR_CALL_FUNCTION(&_2, "substr", &_3, func, &_0, &_1);
+		zephir_check_call_status();
+		ZEPHIR_RETURN_CALL_METHOD(this_ptr, "getpath", NULL, _2);
+		zephir_check_call_status();
+		RETURN_MM();
+	}
+	ZEPHIR_MM_RESTORE();
 
 }
 

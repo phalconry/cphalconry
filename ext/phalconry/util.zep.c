@@ -27,6 +27,12 @@ ZEPHIR_INIT_CLASS(Phalconry_Util) {
 
 }
 
+/**
+ * Converts a value to an array
+ *
+ * @param mixed
+ * @return array
+ */
 PHP_METHOD(Phalconry_Util, toArray) {
 
 	zval *_1 = NULL;
@@ -63,6 +69,12 @@ PHP_METHOD(Phalconry_Util, toArray) {
 
 }
 
+/**
+ * Converts a value to an object
+ *
+ * @param mixed
+ * @return object
+ */
 PHP_METHOD(Phalconry_Util, toObject) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -89,6 +101,12 @@ PHP_METHOD(Phalconry_Util, toObject) {
 
 }
 
+/**
+ * Returns whether the given variable is a valid JSON string.
+ *
+ * @param mixed
+ * @return boolean
+ */
 PHP_METHOD(Phalconry_Util, isJson) {
 
 	int ZEPHIR_LAST_CALL_STATUS;

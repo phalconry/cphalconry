@@ -1,12 +1,16 @@
 namespace Phalconry\Mvc;
 
+use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Mvc\View;
+use Phalcon\DiInterface;
+
 /**
  * Module
  *
  * This class is "pseudo-DI-aware" in that its getDI() method returns the
  * default DI container using DI::getDefault()
  */
-abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
+abstract class Module implements ModuleDefinitionInterface
 {
 
 	/**
@@ -63,7 +67,7 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 	 *
 	 * @param \Phalconry\Mvc\Application $app
 	 */
-	public function setApp(<\Phalconry\Mvc\Application> app) {
+	public function setApp(<Application> app) {
 		let this->_application = app;
 	}
 
@@ -78,7 +82,7 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 		if (typeof this->_application == "null") {
 			throw new \RuntimeException("Module is not active");
 		}
-		
+
 		return this->_application;
 	}
 
@@ -88,7 +92,7 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 	 * @return boolean
 	 */
 	public function isLoaded() {
-		return isset this->_application;
+		return (typeof this->_application == "object");
 	}
 
 	/**
@@ -98,7 +102,7 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 	 */
 	public function isPrimary() {
 		if this->isLoaded() {
-			return this === this->getApp()->getPrimaryModule();
+			return this === this->getApp()->getModuleObject();
 		}
 		return false;
 	}
@@ -117,8 +121,19 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 
 	/**
 	 * Register separate autoloaders for the module, if any
+	 *
+	 * @param \Phalcon\DiInterface
 	 */
-	public function registerAutoloaders() {
+	public function registerAutoloaders(<DiInterface> di = null) {
+
+	}
+
+	/**
+	 * Register services for the module
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	public function registerServices(<DiInterface> di = null) {
 
 	}
 
@@ -148,7 +163,7 @@ abstract class Module implements \Phalcon\Mvc\ModuleDefinitionInterface
 	 *
 	 * @param \Phalcon\Mvc\View $view
 	 */
-	public function onView(<\Phalcon\Mvc\View> view) {
+	public function onView(<View> view) {
 
 	}
 

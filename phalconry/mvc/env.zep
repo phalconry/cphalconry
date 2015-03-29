@@ -1,6 +1,9 @@
 namespace Phalconry\Mvc;
 
-class Env extends \Phalcon\Config
+use Phalcon\Config;
+use Phalcon\Registry;
+
+class Env extends Config
 {
 
 	/**
@@ -79,7 +82,7 @@ class Env extends \Phalcon\Config
 		}
 
 		if ! isset config["paths"] {
-			let config["paths"] = new \Phalcon\Registry();
+			let config["paths"] = new Registry();
 		}
 
 		parent::__construct(config);
@@ -92,16 +95,88 @@ class Env extends \Phalcon\Config
 	}
 
 	/**
+	 * Sets the environment name
+	 *
+	 * @param string env
+	 * @return \Phalconry\Mvc\Env
+	 */
+	public function setEnvironment(string! env) -> <Env>
+	{
+		let this->env = env;
+
+		return this;
+	}
+
+	/**
+	 * Returns the environment name
+	 *
+	 * @return string
+	 */
+	public function getEnvironment() -> string
+	{
+		return this->env;
+	}
+
+	/**
+	 * Sets the timezone
+	 *
+	 * @param string timezone
+	 * @return \Phalconry\Mvc\Env
+	 */
+	public function setTimezone(string! timezone) -> <Env>
+	{
+		let this->timezone = timezone;
+
+		return this;
+	}
+
+	/**
+	 * Returns the timezone
+	 *
+	 * @return string
+	 */
+	public function getTimezone() -> string
+	{
+		return this->timezone;
+	}
+
+	/**
+	 * Sets the locale
+	 *
+	 * @param string locale
+	 * @return \Phalconry\Mvc\Env
+	 */
+	public function setLocale(string! locale) -> <Env>
+	{
+		let this->locale = locale;
+
+		return this;
+	}
+
+	/**
+	 * Returns the environment name
+	 *
+	 * @return string
+	 */
+	public function getLocale() -> string
+	{
+		return this->locale;
+	}
+
+	/**
 	 * Sets the directory paths
 	 *
 	 * @param array $paths Array of directory paths
+	 * @return \Phalconry\Mvc\Env
 	 */
-	public function setPaths(array paths) -> void
+	public function setPaths(array paths) -> <Env>
 	{
 		var key, value;
 		for key, value in paths {
 			this->setPath(key, value);
 		}
+
+		return this;
 	}
 
 	/**
@@ -109,7 +184,7 @@ class Env extends \Phalcon\Config
 	 *
 	 * @return \Phalcon\Registry
 	 */
-	public function getPaths() -> <\Phalcon\Registry>
+	public function getPaths() -> <Registry>
 	{
 		return this->paths;
 	}
@@ -119,10 +194,13 @@ class Env extends \Phalcon\Config
 	 *
 	 * @param string $name
 	 * @param string $path
+	 * @return \Phalconry\Mvc\Env
 	 */
-	public function setPath(string name, string path) -> void
+	public function setPath(string name, string path) -> <Env>
 	{
 		let this->paths[name] = realpath(path).DIRECTORY_SEPARATOR;
+
+		return this;
 	}
 
 	/**
@@ -145,7 +223,17 @@ class Env extends \Phalcon\Config
 	 */
 	public function getFrom(string section, string key)
 	{
-		return isset this[section] ? this[section][key] : null;
+		return (typeof this->{section} == "object") ? this->{section}->get(key) : null;
+	}
+
+	/**
+	 * Magic call
+	 */
+	public function __call(string! func, array! args)
+	{
+		if ends_with(func, "Path") {
+			return this->getPath(substr(func, 0, strlen(func) - 4));
+		}
 	}
 
 }

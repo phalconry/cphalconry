@@ -26,11 +26,22 @@
 
 
 
-zend_class_entry *phalconry_arrayobject_ce;
+zend_class_entry *phalconry_mvc_response_typeinterface_ce;
+zend_class_entry *phalconry_mvc_response_abstracttype_ce;
+zend_class_entry *phalconry_mvc_response_abstractdatatype_ce;
+zend_class_entry *phalconry_http_util_mimetype_ce;
+zend_class_entry *phalconry_mvc_application_bootstrap_ce;
 zend_class_entry *phalconry_mvc_application_ce;
-zend_class_entry *phalconry_mvc_dispatcher_ce;
 zend_class_entry *phalconry_mvc_env_ce;
+zend_class_entry *phalconry_mvc_hmvcrequest_ce;
 zend_class_entry *phalconry_mvc_module_ce;
+zend_class_entry *phalconry_mvc_module_manager_ce;
+zend_class_entry *phalconry_mvc_responder_ce;
+zend_class_entry *phalconry_mvc_response_typejson_ce;
+zend_class_entry *phalconry_mvc_response_typenone_ce;
+zend_class_entry *phalconry_mvc_response_typetext_ce;
+zend_class_entry *phalconry_mvc_response_typeview_ce;
+zend_class_entry *phalconry_mvc_response_typexml_ce;
 zend_class_entry *phalconry_util_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(phalconry)
@@ -53,11 +64,22 @@ static PHP_MINIT_FUNCTION(phalconry)
 	setlocale(LC_ALL, "C");
 #endif
 
-	ZEPHIR_INIT(Phalconry_ArrayObject);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeInterface);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_AbstractType);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_AbstractDataType);
+	ZEPHIR_INIT(Phalconry_Http_Util_MimeType);
 	ZEPHIR_INIT(Phalconry_Mvc_Application);
-	ZEPHIR_INIT(Phalconry_Mvc_Dispatcher);
+	ZEPHIR_INIT(Phalconry_Mvc_Application_Bootstrap);
 	ZEPHIR_INIT(Phalconry_Mvc_Env);
+	ZEPHIR_INIT(Phalconry_Mvc_HmvcRequest);
 	ZEPHIR_INIT(Phalconry_Mvc_Module);
+	ZEPHIR_INIT(Phalconry_Mvc_Module_Manager);
+	ZEPHIR_INIT(Phalconry_Mvc_Responder);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeJson);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeNone);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeText);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeView);
+	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeXml);
 	ZEPHIR_INIT(Phalconry_Util);
 
 #if PHP_VERSION_ID < 50500
