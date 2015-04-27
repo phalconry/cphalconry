@@ -3,6 +3,8 @@ namespace Phalconry\Mvc;
 use Phalcon\Mvc\ModuleDefinitionInterface;
 use Phalcon\Mvc\View;
 use Phalcon\DiInterface;
+use Phalcon\DI as DiContainer;
+use RuntimeException;
 
 /**
  * Module
@@ -30,8 +32,9 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @return \Phalcon\DiInterface
 	 */
-	public function getDI() {
-		return \Phalcon\DI::getDefault();
+	public function getDI() -> <DiInterface>
+	{
+		return DiContainer::getDefault();
 	}
 
 	/**
@@ -40,7 +43,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 * @param string $key
 	 * @return mixed
 	 */
-	public function __get(string key) {
+	public function __get(string! key)
+	{
 		return this->getDI()->getShared(key);
 	}
 
@@ -49,7 +53,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @param string $name
 	 */
-	public function setName(string name) {
+	public function setName(string! name) -> void
+	{
 		let this->_name = name;
 	}
 
@@ -58,7 +63,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @return string
 	 */
-	public function getName() {
+	public function getName() -> string
+	{
 		return this->_name;
 	}
 
@@ -67,7 +73,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @param \Phalconry\Mvc\Application $app
 	 */
-	public function setApp(<Application> app) {
+	public function setApp(<Application> app) -> void
+	{
 		let this->_application = app;
 	}
 
@@ -77,10 +84,11 @@ abstract class Module implements ModuleDefinitionInterface
 	 * @return \Phalconry\Mvc\Application
 	 * @throws \RuntimeException if app is not set
 	 */
-	public function getApp() {
+	public function getApp() -> <Application>
+	{
 
-		if (typeof this->_application == "null") {
-			throw new \RuntimeException("Module is not active");
+		if typeof this->_application == "null" {
+			throw new RuntimeException("Module is not active");
 		}
 
 		return this->_application;
@@ -91,7 +99,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @return boolean
 	 */
-	public function isLoaded() {
+	public function isLoaded() -> boolean
+	{
 		return (typeof this->_application == "object");
 	}
 
@@ -100,10 +109,13 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @return boolean
 	 */
-	public function isPrimary() {
-		if this->isLoaded() {
-			return this === this->getApp()->getModuleObject();
+	public function isPrimary() -> boolean
+	{
+
+		if typeof this->_application == "object" {
+			return this === this->_application->getModuleObject();
 		}
+
 		return false;
 	}
 
@@ -112,29 +124,14 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @return boolean
 	 */
-	public function isDefault() {
-		if this->isLoaded() {
-			return this->getName() === this->getApp()->getDefaultModule();
+	public function isDefault() -> boolean
+	{
+
+		if typeof this->_application == "object" {
+			return this->_name === this->_application->getDefaultModule();
 		}
+
 		return false;
-	}
-
-	/**
-	 * Register separate autoloaders for the module, if any
-	 *
-	 * @param \Phalcon\DiInterface
-	 */
-	public function registerAutoloaders(<DiInterface> di = null) {
-
-	}
-
-	/**
-	 * Register services for the module
-	 *
-	 * @param \Phalcon\DiInterface
-	 */
-	public function registerServices(<DiInterface> di = null) {
-
 	}
 
 	/**
@@ -147,11 +144,32 @@ abstract class Module implements ModuleDefinitionInterface
 	abstract public function getControllerNamespace();
 
 	/**
+	 * Register separate autoloaders for the module, if any
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	public function registerAutoloaders(<DiInterface> di = null) -> void
+	{
+
+	}
+
+	/**
+	 * Register services for the module
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	public function registerServices(<DiInterface> di = null) -> void
+	{
+
+	}
+
+	/**
 	 * Allows the module to perform start-up tasks
 	 *
 	 * Called in Application on "application:afterStartModule"
 	 */
-	public function onLoad() {
+	public function onLoad() -> void
+	{
 
 	}
 
@@ -163,7 +181,8 @@ abstract class Module implements ModuleDefinitionInterface
 	 *
 	 * @param \Phalcon\Mvc\View $view
 	 */
-	public function onView(<View> view) {
+	public function onView(<View> view) -> void
+	{
 
 	}
 

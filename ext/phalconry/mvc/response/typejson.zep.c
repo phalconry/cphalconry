@@ -173,25 +173,28 @@ PHP_METHOD(Phalconry_Mvc_Response_TypeJson, jsonSerialize) {
 
 PHP_METHOD(Phalconry_Mvc_Response_TypeJson, valueToArray) {
 
-	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
-	zval *_1 = NULL;
+	zephir_nts_static zephir_fcall_cache_entry *_3 = NULL;
+	zval *_2 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *value, *_0 = NULL;
+	zend_bool _0;
+	zval *value, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &value);
 
 
 
-	if (Z_TYPE_P(value) == IS_OBJECT) {
-		if ((zephir_method_exists_ex(value, SS("jsonserialize") TSRMLS_CC) == SUCCESS)) {
-			ZEPHIR_CALL_METHOD(&_0, value, "jsonserialize", NULL);
-			zephir_check_call_status();
-			zephir_get_arrval(_1, _0);
-			RETURN_CTOR(_1);
-		}
+	_0 = Z_TYPE_P(value) == IS_OBJECT;
+	if (_0) {
+		_0 = (zephir_method_exists_ex(value, SS("jsonserialize") TSRMLS_CC) == SUCCESS);
 	}
-	ZEPHIR_RETURN_CALL_PARENT(phalconry_mvc_response_typejson_ce, this_ptr, "valuetoarray", &_2, value);
+	if (_0) {
+		ZEPHIR_CALL_METHOD(&_1, value, "jsonserialize", NULL);
+		zephir_check_call_status();
+		zephir_get_arrval(_2, _1);
+		RETURN_CTOR(_2);
+	}
+	ZEPHIR_RETURN_CALL_PARENT(phalconry_mvc_response_typejson_ce, this_ptr, "valuetoarray", &_3, value);
 	zephir_check_call_status();
 	RETURN_MM();
 

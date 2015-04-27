@@ -12,15 +12,14 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/memory.h"
-#include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/exception.h"
+#include "kernel/memory.h"
+#include "kernel/fcall.h"
 #include "kernel/operators.h"
 #include "kernel/array.h"
 #include "kernel/hash.h"
 #include "ext/spl/spl_exceptions.h"
-
 
 ZEPHIR_INIT_CLASS(Phalconry_Mvc_Module_Manager) {
 
@@ -28,38 +27,17 @@ ZEPHIR_INIT_CLASS(Phalconry_Mvc_Module_Manager) {
 
 	/**
 	 * Primary module name
-	 *
 	 * @var string
 	 */
 	zend_declare_property_null(phalconry_mvc_module_manager_ce, SL("_primary"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
 	 * Module registry
-	 *
-	 * @var \Phalcon\Registry
+	 * @var array
 	 */
-	zend_declare_property_null(phalconry_mvc_module_manager_ce, SL("_registry"), ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(phalconry_mvc_module_manager_ce, SL("_modules"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	return SUCCESS;
-
-}
-
-/**
- * Constructor.
- */
-PHP_METHOD(Phalconry_Mvc_Module_Manager, __construct) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0;
-
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_INIT_VAR(_0);
-	object_init_ex(_0, zephir_get_internal_ce(SS("phalcon\\registry") TSRMLS_CC));
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL);
-	zephir_check_call_status();
-	zephir_update_property_this(this_ptr, SL("_registry"), _0 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
 
 }
 
@@ -84,7 +62,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, set) {
 	}
 	ZEPHIR_CALL_METHOD(&_0, module, "getname", NULL);
 	zephir_check_call_status();
-	zephir_update_property_array(this_ptr, SL("_registry"), _0, module TSRMLS_CC);
+	zephir_update_property_array(this_ptr, SL("_modules"), _0, module TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
@@ -119,8 +97,8 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, get) {
 		ZEPHIR_CALL_METHOD(&_0, this_ptr, "getprimary", NULL);
 		zephir_check_call_status();
 	} else {
-		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_registry"), PH_NOISY_CC);
-		zephir_array_fetch(&_0, _2, name, PH_NOISY, "phalconry/mvc/module/manager.zep", 52 TSRMLS_CC);
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_modules"), PH_NOISY_CC);
+		zephir_array_fetch(&_0, _2, name, PH_NOISY, "phalconry/mvc/module/manager.zep", 41 TSRMLS_CC);
 	}
 	RETURN_CCTOR(_0);
 
@@ -149,7 +127,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, setPrimary) {
 	}
 	ZEPHIR_OBS_VAR(_0);
 	zephir_read_property_this(&_0, this_ptr, SL("_primary"), PH_NOISY_CC);
-	if (Z_TYPE_P(_0) == IS_STRING) {
+	if (unlikely(Z_TYPE_P(_0) == IS_STRING)) {
 		ZEPHIR_INIT_VAR(_1);
 		if (!_2) {
 			_2 = zend_fetch_class(SL("Phalcon\\Mvc\\Exception"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
@@ -162,7 +140,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, setPrimary) {
 			zephir_check_temp_parameter(_3);
 			zephir_check_call_status();
 		}
-		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 64 TSRMLS_CC);
+		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 53 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -191,7 +169,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, getPrimary) {
 
 	ZEPHIR_OBS_VAR(_0);
 	zephir_read_property_this(&_0, this_ptr, SL("_primary"), PH_NOISY_CC);
-	if (Z_TYPE_P(_0) != IS_STRING) {
+	if (unlikely(Z_TYPE_P(_0) != IS_STRING)) {
 		ZEPHIR_INIT_VAR(_1);
 		if (!_2) {
 			_2 = zend_fetch_class(SL("Phalcon\\Mvc\\Exception"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
@@ -204,14 +182,14 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, getPrimary) {
 			zephir_check_temp_parameter(_3);
 			zephir_check_call_status();
 		}
-		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 81 TSRMLS_CC);
+		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 70 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	_4 = zephir_fetch_nproperty_this(this_ptr, SL("_registry"), PH_NOISY_CC);
+	_4 = zephir_fetch_nproperty_this(this_ptr, SL("_modules"), PH_NOISY_CC);
 	ZEPHIR_OBS_VAR(_6);
 	zephir_read_property_this(&_6, this_ptr, SL("_primary"), PH_NOISY_CC);
-	zephir_array_fetch(&_5, _4, _6, PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 84 TSRMLS_CC);
+	zephir_array_fetch(&_5, _4, _6, PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 73 TSRMLS_CC);
 	RETURN_CTOR(_5);
 
 }
@@ -228,7 +206,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, load) {
 
 	zephir_nts_static zend_class_entry *_2 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *module = NULL, *_0 = NULL, *_1 = NULL, *_3, *di = NULL;
+	zval *module = NULL, *di = NULL, *_0 = NULL, *_1 = NULL, *_3;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &module);
@@ -242,7 +220,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, load) {
 		ZEPHIR_CPY_WRT(module, _0);
 	}
 	if (Z_TYPE_P(module) != IS_OBJECT) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Invalid module given", "phalconry/mvc/module/manager.zep", 103);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Invalid module given", "phalconry/mvc/module/manager.zep", 93);
 		return;
 	}
 	ZEPHIR_CALL_METHOD(&_0, module, "isloaded", NULL);
@@ -260,7 +238,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, load) {
 			zephir_check_temp_parameter(_3);
 			zephir_check_call_status();
 		}
-		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 107 TSRMLS_CC);
+		zephir_throw_exception_debug(_1, "phalconry/mvc/module/manager.zep", 97 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
@@ -268,16 +246,16 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, load) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&di, this_ptr, "getdi", NULL);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, module, "registerautoloaders", NULL, di);
-	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, module, "registerservices", NULL, di);
-	zephir_check_call_status();
 	ZEPHIR_INIT_NVAR(_1);
 	ZVAL_STRING(_1, "app", ZEPHIR_TEMP_PARAM_COPY);
 	ZEPHIR_CALL_METHOD(&_0, di, "getshared", NULL, _1);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, module, "setapp", NULL, _0);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(NULL, module, "registerautoloaders", NULL, di);
+	zephir_check_call_status();
+	ZEPHIR_CALL_METHOD(NULL, module, "registerservices", NULL, di);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, module, "onload", NULL);
 	zephir_check_call_status();
@@ -309,10 +287,10 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, isLoaded) {
 		RETURN_MM();
 	}
 	if (Z_TYPE_P(module) == IS_STRING) {
-		_0 = zephir_fetch_nproperty_this(this_ptr, SL("_registry"), PH_NOISY_CC);
+		_0 = zephir_fetch_nproperty_this(this_ptr, SL("_modules"), PH_NOISY_CC);
 		RETURN_MM_BOOL(zephir_array_isset(_0, module));
 	}
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Expecting string or Module", "phalconry/mvc/module/manager.zep", 142);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Expecting string or Module", "phalconry/mvc/module/manager.zep", 130);
 	return;
 
 }
@@ -363,14 +341,14 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, getName) {
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(&_4, _2, "getmodules", NULL);
 	zephir_check_call_status();
-	zephir_is_iterable(_4, &_6, &_5, 0, 0, "phalconry/mvc/module/manager.zep", 167);
+	zephir_is_iterable(_4, &_6, &_5, 0, 0, "phalconry/mvc/module/manager.zep", 155);
 	for (
 	  ; zephir_hash_get_current_data_ex(_6, (void**) &_7, &_5) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_6, &_5)
 	) {
 		ZEPHIR_GET_HMKEY(key, _6, _5);
 		ZEPHIR_GET_HVALUE(value, _7);
-		zephir_array_fetch_string(&_8, value, SL("className"), PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 162 TSRMLS_CC);
+		zephir_array_fetch_string(&_8, value, SL("className"), PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 150 TSRMLS_CC);
 		if (ZEPHIR_IS_IDENTICAL(_8, className)) {
 			RETURN_CCTOR(key);
 		}
@@ -387,7 +365,7 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, getName) {
 		zephir_check_temp_parameter(_10);
 		zephir_check_call_status();
 	}
-	zephir_throw_exception_debug(_3, "phalconry/mvc/module/manager.zep", 167 TSRMLS_CC);
+	zephir_throw_exception_debug(_3, "phalconry/mvc/module/manager.zep", 155 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 	return;
 
@@ -446,13 +424,13 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, create) {
 			zephir_check_temp_parameter(_4);
 			zephir_check_call_status();
 		}
-		zephir_throw_exception_debug(_2, "phalconry/mvc/module/manager.zep", 184 TSRMLS_CC);
+		zephir_throw_exception_debug(_2, "phalconry/mvc/module/manager.zep", 172 TSRMLS_CC);
 		ZEPHIR_MM_RESTORE();
 		return;
 	}
-	zephir_array_fetch(&_5, moduleList, name, PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 187 TSRMLS_CC);
+	zephir_array_fetch(&_5, moduleList, name, PH_NOISY | PH_READONLY, "phalconry/mvc/module/manager.zep", 175 TSRMLS_CC);
 	ZEPHIR_OBS_VAR(className);
-	zephir_array_fetch_string(&className, _5, SL("className"), PH_NOISY, "phalconry/mvc/module/manager.zep", 187 TSRMLS_CC);
+	zephir_array_fetch_string(&className, _5, SL("className"), PH_NOISY, "phalconry/mvc/module/manager.zep", 175 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(moduleObject);
 	zephir_fetch_safe_class(_6, className);
 	_7 = zend_fetch_class(Z_STRVAL_P(_6), Z_STRLEN_P(_6), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
@@ -464,6 +442,19 @@ PHP_METHOD(Phalconry_Mvc_Module_Manager, create) {
 	ZEPHIR_CALL_METHOD(NULL, moduleObject, "setname", NULL, name);
 	zephir_check_call_status();
 	RETURN_CCTOR(moduleObject);
+
+}
+
+PHP_METHOD(Phalconry_Mvc_Module_Manager, __construct) {
+
+	zval *_0;
+
+	ZEPHIR_MM_GROW();
+
+	ZEPHIR_INIT_VAR(_0);
+	array_init(_0);
+	zephir_update_property_this(this_ptr, SL("_modules"), _0 TSRMLS_CC);
+	ZEPHIR_MM_RESTORE();
 
 }
 

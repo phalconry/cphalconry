@@ -11,11 +11,11 @@
 #include "kernel/globals.h"
 
 #define PHP_PHALCONRY_NAME        "phalconry"
-#define PHP_PHALCONRY_VERSION     "0.0.2"
+#define PHP_PHALCONRY_VERSION     "0.0.4"
 #define PHP_PHALCONRY_EXTNAME     "phalconry"
 #define PHP_PHALCONRY_AUTHOR      "wells5609"
 #define PHP_PHALCONRY_ZEPVERSION  "0.6.0a"
-#define PHP_PHALCONRY_DESCRIPTION "An extension for PhalconPHP"
+#define PHP_PHALCONRY_DESCRIPTION "A PHP extension for PhalconPHP providing additional MVC components and an HTTP client library."
 
 
 

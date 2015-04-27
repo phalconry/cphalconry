@@ -62,23 +62,21 @@ class Env extends Config
 	 */
 	public function __construct(array! config = [])
 	{
+		var environment, locale, timezone;
 
 		if ! isset config["env"] {
-			var _env;
-			let _env = getenv("ENVIRONMENT");
-			let config["env"] = _env ? _env : Env::DEFAULT_ENVIRONMENT;
+			let environment = getenv("ENVIRONMENT");
+			let config["env"] = environment ? environment : Env::DEFAULT_ENVIRONMENT;
 		}
 
 		if ! isset config["locale"] {
-			var _locale;
-			let _locale = getenv("LOCALE");
-			let config["locale"] = _locale ? _locale : Env::DEFAULT_LOCALE;
+			let locale = getenv("LOCALE");
+			let config["locale"] = locale ? locale : Env::DEFAULT_LOCALE;
 		}
 
 		if ! isset config["timezone"] {
-			var _timezone;
-			let _timezone = getenv("TZ");
-			let config["timezone"] = _timezone ? _timezone : Env::DEFAULT_TIMEZONE;
+			let timezone = getenv("TZ");
+			let config["timezone"] = timezone ? timezone : Env::DEFAULT_TIMEZONE;
 		}
 
 		if ! isset config["paths"] {

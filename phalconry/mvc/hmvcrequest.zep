@@ -5,6 +5,7 @@ use Phalcon\DI\Injectable;
 use Phalcon\Http\ResponseInterface;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\Dispatcher;
+use RuntimeException;
 
 /**
  * Wrapper for an HMVC request.
@@ -100,7 +101,7 @@ class HmvcRequest extends Injectable
 	 */
 	public function hasModuleName() -> boolean
     {
-		return (boolean)(typeof this->_module == "string");
+		return (typeof this->_module == "string");
 	}
 
 	/**
@@ -221,39 +222,51 @@ class HmvcRequest extends Injectable
 	 */
 	public function __invoke(var args = null)
     {
-        var dispatcher;
+        var dependencyInjector, dispatcher, response;
 
 		if typeof args == "array" {
 			this->setLocation(args);
 		}
 
-		let dispatcher = this->getDispatcher();
+		let dependencyInjector = this->getDI();
 
-		if this->hasModuleName() {
-			this->prepareModuleForDispatch(dispatcher, this->getModuleName());
+		if typeof dependencyInjector != "object" {
+
+			let dependencyInjector = \Phalcon\Di::getDefault();
+
+			if typeof dependencyInjector != "object" {
+				throw new RuntimeException("Could not locate dependency injector");
+			}
 		}
 
-		if this->hasControllerName() {
-			dispatcher->setControllerName(this->getControllerName());
+		let dispatcher = clone dependencyInjector->getShared("dispatcher");
+
+		if typeof this->_module == "string" {
+			this->prepareModule(dispatcher, this->_module);
 		}
 
-		if this->hasActionName() {
-			dispatcher->setActionName(this->getActionName());
+		if typeof this->_controller == "string" {
+			dispatcher->setControllerName(this->_controller);
 		}
 
-		if this->hasParams() {
-			dispatcher->setParams(this->getParams());
+		if typeof this->_action == "string" {
+			dispatcher->setActionName(this->_action);
+		}
+
+		if typeof this->_params == "array" && !empty this->_params {
+			dispatcher->setParams(this->_params);
 		}
 
 		dispatcher->dispatch();
 
-		let this->_response = dispatcher->getReturnedValue();
+		let response = dispatcher->getReturnedValue();
+		let this->_response = response;
 
-		if (this->_response instanceof ResponseInterface) {
-			return this->_response->getContent();
+		if (response instanceof ResponseInterface) {
+			return response->getContent();
 		}
 
-		return this->_response;
+		return response;
 	}
 
 	/**
@@ -267,18 +280,6 @@ class HmvcRequest extends Injectable
 	}
 
 	/**
-	 * Returns the dispatcher to use for the request
-	 *
-	 * @return \Phalcon\Mvc\Dispatcher
-	 */
-	protected function getDispatcher() -> <Dispatcher>
-    {
-		var dispatcher;
-        let dispatcher = this->getDI()->getShared("dispatcher");
-        return clone dispatcher;
-	}
-
-	/**
 	 * Prepares to dispatch to a module
 	 *
 	 * The module is loaded if not already. If it's not the primary module, the
@@ -287,10 +288,26 @@ class HmvcRequest extends Injectable
 	 * @param \Phalcon\Mvc\Dispatcher dispatcher
 	 * @param string moduleName
 	 */
-	protected function prepareModuleForDispatch(<Dispatcher> dispatcher, string moduleName) -> void
+	protected function prepareModule(<Dispatcher> dispatcher, string moduleName) -> void
     {
-        var moduleManager, module;
-        let moduleManager = this->getDI()->getShared("moduleManager");
+        var dependencyInjector, moduleManager, module;
+
+		let dependencyInjector = this->getDI();
+
+		if typeof dependencyInjector != "object" {
+
+			let dependencyInjector = \Phalcon\Di::getDefault();
+
+			if typeof dependencyInjector != "object" {
+				throw new RuntimeException("Could not locate dependency injector");
+			}
+		}
+
+		let moduleManager = dependencyInjector->getShared("moduleManager");
+
+		if typeof moduleManager != "object" {
+			throw new RuntimeException("Invalid injected module manager");
+		}
 
 		if moduleName != moduleManager->getPrimary()->getName() {
 
@@ -298,6 +315,10 @@ class HmvcRequest extends Injectable
 				let module = moduleManager->get(moduleName);
 			} else {
 				let module = moduleManager->load(moduleName);
+			}
+
+			if typeof module != "object" {
+				throw new RuntimeException("Invalid module provided");
 			}
 
 			dispatcher->setNamespaceName(module->getControllerNamespace());

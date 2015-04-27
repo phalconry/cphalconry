@@ -90,7 +90,7 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zephir_nts_static zephir_fcall_cache_entry *_1 = NULL, *_5 = NULL;
-	zval *config_param = NULL, *_env = NULL, _0 = zval_used_for_init, *_2 = NULL, *_locale = NULL, *_timezone = NULL, *_3, *_4, *_6;
+	zval *config_param = NULL, *environment = NULL, *locale = NULL, *timezone = NULL, _0 = zval_used_for_init, *_2 = NULL, *_3, *_4, *_6;
 	zval *config = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -108,11 +108,11 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 	if (!(zephir_array_isset_string(config, SS("env")))) {
 		ZEPHIR_SINIT_VAR(_0);
 		ZVAL_STRING(&_0, "ENVIRONMENT", 0);
-		ZEPHIR_CALL_FUNCTION(&_env, "getenv", &_1, &_0);
+		ZEPHIR_CALL_FUNCTION(&environment, "getenv", &_1, &_0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_2);
-		if (zephir_is_true(_env)) {
-			ZEPHIR_CPY_WRT(_2, _env);
+		if (zephir_is_true(environment)) {
+			ZEPHIR_CPY_WRT(_2, environment);
 		} else {
 			ZEPHIR_INIT_NVAR(_2);
 			ZVAL_STRING(_2, "production", 1);
@@ -122,11 +122,11 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 	if (!(zephir_array_isset_string(config, SS("locale")))) {
 		ZEPHIR_SINIT_NVAR(_0);
 		ZVAL_STRING(&_0, "LOCALE", 0);
-		ZEPHIR_CALL_FUNCTION(&_locale, "getenv", &_1, &_0);
+		ZEPHIR_CALL_FUNCTION(&locale, "getenv", &_1, &_0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_LNVAR(_2);
-		if (zephir_is_true(_locale)) {
-			ZEPHIR_CPY_WRT(_2, _locale);
+		if (zephir_is_true(locale)) {
+			ZEPHIR_CPY_WRT(_2, locale);
 		} else {
 			ZEPHIR_INIT_NVAR(_2);
 			ZVAL_STRING(_2, "en_US", 1);
@@ -136,11 +136,11 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 	if (!(zephir_array_isset_string(config, SS("timezone")))) {
 		ZEPHIR_SINIT_NVAR(_0);
 		ZVAL_STRING(&_0, "TZ", 0);
-		ZEPHIR_CALL_FUNCTION(&_timezone, "getenv", &_1, &_0);
+		ZEPHIR_CALL_FUNCTION(&timezone, "getenv", &_1, &_0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_LNVAR(_2);
-		if (zephir_is_true(_timezone)) {
-			ZEPHIR_CPY_WRT(_2, _timezone);
+		if (zephir_is_true(timezone)) {
+			ZEPHIR_CPY_WRT(_2, timezone);
 		} else {
 			ZEPHIR_INIT_NVAR(_2);
 			ZVAL_STRING(_2, "UTC", 1);
@@ -156,12 +156,12 @@ PHP_METHOD(Phalconry_Mvc_Env, __construct) {
 	}
 	ZEPHIR_CALL_PARENT(NULL, phalconry_mvc_env_ce, this_ptr, "__construct", NULL, config);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_4, config, SL("locale"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 91 TSRMLS_CC);
+	zephir_array_fetch_string(&_4, config, SL("locale"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 89 TSRMLS_CC);
 	ZEPHIR_SINIT_NVAR(_0);
 	ZVAL_LONG(&_0, 0);
 	ZEPHIR_CALL_FUNCTION(NULL, "setlocale", &_5, &_0, _4);
 	zephir_check_call_status();
-	zephir_array_fetch_string(&_6, config, SL("timezone"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 94 TSRMLS_CC);
+	zephir_array_fetch_string(&_6, config, SL("timezone"), PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 92 TSRMLS_CC);
 	ZEPHIR_CALL_FUNCTION(NULL, "date_default_timezone_set", NULL, _6);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
@@ -321,7 +321,7 @@ PHP_METHOD(Phalconry_Mvc_Env, setPaths) {
 	zephir_get_arrval(paths, paths_param);
 
 
-	zephir_is_iterable(paths, &_1, &_0, 0, 0, "phalconry/mvc/env.zep", 179);
+	zephir_is_iterable(paths, &_1, &_0, 0, 0, "phalconry/mvc/env.zep", 177);
 	for (
 	  ; zephir_hash_get_current_data_ex(_1, (void**) &_2, &_0) == SUCCESS
 	  ; zephir_hash_move_forward_ex(_1, &_0)
@@ -395,7 +395,7 @@ PHP_METHOD(Phalconry_Mvc_Env, getPath) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("paths"), PH_NOISY_CC);
-	zephir_array_fetch(&_1, _0, name, PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 214 TSRMLS_CC);
+	zephir_array_fetch(&_1, _0, name, PH_NOISY | PH_READONLY, "phalconry/mvc/env.zep", 212 TSRMLS_CC);
 	RETURN_CTOR(_1);
 
 }

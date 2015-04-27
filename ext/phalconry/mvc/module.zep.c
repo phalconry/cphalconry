@@ -14,9 +14,10 @@
 #include "kernel/main.h"
 #include "kernel/fcall.h"
 #include "kernel/memory.h"
+#include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 #include "kernel/operators.h"
 #include "kernel/object.h"
-#include "kernel/exception.h"
 
 
 /**
@@ -80,7 +81,17 @@ PHP_METHOD(Phalconry_Mvc_Module, __get) {
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &key_param);
 
-	zephir_get_strval(key, key_param);
+	if (unlikely(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(key_param) == IS_STRING)) {
+		zephir_get_strval(key, key_param);
+	} else {
+		ZEPHIR_INIT_VAR(key);
+		ZVAL_EMPTY_STRING(key);
+	}
 
 
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL);
@@ -104,7 +115,17 @@ PHP_METHOD(Phalconry_Mvc_Module, setName) {
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &name_param);
 
-	zephir_get_strval(name, name_param);
+	if (unlikely(Z_TYPE_P(name_param) != IS_STRING && Z_TYPE_P(name_param) != IS_NULL)) {
+		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'name' must be a string") TSRMLS_CC);
+		RETURN_MM_NULL();
+	}
+
+	if (likely(Z_TYPE_P(name_param) == IS_STRING)) {
+		zephir_get_strval(name, name_param);
+	} else {
+		ZEPHIR_INIT_VAR(name);
+		ZVAL_EMPTY_STRING(name);
+	}
 
 
 	zephir_update_property_this(this_ptr, SL("_name"), name TSRMLS_CC);
@@ -160,7 +181,7 @@ PHP_METHOD(Phalconry_Mvc_Module, getApp) {
 	ZEPHIR_OBS_VAR(_0);
 	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
 	if (Z_TYPE_P(_0) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Module is not active", "phalconry/mvc/module.zep", 83);
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Module is not active", "phalconry/mvc/module.zep", 91);
 		return;
 	}
 	RETURN_MM_MEMBER(this_ptr, "_application");
@@ -192,15 +213,14 @@ PHP_METHOD(Phalconry_Mvc_Module, isLoaded) {
 PHP_METHOD(Phalconry_Mvc_Module, isPrimary) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0 = NULL, *_1 = NULL, *_2 = NULL;
+	zval *_0, *_1, *_2 = NULL;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isloaded", NULL);
-	zephir_check_call_status();
-	if (zephir_is_true(_0)) {
-		ZEPHIR_CALL_METHOD(&_1, this_ptr, "getapp", NULL);
-		zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_0);
+	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
+	if (Z_TYPE_P(_0) == IS_OBJECT) {
+		_1 = zephir_fetch_nproperty_this(this_ptr, SL("_application"), PH_NOISY_CC);
 		ZEPHIR_CALL_METHOD(&_2, _1, "getmoduleobject", NULL);
 		zephir_check_call_status();
 		RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(this_ptr, _2));
@@ -217,22 +237,31 @@ PHP_METHOD(Phalconry_Mvc_Module, isPrimary) {
 PHP_METHOD(Phalconry_Mvc_Module, isDefault) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0 = NULL, *_1 = NULL, *_2 = NULL, *_3 = NULL;
+	zval *_0, *_1, *_2, *_3 = NULL;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "isloaded", NULL);
-	zephir_check_call_status();
-	if (zephir_is_true(_0)) {
-		ZEPHIR_CALL_METHOD(&_1, this_ptr, "getname", NULL);
-		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(&_2, this_ptr, "getapp", NULL);
-		zephir_check_call_status();
+	ZEPHIR_OBS_VAR(_0);
+	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
+	if (Z_TYPE_P(_0) == IS_OBJECT) {
+		_1 = zephir_fetch_nproperty_this(this_ptr, SL("_name"), PH_NOISY_CC);
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_application"), PH_NOISY_CC);
 		ZEPHIR_CALL_METHOD(&_3, _2, "getdefaultmodule", NULL);
 		zephir_check_call_status();
 		RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(_1, _3));
 	}
 	RETURN_MM_BOOL(0);
+
+}
+
+/**
+ * Returns the default namespace to use for controllers
+ *
+ * Called in Application on "application:afterStartModule"
+ *
+ * @return string
+ */
+PHP_METHOD(Phalconry_Mvc_Module, getControllerNamespace) {
 
 }
 
@@ -289,17 +318,6 @@ PHP_METHOD(Phalconry_Mvc_Module, registerServices) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'di' must be an instance of 'Phalcon\\DiInterface'", "", 0);
 		return;
 	}
-
-}
-
-/**
- * Returns the default namespace to use for controllers
- *
- * Called in Application on "application:afterStartModule"
- *
- * @return string
- */
-PHP_METHOD(Phalconry_Mvc_Module, getControllerNamespace) {
 
 }
 

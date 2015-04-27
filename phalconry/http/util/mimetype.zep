@@ -10,14 +10,13 @@ class MimeType
 {
 
 	const DOWNLOAD = "application/octet-stream";
-
 	const TEXT	= "text/plain";
 	const HTML	= "text/html";
 	const XML	= "application/xml";
 	const JSON	= "application/json";
 	const JS	= "application/javascript";
 	const CSS	= "text/css";
-
+	
     const DEFAULT_HTTP = "text/html";
     const DEFAULT_FILE = "application/octet-stream";
 

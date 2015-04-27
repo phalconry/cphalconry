@@ -134,8 +134,22 @@ abstract class AbstractDataType extends AbstractType
     	return content;
 	}
 
-	protected function valueToArray(value) {
-		return \Utils\Typecast::toArray(value);
+	protected function valueToArray(value)
+	{
+
+		if typeof value == "array" {
+			return value;
+		}
+
+		if class_exists("Util\\Typecast") {
+			return \Util\Typecast::toArray(value);
+		}
+
+		if typeof value == "object" {
+			return (value instanceof \Traversable) ? iterator_to_array(value) : get_object_vars(value);
+		}
+
+		return (array)value;
 	}
 
 }

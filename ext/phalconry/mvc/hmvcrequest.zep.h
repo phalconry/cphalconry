@@ -19,8 +19,7 @@ PHP_METHOD(Phalconry_Mvc_HmvcRequest, hasParams);
 PHP_METHOD(Phalconry_Mvc_HmvcRequest, getParams);
 PHP_METHOD(Phalconry_Mvc_HmvcRequest, __invoke);
 PHP_METHOD(Phalconry_Mvc_HmvcRequest, getResponse);
-PHP_METHOD(Phalconry_Mvc_HmvcRequest, getDispatcher);
-PHP_METHOD(Phalconry_Mvc_HmvcRequest, prepareModuleForDispatch);
+PHP_METHOD(Phalconry_Mvc_HmvcRequest, prepareModule);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_mvc_hmvcrequest___construct, 0, 0, 0)
 	ZEND_ARG_ARRAY_INFO(0, args, 1)
@@ -50,7 +49,7 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_mvc_hmvcrequest___invoke, 0, 0, 0)
 	ZEND_ARG_INFO(0, args)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_mvc_hmvcrequest_preparemodulefordispatch, 0, 0, 2)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_mvc_hmvcrequest_preparemodule, 0, 0, 2)
 	ZEND_ARG_OBJ_INFO(0, dispatcher, Phalcon\\Mvc\\Dispatcher, 0)
 	ZEND_ARG_INFO(0, moduleName)
 ZEND_END_ARG_INFO()
@@ -72,7 +71,6 @@ ZEPHIR_INIT_FUNCS(phalconry_mvc_hmvcrequest_method_entry) {
 	PHP_ME(Phalconry_Mvc_HmvcRequest, getParams, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_HmvcRequest, __invoke, arginfo_phalconry_mvc_hmvcrequest___invoke, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_HmvcRequest, getResponse, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalconry_Mvc_HmvcRequest, getDispatcher, NULL, ZEND_ACC_PROTECTED)
-	PHP_ME(Phalconry_Mvc_HmvcRequest, prepareModuleForDispatch, arginfo_phalconry_mvc_hmvcrequest_preparemodulefordispatch, ZEND_ACC_PROTECTED)
+	PHP_ME(Phalconry_Mvc_HmvcRequest, prepareModule, arginfo_phalconry_mvc_hmvcrequest_preparemodule, ZEND_ACC_PROTECTED)
   PHP_FE_END
 };

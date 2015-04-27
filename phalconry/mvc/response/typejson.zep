@@ -56,10 +56,8 @@ class TypeJson extends AbstractDataType implements \JsonSerializable
 
 	protected function valueToArray(value) {
 
-        if (is_object(value)) {
-			if (method_exists(value, "jsonSerialize")) {
-				return (array)value->jsonSerialize();
-			}
+        if typeof value == "object" && method_exists(value, "jsonSerialize") {
+			return (array)value->jsonSerialize();
         }
 
         return parent::valueToArray(value);

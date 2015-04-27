@@ -133,17 +133,15 @@ PHP_METHOD(Phalconry_Mvc_Response_TypeXml, getContentType) {
 PHP_METHOD(Phalconry_Mvc_Response_TypeXml, encode) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *writer, *_0 = NULL;
+	zval *_0 = NULL;
+	zend_class_entry *util_util_xml;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_INIT_VAR(writer);
-	object_init_ex(writer, zephir_get_internal_ce(SS("utils\\xmlwriter") TSRMLS_CC));
-	ZEPHIR_CALL_METHOD(NULL, writer, "__construct", NULL);
-	zephir_check_call_status();
+	util_util_xml = zend_fetch_class(SL("\\Util\\Xml"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
 	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getcontent", NULL);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(writer, "write", NULL, _0);
+	ZEPHIR_RETURN_CALL_CE_STATIC(util_util_xml, "writedocument", NULL, _0);
 	zephir_check_call_status();
 	RETURN_MM();
 

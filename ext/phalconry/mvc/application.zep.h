@@ -8,7 +8,6 @@ PHP_METHOD(Phalconry_Mvc_Application, env);
 PHP_METHOD(Phalconry_Mvc_Application, getPath);
 PHP_METHOD(Phalconry_Mvc_Application, setPath);
 PHP_METHOD(Phalconry_Mvc_Application, getModuleObject);
-PHP_METHOD(Phalconry_Mvc_Application, getResponder);
 PHP_METHOD(Phalconry_Mvc_Application, setResponseType);
 PHP_METHOD(Phalconry_Mvc_Application, getResponseType);
 PHP_METHOD(Phalconry_Mvc_Application, run);
@@ -50,7 +49,6 @@ ZEPHIR_INIT_FUNCS(phalconry_mvc_application_method_entry) {
 	PHP_ME(Phalconry_Mvc_Application, getPath, arginfo_phalconry_mvc_application_getpath, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_Application, setPath, arginfo_phalconry_mvc_application_setpath, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_Application, getModuleObject, arginfo_phalconry_mvc_application_getmoduleobject, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalconry_Mvc_Application, getResponder, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_Application, setResponseType, arginfo_phalconry_mvc_application_setresponsetype, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_Application, getResponseType, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_Application, run, NULL, ZEND_ACC_PUBLIC)

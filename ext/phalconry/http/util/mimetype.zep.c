@@ -136,7 +136,7 @@ PHP_METHOD(Phalconry_Http_Util_MimeType, get) {
 	_2 = zephir_fetch_static_property_ce(phalconry_http_util_mimetype_ce, SL("mimetypes") TSRMLS_CC);
 	if (zephir_array_isset(_2, extension)) {
 		_3 = zephir_fetch_static_property_ce(phalconry_http_util_mimetype_ce, SL("mimetypes") TSRMLS_CC);
-		zephir_array_fetch(&_1, _3, extension, PH_NOISY, "phalconry/http/util/mimetype.zep", 87 TSRMLS_CC);
+		zephir_array_fetch(&_1, _3, extension, PH_NOISY, "phalconry/http/util/mimetype.zep", 86 TSRMLS_CC);
 	} else {
 		ZEPHIR_CPY_WRT(_1, defaultValue);
 	}

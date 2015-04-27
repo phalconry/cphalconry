@@ -27,8 +27,21 @@
 
 
 zend_class_entry *phalconry_mvc_response_typeinterface_ce;
+zend_class_entry *phalconry_http_client_adapter_adapterinterface_ce;
+zend_class_entry *phalconry_webservice_serviceinterface_ce;
+zend_class_entry *phalconry_di_serviceproviderinterface_ce;
 zend_class_entry *phalconry_mvc_response_abstracttype_ce;
+zend_class_entry *phalconry_http_client_message_ce;
 zend_class_entry *phalconry_mvc_response_abstractdatatype_ce;
+zend_class_entry *phalconry_http_client_exception_ce;
+zend_class_entry *phalconry_http_client_adapter_curl_ce;
+zend_class_entry *phalconry_http_client_adapter_exception_ce;
+zend_class_entry *phalconry_http_client_adapter_stream_ce;
+zend_class_entry *phalconry_http_client_ce;
+zend_class_entry *phalconry_http_client_header_ce;
+zend_class_entry *phalconry_http_client_request_ce;
+zend_class_entry *phalconry_http_client_response_ce;
+zend_class_entry *phalconry_http_uri_ce;
 zend_class_entry *phalconry_http_util_mimetype_ce;
 zend_class_entry *phalconry_mvc_application_bootstrap_ce;
 zend_class_entry *phalconry_mvc_application_ce;
@@ -42,7 +55,10 @@ zend_class_entry *phalconry_mvc_response_typenone_ce;
 zend_class_entry *phalconry_mvc_response_typetext_ce;
 zend_class_entry *phalconry_mvc_response_typeview_ce;
 zend_class_entry *phalconry_mvc_response_typexml_ce;
-zend_class_entry *phalconry_util_ce;
+zend_class_entry *phalconry_webservice_exception_ce;
+zend_class_entry *phalconry_webservice_factory_ce;
+zend_class_entry *phalconry_webservice_manager_ce;
+zend_class_entry *phalconry_webservice_service_ce;
 
 ZEND_DECLARE_MODULE_GLOBALS(phalconry)
 
@@ -65,8 +81,21 @@ static PHP_MINIT_FUNCTION(phalconry)
 #endif
 
 	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeInterface);
+	ZEPHIR_INIT(Phalconry_Http_Client_Adapter_AdapterInterface);
+	ZEPHIR_INIT(Phalconry_WebService_ServiceInterface);
+	ZEPHIR_INIT(Phalconry_DI_ServiceProviderInterface);
 	ZEPHIR_INIT(Phalconry_Mvc_Response_AbstractType);
+	ZEPHIR_INIT(Phalconry_Http_Client_Message);
 	ZEPHIR_INIT(Phalconry_Mvc_Response_AbstractDataType);
+	ZEPHIR_INIT(Phalconry_Http_Client_Exception);
+	ZEPHIR_INIT(Phalconry_Http_Client);
+	ZEPHIR_INIT(Phalconry_Http_Client_Adapter_Curl);
+	ZEPHIR_INIT(Phalconry_Http_Client_Adapter_Exception);
+	ZEPHIR_INIT(Phalconry_Http_Client_Adapter_Stream);
+	ZEPHIR_INIT(Phalconry_Http_Client_Header);
+	ZEPHIR_INIT(Phalconry_Http_Client_Request);
+	ZEPHIR_INIT(Phalconry_Http_Client_Response);
+	ZEPHIR_INIT(Phalconry_Http_Uri);
 	ZEPHIR_INIT(Phalconry_Http_Util_MimeType);
 	ZEPHIR_INIT(Phalconry_Mvc_Application);
 	ZEPHIR_INIT(Phalconry_Mvc_Application_Bootstrap);
@@ -80,7 +109,10 @@ static PHP_MINIT_FUNCTION(phalconry)
 	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeText);
 	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeView);
 	ZEPHIR_INIT(Phalconry_Mvc_Response_TypeXml);
-	ZEPHIR_INIT(Phalconry_Util);
+	ZEPHIR_INIT(Phalconry_WebService_Exception);
+	ZEPHIR_INIT(Phalconry_WebService_Factory);
+	ZEPHIR_INIT(Phalconry_WebService_Manager);
+	ZEPHIR_INIT(Phalconry_WebService_Service);
 
 #if PHP_VERSION_ID < 50500
 	setlocale(LC_ALL, old_lc_all);

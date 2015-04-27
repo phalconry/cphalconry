@@ -53,9 +53,9 @@
     },
     "namespace": "phalconry",
     "name": "phalconry",
-    "description": "An extension for PhalconPHP",
+    "description": "A PHP extension for PhalconPHP providing additional MVC components and an HTTP client library.",
     "author": "wells5609",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "verbose": false,
     "requires": {
         "extensions": [

@@ -37,7 +37,7 @@ PHP_METHOD(Phalconry_Mvc_Application, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
 	zend_bool _0, _1;
-	zval *di = NULL, *env = NULL, *eventsManager, *_2 = NULL, *_3 = NULL;
+	zval *di = NULL, *env = NULL, *eventsManager, *_2 = NULL, *_3 = NULL, *_4 = NULL, *_5 = NULL, *_6 = NULL, *_7 = NULL, *_8 = NULL, *_9 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 0, 2, &di, &env);
@@ -79,19 +79,101 @@ PHP_METHOD(Phalconry_Mvc_Application, __construct) {
 	ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, this_ptr);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	ZEPHIR_INIT_NVAR(_2);
-	ZVAL_STRING(_2, "moduleManager", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_INIT_VAR(_3);
-	ZVAL_STRING(_3, "Phalconry\\Mvc\\Module\\Manager", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _3);
-	zephir_check_temp_parameter(_2);
-	zephir_check_temp_parameter(_3);
-	zephir_check_call_status();
 	if (Z_TYPE_P(env) == IS_OBJECT) {
 		ZEPHIR_INIT_NVAR(_2);
 		ZVAL_STRING(_2, "env", ZEPHIR_TEMP_PARAM_COPY);
 		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, env);
 		zephir_check_temp_parameter(_2);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "moduleManager", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_3, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_3))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "moduleManager", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_VAR(_4);
+		ZVAL_STRING(_4, "Phalconry\\Mvc\\Module\\Manager", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "responder", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_5, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_5))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "responder", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_NVAR(_4);
+		ZVAL_STRING(_4, "Phalconry\\Mvc\\Responder", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "view", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_6, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_6))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "view", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_NVAR(_4);
+		ZVAL_STRING(_4, "Phalcon\\Mvc\\View", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "viewEvents", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_7, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_7))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "viewEvents", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_NVAR(_4);
+		ZVAL_STRING(_4, "Phalcon\\Events\\Manager", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "hmvcRequest", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_8, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_8))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "hmvcRequest", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_NVAR(_4);
+		ZVAL_STRING(_4, "Phalconry\\Mvc\\HmvcRequest", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
+		zephir_check_call_status();
+	}
+	ZEPHIR_INIT_NVAR(_2);
+	ZVAL_STRING(_2, "httpClient", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_9, di, "has", NULL, _2);
+	zephir_check_temp_parameter(_2);
+	zephir_check_call_status();
+	if (!(zephir_is_true(_9))) {
+		ZEPHIR_INIT_NVAR(_2);
+		ZVAL_STRING(_2, "httpClient", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_INIT_NVAR(_4);
+		ZVAL_STRING(_4, "Phalconry\\Http\\Client", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, di, "setshared", NULL, _2, _4);
+		zephir_check_temp_parameter(_2);
+		zephir_check_temp_parameter(_4);
 		zephir_check_call_status();
 	}
 	ZEPHIR_INIT_VAR(eventsManager);
@@ -106,10 +188,10 @@ PHP_METHOD(Phalconry_Mvc_Application, __construct) {
 		ZEPHIR_CALL_METHOD(NULL, _2, "__construct", NULL);
 		zephir_check_call_status();
 	}
-	ZEPHIR_INIT_NVAR(_3);
-	ZVAL_STRING(_3, "application", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(NULL, eventsManager, "attach", NULL, _3, _2);
-	zephir_check_temp_parameter(_3);
+	ZEPHIR_INIT_NVAR(_4);
+	ZVAL_STRING(_4, "application", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(NULL, eventsManager, "attach", NULL, _4, _2);
+	zephir_check_temp_parameter(_4);
 	zephir_check_call_status();
 	ZEPHIR_CALL_METHOD(NULL, this_ptr, "seteventsmanager", NULL, eventsManager);
 	zephir_check_call_status();
@@ -261,29 +343,6 @@ PHP_METHOD(Phalconry_Mvc_Application, getModuleObject) {
 }
 
 /**
- * Returns the responder
- *
- * @return \Phalconry\Mvc\Responder
- */
-PHP_METHOD(Phalconry_Mvc_Application, getResponder) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0 = NULL, *_1;
-
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL);
-	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_1);
-	ZVAL_STRING(_1, "responder", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_METHOD(_0, "getshared", NULL, _1);
-	zephir_check_temp_parameter(_1);
-	zephir_check_call_status();
-	RETURN_MM();
-
-}
-
-/**
  * Sets the type of response
  *
  * @see \Phalconry\Mvc\Responder
@@ -348,7 +407,7 @@ PHP_METHOD(Phalconry_Mvc_Application, getResponseType) {
 PHP_METHOD(Phalconry_Mvc_Application, run) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0 = NULL, *_1 = NULL, *_2 = NULL, *response = NULL, *_3 = NULL, *_4 = NULL;
+	zval *response = NULL, *_0 = NULL, *_1 = NULL, *_2 = NULL, *_3 = NULL, *_4 = NULL;
 
 	ZEPHIR_MM_GROW();
 
@@ -359,8 +418,8 @@ PHP_METHOD(Phalconry_Mvc_Application, run) {
 	ZEPHIR_CALL_METHOD(&_1, _0, "has", NULL, _2);
 	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
-	if (!(zephir_is_true(_1))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zephir_get_internal_ce(SS("phalcon\\mvc\\application\\exception") TSRMLS_CC), "Env instance not set in DI container", "phalconry/mvc/application.zep", 132);
+	if (unlikely(!zephir_is_true(_1))) {
+		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(zephir_get_internal_ce(SS("phalcon\\mvc\\application\\exception") TSRMLS_CC), "Env instance not set in DI container", "phalconry/mvc/application.zep", 148);
 		return;
 	}
 	ZEPHIR_INIT_NVAR(_2);

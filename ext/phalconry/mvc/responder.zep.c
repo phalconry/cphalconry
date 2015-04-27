@@ -12,13 +12,13 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "kernel/array.h"
 #include "kernel/object.h"
-#include "kernel/operators.h"
+#include "kernel/exception.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
+#include "kernel/operators.h"
 #include "ext/spl/spl_exceptions.h"
-#include "kernel/exception.h"
-#include "kernel/array.h"
 
 ZEPHIR_INIT_CLASS(Phalconry_Mvc_Responder) {
 
@@ -82,9 +82,16 @@ ZEPHIR_INIT_CLASS(Phalconry_Mvc_Responder) {
 
 }
 
+/**
+ * Sets the type of response
+ *
+ * @param string type Response type
+ * @throws \InvalidArgumentException if type does not have an associated class
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, setType) {
 
-	zval *type_param = NULL;
+	int ZEPHIR_LAST_CALL_STATUS;
+	zval *type_param = NULL, *_0, *_1;
 	zval *type = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -93,11 +100,26 @@ PHP_METHOD(Phalconry_Mvc_Responder, setType) {
 	zephir_get_strval(type, type_param);
 
 
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_typeClasses"), PH_NOISY_CC);
+	if (!(zephir_array_isset(_0, type))) {
+		ZEPHIR_INIT_VAR(_1);
+		object_init_ex(_1, spl_ce_InvalidArgumentException);
+		ZEPHIR_CALL_METHOD(NULL, _1, "__construct", NULL);
+		zephir_check_call_status();
+		zephir_throw_exception_debug(_1, "phalconry/mvc/responder.zep", 79 TSRMLS_CC);
+		ZEPHIR_MM_RESTORE();
+		return;
+	}
 	zephir_update_property_this(this_ptr, SL("_type"), type TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
 }
 
+/**
+ * Returns the response type
+ *
+ * @return string
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, getType) {
 
 
@@ -105,6 +127,11 @@ PHP_METHOD(Phalconry_Mvc_Responder, getType) {
 
 }
 
+/**
+ * Whether the current response type is identical to the type given
+ *
+ * @param string type
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, isType) {
 
 	zval *type_param = NULL, *_0;
@@ -121,6 +148,11 @@ PHP_METHOD(Phalconry_Mvc_Responder, isType) {
 
 }
 
+/**
+ * Whether the given or current response type returns structured data
+ *
+ * @param string type [Optional] Default is null, returns if current type is data
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, isDataType) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
@@ -148,6 +180,12 @@ PHP_METHOD(Phalconry_Mvc_Responder, isDataType) {
 
 }
 
+/**
+ * Sets the classname for a given response type
+ *
+ * @param string type
+ * @param string className
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, setTypeClass) {
 
 	zval *type_param = NULL, *className_param = NULL;
@@ -175,6 +213,12 @@ PHP_METHOD(Phalconry_Mvc_Responder, setTypeClass) {
 
 }
 
+/**
+ * Returns the classname for a given response type, or null if none exists
+ *
+ * @param string type
+ * @return string|null
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, getTypeClass) {
 
 	zval *type_param = NULL, *_0, *_1, *_2;
@@ -190,7 +234,7 @@ PHP_METHOD(Phalconry_Mvc_Responder, getTypeClass) {
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("_typeClasses"), PH_NOISY_CC);
 	if (zephir_array_isset(_1, type)) {
 		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_typeClasses"), PH_NOISY_CC);
-		zephir_array_fetch(&_0, _2, type, PH_NOISY, "phalconry/mvc/responder.zep", 101 TSRMLS_CC);
+		zephir_array_fetch(&_0, _2, type, PH_NOISY, "phalconry/mvc/responder.zep", 138 TSRMLS_CC);
 	} else {
 		ZVAL_NULL(_0);
 	}
@@ -198,6 +242,14 @@ PHP_METHOD(Phalconry_Mvc_Responder, getTypeClass) {
 
 }
 
+/**
+ * Gets/sets whether to try to fill empty response content
+ *
+ * If true (default), attempts to fill empty response content with the value returned by the controller.
+ *
+ * @param bool value [Optional] New value
+ * @return bool Current value
+ */
 PHP_METHOD(Phalconry_Mvc_Responder, fillEmptyContent) {
 
 	zval *value = NULL;
@@ -219,13 +271,19 @@ PHP_METHOD(Phalconry_Mvc_Responder, fillEmptyContent) {
 /**
  * Modifies and sends the response
  *
+ * If the controller returns boolean false or the response object, no modification takes place.
+ *
+ * If this->fillEmptyContent() == true (default), attempts to fill empty response content with
+ * the value returned by the controller.
+ *
  * @param \Phalcon\Http\ResponseInterface response
  */
 PHP_METHOD(Phalconry_Mvc_Responder, respond) {
 
-	zend_class_entry *_2;
+	zend_bool _7;
+	zend_class_entry *_3;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *response, *typeClass = NULL, *responseType, *returnedValue = NULL, *content = NULL, *_0 = NULL, *_1 = NULL, *_3 = NULL, *_4 = NULL, *_5, *_6 = NULL;
+	zval *response, *eventsManager = NULL, *typeClass, *responseType, *returnedValue = NULL, *content = NULL, *_0, *_1, *_2 = NULL, *_4 = NULL, *_5 = NULL, *_6 = NULL, *_8, *_9 = NULL;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &response);
@@ -236,49 +294,67 @@ PHP_METHOD(Phalconry_Mvc_Responder, respond) {
 		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Parameter 'response' must be an instance of 'Phalcon\\Http\\ResponseInterface'", "", 0);
 		return;
 	}
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "gettype", NULL);
+	ZEPHIR_CALL_METHOD(&eventsManager, this_ptr, "geteventsmanager", NULL);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&typeClass, this_ptr, "gettypeclass", NULL, _0);
-	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_typeClasses"), PH_NOISY_CC);
+	ZEPHIR_OBS_VAR(typeClass);
+	ZEPHIR_OBS_VAR(_1);
+	zephir_read_property_this(&_1, this_ptr, SL("_type"), PH_NOISY_CC);
+	zephir_array_fetch(&typeClass, _0, _1, PH_NOISY, "phalconry/mvc/responder.zep", 173 TSRMLS_CC);
 	ZEPHIR_INIT_VAR(responseType);
-	zephir_fetch_safe_class(_1, typeClass);
-	_2 = zend_fetch_class(Z_STRVAL_P(_1), Z_STRLEN_P(_1), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-	object_init_ex(responseType, _2);
+	zephir_fetch_safe_class(_2, typeClass);
+	_3 = zend_fetch_class(Z_STRVAL_P(_2), Z_STRLEN_P(_2), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+	object_init_ex(responseType, _3);
 	if (zephir_has_constructor(responseType TSRMLS_CC)) {
 		ZEPHIR_CALL_METHOD(NULL, responseType, "__construct", NULL);
 		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(&_3, response, "getdi", NULL);
+	ZEPHIR_CALL_METHOD(&_4, response, "getdi", NULL);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_5);
-	ZVAL_STRING(_5, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&_4, _3, "getshared", NULL, _5);
-	zephir_check_temp_parameter(_5);
+	ZEPHIR_INIT_VAR(_6);
+	ZVAL_STRING(_6, "dispatcher", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_CALL_METHOD(&_5, _4, "getshared", NULL, _6);
+	zephir_check_temp_parameter(_6);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&returnedValue, _4, "getreturnedvalue", NULL);
+	ZEPHIR_CALL_METHOD(&returnedValue, _5, "getreturnedvalue", NULL);
 	zephir_check_call_status();
-	if (!ZEPHIR_IS_FALSE_IDENTICAL(returnedValue)) {
-		if (!ZEPHIR_IS_IDENTICAL(returnedValue, response)) {
-			ZEPHIR_CALL_METHOD(&_6, this_ptr, "fillemptycontent", NULL);
+	if (Z_TYPE_P(eventsManager) == IS_OBJECT) {
+		ZEPHIR_INIT_NVAR(_6);
+		ZVAL_STRING(_6, "responder:beforeRespond", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, eventsManager, "fire", NULL, _6, this_ptr, response);
+		zephir_check_temp_parameter(_6);
+		zephir_check_call_status();
+	}
+	_7 = !ZEPHIR_IS_FALSE_IDENTICAL(returnedValue);
+	if (_7) {
+		_7 = !ZEPHIR_IS_IDENTICAL(returnedValue, response);
+	}
+	if (_7) {
+		_8 = zephir_fetch_nproperty_this(this_ptr, SL("_fillEmptyContent"), PH_NOISY_CC);
+		if (zephir_is_true(_8)) {
+			ZEPHIR_CALL_METHOD(&content, response, "getcontent", NULL);
 			zephir_check_call_status();
-			if (zephir_is_true(_6)) {
-				ZEPHIR_CALL_METHOD(&content, response, "getcontent", NULL);
-				zephir_check_call_status();
-				if (ZEPHIR_IS_EMPTY(content)) {
-					if (!(ZEPHIR_IS_EMPTY(returnedValue))) {
-						ZEPHIR_CALL_METHOD(NULL, responseType, "setmodifiedcontent", NULL, response, returnedValue);
-						zephir_check_call_status();
-					}
+			if (ZEPHIR_IS_EMPTY(content)) {
+				if (!(ZEPHIR_IS_EMPTY(returnedValue))) {
+					ZEPHIR_CALL_METHOD(NULL, responseType, "setmodifiedcontent", NULL, response, returnedValue);
+					zephir_check_call_status();
 				}
 			}
-			ZEPHIR_CALL_METHOD(NULL, responseType, "formatresponse", NULL, response);
-			zephir_check_call_status();
 		}
+		ZEPHIR_CALL_METHOD(NULL, responseType, "formatresponse", NULL, response);
+		zephir_check_call_status();
+		ZEPHIR_CALL_METHOD(&_9, responseType, "getcontenttype", NULL);
+		zephir_check_call_status();
+		ZEPHIR_CALL_METHOD(NULL, response, "setcontenttype", NULL, _9);
+		zephir_check_call_status();
 	}
-	ZEPHIR_CALL_METHOD(&_6, responseType, "getcontenttype", NULL);
-	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, response, "setcontenttype", NULL, _6);
-	zephir_check_call_status();
+	if (Z_TYPE_P(eventsManager) == IS_OBJECT) {
+		ZEPHIR_INIT_NVAR(_6);
+		ZVAL_STRING(_6, "responder:respond", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(NULL, eventsManager, "fire", NULL, _6, this_ptr, response);
+		zephir_check_temp_parameter(_6);
+		zephir_check_call_status();
+	}
 	ZEPHIR_CALL_METHOD(NULL, response, "send", NULL);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();

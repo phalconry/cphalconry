@@ -2,6 +2,7 @@ namespace Phalconry\Mvc\Response;
 
 use Phalcon\Http\ResponseInterface;
 use Phalconry\Http\Util\MimeType;
+use Util\Xml;
 
 class TypeXml extends AbstractDataType
 {
@@ -42,10 +43,7 @@ class TypeXml extends AbstractDataType
 
 	public function encode()
     {
-		var writer;
-        let writer = new \Utils\XmlWriter();
-
-        return writer->write(this->getContent());
+        return Xml::writeDocument(this->getContent());
 	}
 
 }

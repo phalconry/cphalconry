@@ -1,7 +1,6 @@
 namespace Phalconry\Mvc\Module;
 
-use Phalcon\DI\Injectable;
-use Phalcon\Registry;
+use Phalcon\Di\Injectable;
 use Phalcon\Mvc\Exception;
 use Phalconry\Mvc\Module;
 use InvalidArgumentException;
@@ -11,25 +10,15 @@ class Manager extends Injectable
 
     /**
      * Primary module name
-     *
      * @var string
      */
     protected _primary;
 
     /**
      * Module registry
-     *
-     * @var \Phalcon\Registry
+     * @var array
      */
-    protected _registry;
-
-    /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        let this->_registry = new Registry();
-    }
+    protected _modules = [];
 
     /**
      * Sets a module in the registry
@@ -38,7 +27,7 @@ class Manager extends Injectable
      */
     public function set(<Module> module) -> void
     {
-        let this->_registry[module->getName()] = module;
+        let this->_modules[module->getName()] = module;
     }
 
 	/**
@@ -49,7 +38,7 @@ class Manager extends Injectable
 	 */
     public function get(string name = null) -> <Module>
     {
-        return "" == name ? this->getPrimary() : this->_registry[name];
+        return "" == name ? this->getPrimary() : this->_modules[name];
     }
 
     /**
@@ -60,7 +49,7 @@ class Manager extends Injectable
      */
     public function setPrimary(<Module> module) -> void
     {
-        if typeof this->_primary == "string" {
+        if unlikely typeof this->_primary == "string" {
             throw new Exception("Primary module already set");
         }
 
@@ -77,11 +66,11 @@ class Manager extends Injectable
 	 */
     public function getPrimary() -> <Module>
     {
-        if typeof this->_primary != "string" {
+        if unlikely typeof this->_primary != "string" {
             throw new Exception("No primary module set");
         }
 
-        return this->_registry[this->_primary];
+        return this->_modules[this->_primary];
     }
 
 	/**
@@ -94,6 +83,7 @@ class Manager extends Injectable
 	 */
 	public function load(var module) -> <Module>
 	{
+        var di;
 
 		if typeof module == "string" {
             let module = this->create(module);
@@ -109,13 +99,11 @@ class Manager extends Injectable
 
 		this->set(module);
 
-        var di;
 		let di = this->getDI();
 
-		module->registerAutoloaders(di);
-		module->registerServices(di);
-
 		module->setApp(di->getShared("app"));
+        module->registerAutoloaders(di);
+		module->registerServices(di);
 		module->onLoad();
 
 		return module;
@@ -136,7 +124,7 @@ class Manager extends Injectable
 		}
 
 		if typeof module == "string" {
-            return isset this->_registry[module];
+            return isset this->_modules[module];
 		}
 
         throw new InvalidArgumentException("Expecting string or Module");

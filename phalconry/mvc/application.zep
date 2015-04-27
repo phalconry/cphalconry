@@ -27,14 +27,39 @@ class Application extends \Phalcon\Mvc\Application
 		}
 
 		di->setShared("app", this);
-		di->setShared("moduleManager", "Phalconry\\Mvc\\Module\\Manager");
 
 		if typeof env == "object" {
 			di->setShared("env", env);
 		}
 
+		if ! di->has("moduleManager") {
+			di->setShared("moduleManager", "Phalconry\\Mvc\\Module\\Manager");
+		}
+
+		if ! di->has("responder") {
+			di->setShared("responder", "Phalconry\\Mvc\\Responder");
+		}
+
+		if ! di->has("view") {
+			di->setShared("view", "Phalcon\\Mvc\\View");
+		}
+
+		if ! di->has("viewEvents") {
+			di->setShared("viewEvents", "Phalcon\\Events\\Manager");
+		}
+
+		if ! di->has("hmvcRequest") {
+			di->setShared("hmvcRequest", "Phalconry\\Mvc\\HmvcRequest");
+		}
+
+		if ! di->has("httpClient") {
+			di->setShared("httpClient", "Phalconry\\Http\\Client");
+		}
+
 		let eventsManager = new EventsManager();
+
 		eventsManager->attach("application", new Bootstrap());
+
 		this->setEventsManager(eventsManager);
 
 		parent::__construct(di);
@@ -89,16 +114,6 @@ class Application extends \Phalcon\Mvc\Application
 	}
 
 	/**
-	 * Returns the responder
-	 *
-	 * @return \Phalconry\Mvc\Responder
-	 */
-	public function getResponder() -> <Responder>
-	{
-		return this->getDI()->getShared("responder");
-	}
-
-	/**
 	 * Sets the type of response
 	 *
 	 * @see \Phalconry\Mvc\Responder
@@ -127,12 +142,12 @@ class Application extends \Phalcon\Mvc\Application
 	 */
 	public function run() -> void
 	{
+		var response;
 
-		if ! this->getDI()->has("env") {
+		if unlikely ! this->getDI()->has("env") {
 			throw new Exception("Env instance not set in DI container");
 		}
 
-		var response;
 		// this->handle(null) avoids errors in Zephir
 		let response = this->handle(null);
 
