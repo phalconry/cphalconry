@@ -2,22 +2,34 @@
 Phalconry is a PHP extension that builds on Phalcon.
 
 ##About
-Phalconry is composed of a few distinct parts:
+Phalconry is composed of several distinct component libraries:
 
 ####MVC
-Extends the MVC portion of Phalcon. Notable features include:
- 1. __Bootstrapping__: A stand-alone bootstrapper is used for running "application" event callbacks
- 2. __Integrated modules__: Modules assume a larger role, enabling the developer to implement module-specific functionality
- 3. __HMVC__: HMVC requests can now be sent between modules
- 4. __Responder__: Response data and formatting can be altered in a dynamic, "controller-unaware" way
+Extends the MVC portion of Phalcon. 
+
+Major features include:
+ 1. __Contract-based applications__: Allows the developer to implement custom routines (e.g. bootstrapping, handling, etc.) using a common set of interfaces.
+  * Introduces: `ApplicationInterface`, `ApplicationAwareInterface`, `EnvironmentInterface`, `Application\BootstrapInterface`, `Application\HandlerInterface`
+ 2. __Integrated modules__: Modules are no longer just structural objects but can now more easily implement module-specific logic. A "manager" now assumes responsibility for modules (instead of Application).
+  * Introduces: `ModuleInterface`, `Module\ManagerInterface`
+ 3. __HMVC__: Provides a simple HMVC request implementation which can even be sent to controllers in other modules.
+  * Introduces: `Hmvc\Request`
+ 4. __Plugins__: Provides a set of simple classes to implement a pluggable component system ("plugins", or "packages", "add-ins", etc.).
+  * Introduces: `PluginInterface`, `Plugin\ManagerInterface`
+
+[Go to the full MVC README](/Mvc/README.md)
 
 ####HTTP Client
-A (heavily) modified extension of the library in Phalcon incubator. Features include:
- 1. __Request & Response__: `Request` and `Response` classes implement an common abstract `Message` class
- 2. __Adapters__: Adapters allow for the use of different HTTP transports; cURL and stream adapters are included
- 3. __Client__: The `Client` class provides a simple API to the underlying messages and adapters
+A (heavily) modified version of the same library from [Phalcon/Incubator](https://github.com/phalcon/incubator/tree/master/Library/Phalcon/Http). 
+
+Major features include:
+ 1. __URI__: Provides a simple wrapper for a URI.
+ 2. __Request & Response__: Provides `Request` and `Response` classes for sending HTTP requests and receiving responses. Both classes extend the `Message` parent class.
+ 3. __Adapters__: Allow for the use of different HTTP transports; cURL and stream adapters are included.
+
+The primary difference from the Incubator library is that in Phalconry, the developer does not directly interface with the adapters; Phalconry's `Client` provides a single interface to the underlying functionality, regardless of the HTTP transport used.
  
 ####Web Services
-Allows the developer to create interfaces that interact with web-based APIs.
+Allows the developer to create interfaces to web service APIs.
 
 
