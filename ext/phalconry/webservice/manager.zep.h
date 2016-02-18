@@ -13,7 +13,7 @@ PHP_METHOD(Phalconry_WebService_Manager, isAvailable);
 PHP_METHOD(Phalconry_WebService_Manager, setFactory);
 PHP_METHOD(Phalconry_WebService_Manager, getFactory);
 PHP_METHOD(Phalconry_WebService_Manager, count);
-PHP_METHOD(Phalconry_WebService_Manager, __construct);
+static zend_object_value zephir_init_properties_Phalconry_WebService_Manager(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_webservice_manager_set, 0, 0, 2)
 	ZEND_ARG_INFO(0, name)
@@ -60,6 +60,5 @@ ZEPHIR_INIT_FUNCS(phalconry_webservice_manager_method_entry) {
 	PHP_ME(Phalconry_WebService_Manager, setFactory, arginfo_phalconry_webservice_manager_setfactory, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_WebService_Manager, getFactory, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_WebService_Manager, count, NULL, ZEND_ACC_PUBLIC)
-	PHP_ME(Phalconry_WebService_Manager, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-  PHP_FE_END
+	PHP_FE_END
 };

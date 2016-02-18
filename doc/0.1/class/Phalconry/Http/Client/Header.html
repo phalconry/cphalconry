@@ -1,0 +1,690 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Http\Client\Header</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../source/Phalconry/Http/Client/Header.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <h1 class="class-name">Header</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-set">set</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>,<span class="param-data-type">variable</span>  <span class="param-name">$value</span>)
+                <div class="summary-text">Sets a single header field</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setMultiple">setMultiple</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$fields</span>)
+                <div class="summary-text">Sets an array of headers</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-addMultiple">addMultiple</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$fields</span>)
+                <div class="summary-text">Adds an array of headers</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-get">get</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                <div class="summary-text">Returns a single header field</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        array
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getAll">getAll</a></span>()
+                <div class="summary-text">Returns all header fields</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-has">has</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                <div class="summary-text">Determine if a header exists with a specific key.</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-remove">remove</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                <div class="summary-text">Removes a single header by name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-parse">parse</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$content</span>)
+                <div class="summary-text">Parses an array or string of headers into the object</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        array
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-build">build</a></span>(<span class="param-data-type">int</span>  <span class="param-name">$flags</span>)
+                <div class="summary-text">Builds the headers and possibly the fields</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        int
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-count">count</a></span>()
+                <div class="summary-text">Returns the number of header fields</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string|null
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getStatusMessage">getStatusMessage</a></span>(<span class="param-data-type">int</span>  <span class="param-name">$code</span>)
+                <div class="summary-text">Returns message text for a given HTTP status code</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__construct">__construct</a></span>()
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-set"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">set</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>,<span class="param-data-type">variable</span>  <span class="param-name">$value</span>)
+                
+                                
+                    <div>
+                    Sets a single header field                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setMultiple"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setMultiple</h3>(<span class="param-data-type">array</span>  <span class="param-name">$fields</span>)
+                
+                                
+                    <div>
+                    Sets an array of headers                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-addMultiple"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">addMultiple</h3>(<span class="param-data-type">array</span>  <span class="param-name">$fields</span>)
+                
+                                
+                    <div>
+                    Adds an array of headers                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-get"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">get</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                
+                                
+                    <div>
+                    Returns a single header field                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getAll"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getAll</h3>()
+                
+                                
+                    <div>
+                    Returns all header fields                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-has"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">has</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                
+                                
+                    <div>
+                    Determine if a header exists with a specific key.                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-remove"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">remove</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                
+                                
+                    <div>
+                    Removes a single header by name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-parse"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">parse</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$content</span>)
+                
+                                
+                    <div>
+                    Parses an array or string of headers into the object                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-build"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">build</h3>(<span class="param-data-type">int</span>  <span class="param-name">$flags</span>)
+                
+                                
+                    <div>
+                    Builds the headers and possibly the fields                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-count"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">count</h3>()
+                
+                                
+                    <div>
+                    Returns the number of header fields                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getStatusMessage"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                    
+                <span class="visibility-static">static</span>
+                
+                                
+                function <h3 class="method-name">getStatusMessage</h3>(<span class="param-data-type">int</span>  <span class="param-name">$code</span>)
+                
+                                
+                    <div>
+                    Returns message text for a given HTTP status code                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__construct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__construct</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

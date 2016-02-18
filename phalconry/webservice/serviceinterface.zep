@@ -1,5 +1,8 @@
 namespace Phalconry\WebService;
 
+use Phalconry\Http\Client;
+use Phalconry\Http\Client\Request;
+
 interface ServiceInterface
 {
 
@@ -8,7 +11,7 @@ interface ServiceInterface
 	 *
 	 * @return \Phalconry\Http\Client
 	 */
-	public function getClient();
+	public function getClient() -> <Client>;
 
 	/**
 	 * Returns a URL to the service using the given args
@@ -16,7 +19,7 @@ interface ServiceInterface
 	 * @param array $args [Optional]
 	 * @return string
 	 */
-	public function buildUrl(array args = []);
+	public function buildUrl(array args = []) -> string;
 
 	/**
 	 * Returns a new HTTP request
@@ -26,7 +29,7 @@ interface ServiceInterface
 	 * @param array $headers [Optional] Request headers
 	 * @return \Phalconry\Http\Client\Request
 	 */
-	public function createRequest(var url = null, var method = null, array headers = []);
+	public function createRequest(var url = null, var method = null, array headers = []) -> <Request>;
 
 	/**
 	 * Returns the response body decoded to a PHP object
@@ -34,6 +37,6 @@ interface ServiceInterface
 	 * @param mixed $body
 	 * @return object
 	 */
-	public function buildResponseBody(var body);
+	public function buildResponseBody(var body) -> var;
 
 }

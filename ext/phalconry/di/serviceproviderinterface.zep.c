@@ -12,9 +12,9 @@
 #include "kernel/main.h"
 
 
-ZEPHIR_INIT_CLASS(Phalconry_DI_ServiceProviderInterface) {
+ZEPHIR_INIT_CLASS(Phalconry_Di_ServiceProviderInterface) {
 
-	ZEPHIR_REGISTER_INTERFACE(Phalconry\\DI, ServiceProviderInterface, phalconry, di_serviceproviderinterface, phalconry_di_serviceproviderinterface_method_entry);
+	ZEPHIR_REGISTER_INTERFACE(Phalconry\\Di, ServiceProviderInterface, phalconry, di_serviceproviderinterface, phalconry_di_serviceproviderinterface_method_entry);
 
 	return SUCCESS;
 
@@ -25,5 +25,5 @@ ZEPHIR_INIT_CLASS(Phalconry_DI_ServiceProviderInterface) {
  *
  * @param \Phalcon\DiInterface $di
  */
-ZEPHIR_DOC_METHOD(Phalconry_DI_ServiceProviderInterface, register);
+ZEPHIR_DOC_METHOD(Phalconry_Di_ServiceProviderInterface, register);
 

@@ -21,5 +21,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_response_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Response, getBody, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Response, parseHeaders, arginfo_phalconry_http_client_response_parseheaders, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Response, getBodyDecoded, NULL, ZEND_ACC_PUBLIC)
-  PHP_FE_END
+	PHP_FE_END
 };

@@ -1,0 +1,875 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../../asset/static/prettify.js"></script>
+        <script src="../../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../../'</script>
+
+        <script src="../../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Http\Client\Adapter\Curl</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../../source/Phalconry/Http/Client/Adapter/Curl.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client/Adapter.html">Adapter</a>
+        </span>
+                <h1 class="class-name">Curl</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-isAvailable">isAvailable</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__construct">__construct</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$curlHandle</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__destruct">__destruct</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__clone">__clone</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setOption">setOption</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$option</span>,<span class="param-data-type">variable</span>  <span class="param-name">$value</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setOptions">setOptions</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$options</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setTimeout">setTimeout</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$timeout</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setConnectTimeout">setConnectTimeout</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$timeout</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setProxy">setProxy</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$host</span>,<span class="param-data-type">variable</span>  <span class="param-name">$port</span>,<span class="param-data-type">variable</span>  <span class="param-name">$user</span>,<span class="param-data-type">variable</span>  <span class="param-name">$pass</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-get">get</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-head">head</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-delete">delete</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-post">post</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-put">put</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__invoke">__invoke</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-send">send</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-initPostFields">initPostFields</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>)
+                <div class="summary-text">Prepare data for a cURL post.</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-initOptions">initOptions</a></span>()
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-isAvailable"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                    
+                <span class="visibility-static">static</span>
+                
+                                
+                function <h3 class="method-name">isAvailable</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__construct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__construct</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$curlHandle</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__destruct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__destruct</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__clone"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__clone</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setOption"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setOption</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$option</span>,<span class="param-data-type">variable</span>  <span class="param-name">$value</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setOptions"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setOptions</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$options</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setTimeout"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setTimeout</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$timeout</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setConnectTimeout"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setConnectTimeout</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$timeout</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setProxy"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setProxy</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$host</span>,<span class="param-data-type">variable</span>  <span class="param-name">$port</span>,<span class="param-data-type">variable</span>  <span class="param-name">$user</span>,<span class="param-data-type">variable</span>  <span class="param-name">$pass</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-get"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">get</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-head"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">head</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-delete"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">delete</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-post"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">post</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-put"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">put</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__invoke"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__invoke</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-send"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-protected">protected</span>
+                
+                                
+                function <h3 class="method-name">send</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$request</span>,<span class="param-data-type">variable</span>  <span class="param-name">$customHeader</span>,<span class="param-data-type">bool</span>  <span class="param-name">$fullResponse</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-initPostFields"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-protected">protected</span>
+                
+                                
+                function <h3 class="method-name">initPostFields</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$params</span>,<span class="param-data-type">bool</span>  <span class="param-name">$urlEncode</span>)
+                
+                                
+                    <div>
+                    Prepare data for a cURL post.                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-initOptions"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-protected">protected</span>
+                
+                                
+                function <h3 class="method-name">initOptions</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

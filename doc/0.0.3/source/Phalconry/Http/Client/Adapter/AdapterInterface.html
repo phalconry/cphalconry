@@ -1,0 +1,129 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../../asset/static/prettify.js"></script>
+        <script src="../../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../../'</script>
+
+        <script src="../../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../../classes.html">Classes</a></li>
+                <li><a href="../../../../../class/Phalconry/Http/Client/Adapter/AdapterInterface.html">Phalconry\Http\Client\Adapter\AdapterInterface</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../../class/Phalconry/Http/Client/Adapter/AdapterInterface.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client/Adapter.html">Adapter</a>
+        </span>
+                <h1 class="class-name">AdapterInterface</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Http\Client\Adapter;
+
+use Phalconry\Http\Client\Request;
+
+interface AdapterInterface
+{
+
+    public function setOption(var option, var value);
+
+    public function setOptions(var options);
+
+    public function setTimeout(var timeout);
+
+	public function setProxy(var host, var port = 8080, var user = null, var pass = null);
+
+    public function get(<Request> request, var params = []);
+
+    public function head(<Request> request, var params = []);
+
+    public function delete(<Request> request, var params = []);
+
+    public function post(<Request> request, var params = []);
+
+    public function put(<Request> request, var params = []);
+
+	public function __invoke(<Request> request);
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

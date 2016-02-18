@@ -1,0 +1,254 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/style.css" />
+        
+        
+        <script src="../../../asset/static/jquery.min.js"></script>
+        <script src="../../../asset/static/prettify.js"></script>
+        <script src="../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../'</script>
+
+        <script src="../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../index.html">Home</a></li>
+        
+                <li><a href="../../../classes.html">Classes</a></li>
+                <li><a href="../../../class/Phalconry/Http/Client.html">Phalconry\Http\Client</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../class/Phalconry/Http/Client.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <h1 class="class-name">Client</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Http;
+
+use Phalconry\Http\Client\Exception;
+use Phalconry\Http\Client\Request;
+use Phalconry\Http\Client\Response;
+use Phalconry\Http\Client\Adapter\Curl;
+use Phalconry\Http\Client\Adapter\Stream;
+use Phalconry\Http\Client\Adapter\Exception as AdapterException;
+use Phalconry\Http\Client\Adapter\AdapterInterface;
+
+class Client extends \Phalcon\DI\Injectable
+{
+
+	/**
+	 * HTTP client library version
+	 * @var string
+	 */
+	const VERSION = "0.0.1";
+
+	/**
+	 * The last request sent
+	 * @var \Phalconry\Http\Client\Request
+	 */
+	protected _lastRequest;
+
+	/**
+	 * The adapter classname
+	 * @var string
+	 */
+	private static adapterClass;
+
+	/**
+	 * Returns the client adapter
+	 *
+	 * @return \Phalconry\Http\Client\Adapter\AdapterInterface
+	 * @throws \Phalconry\Http\Client\Adapter\Exception if no adapters are available
+	 */
+    public static function getAdapter() -> <AdapterInterface>
+	{
+        var className;
+
+		if typeof self::adapterClass == "string" {
+			return create_instance(self::adapterClass);
+		}
+
+        if Curl::isAvailable() {
+        	let self::adapterClass = "Phalconry\\Http\\Client\\Adapter\\Curl";
+            return new Curl();
+        }
+
+        if Stream::isAvailable() {
+        	let self::adapterClass = "Phalconry\\Http\\Client\\Adapter\\Stream";
+            return new Stream();
+        }
+
+        throw new AdapterException("No client adapters are available");
+    }
+
+	/**
+	 * Creates and returns a new request object
+	 *
+	 * @param string uri
+	 * @param string method [Optional] Default "GET"
+	 * @param array params [Optional] Query parameters
+	 * @param array headers [Optional] Extra headers
+	 * @return \Phalconry\Http\Client\Request
+	 */
+	public static function createHttpRequest(var uri, string! method = "GET", array params = [], array headers = []) -> <Request>
+	{
+        var request;
+		let request = new Request(uri);
+
+		request->setMethod(method);
+
+		if ! empty params {
+			request->addQueryParams(params);
+		}
+
+		if ! empty headers {
+			request->addHeaders(headers);
+		}
+
+		return request;
+	}
+
+	/**
+	 * Creates and returns a new request object
+	 *
+	 * @param string uri
+	 * @param string method [Optional] Default "GET"
+	 * @param array params [Optional] Query parameters
+	 * @param array headers [Optional] Extra headers
+	 * @return \Phalconry\Http\Client\Request
+	 */
+	public function createRequest(var uri, string! method = "GET", array params = [], array headers = []) -> <Request>
+	{
+
+        var request;
+		let request = self::createHttpRequest(uri, method, params, headers);
+
+		request->setClient(this);
+
+		this->fire("http-client:createRequest", request);
+
+		return request;
+	}
+
+	/**
+	 * Sends a request.
+	 *
+	 * @param \Phalconry\Http\Client\Request request
+	 * @return \Phalconry\Http\Client
+	 */
+	public function send(<Request> request) -> <Client>
+	{
+		request->setResponse(self::getAdapter()->__invoke(request));
+
+		this->fire("http-client:send", request);
+
+		let this->_lastRequest = request;
+
+		return this;
+	}
+
+	/**
+	 * Returns the response associated with a given request or the last request sent if none given.
+	 *
+	 * @param \Phalconry\Http\Client\Request request [Optional]
+	 * @return \Phalconry\Http\Client\Response
+	 * @throws \Phalconry\Http\Client\Exception if no requests have been sent
+	 */
+	public function getResponse(<Request> request = null) -> <Response>
+	{
+		if typeof request == "object" {
+			return request->getResponse();
+		}
+
+		if typeof this->_lastRequest == "object" {
+			return this->_lastRequest->getResponse();
+		}
+
+		throw new Exception("No requests have been sent");
+	}
+
+	/**
+	 * Fires an event if an events manager is set.
+	 *
+	 * @param string event Event name
+	 * @param mixed arg [Optional] Optional extra data to pass to the event
+	 * @return void
+	 */
+	protected function fire(event, arg = null) -> void
+	{
+		if typeof this->{"_eventsManager"} == "object" {
+			this->{"_eventsManager"}->fire(event, this, arg);
+		}
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

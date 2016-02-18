@@ -36,9 +36,9 @@ abstract class Message
 	 * @param string name [Optional]
 	 * @return \Phalconry\Http\Client\Header|string|null
 	 */
-	public function getHeader(var name = null)
+	public function getHeader(var name = null) -> <Header> | string | null
 	{
-		if typeof name == "string" {
+		if typeof name !== "null" {
 			return this->header->get(name);
 		}
 
@@ -50,7 +50,7 @@ abstract class Message
 	 *
 	 * @return \Phalconry\Http\Client\Message|null
 	 */
-	public function getParent()
+	public function getParent() -> <Message> | null
 	{
 		return this->parentMessage;
 	}
@@ -79,9 +79,11 @@ abstract class Message
 	 * Read-only access to properties
 	 *
 	 * @param string prop Property name
+	 * @return mixed
+	 *
 	 * @throws \OutOfBoundsException if invalid property requested
 	 */
-	public function __get(var prop)
+	public function __get(var prop) -> var
 	{
         if isset this->{prop} {
 			return this->{prop};

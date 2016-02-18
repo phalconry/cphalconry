@@ -218,7 +218,6 @@ class Request extends Message
 	public function send() -> <Request>
 	{
 		var client;
-
 		let client = this->client;
 
 		if typeof client != "object" {

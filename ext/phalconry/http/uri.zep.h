@@ -15,6 +15,7 @@ PHP_METHOD(Phalconry_Http_Uri, resolve);
 PHP_METHOD(Phalconry_Http_Uri, extend);
 PHP_METHOD(Phalconry_Http_Uri, extendQuery);
 PHP_METHOD(Phalconry_Http_Uri, extendPath);
+static zend_object_value zephir_init_properties_Phalconry_Http_Uri(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_http_uri___construct, 0, 0, 0)
 	ZEND_ARG_INFO(0, uri)
@@ -70,5 +71,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_uri_method_entry) {
 	PHP_ME(Phalconry_Http_Uri, extend, arginfo_phalconry_http_uri_extend, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Uri, extendQuery, arginfo_phalconry_http_uri_extendquery, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Uri, extendPath, arginfo_phalconry_http_uri_extendpath, ZEND_ACC_PUBLIC)
-  PHP_FE_END
+	PHP_FE_END
 };

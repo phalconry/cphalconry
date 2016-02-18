@@ -1,7 +1,9 @@
 namespace Phalconry\WebService;
 
 use Phalcon\Di\Injectable;
+use Phalconry\Http\Client;
 use Phalconry\Http\Client\Request;
+use Phalconry\Http\Client\Response;
 
 /**
  * Represents a web service
@@ -14,8 +16,9 @@ abstract class Service extends Injectable implements ServiceInterface
 	 *
 	 * @return \Phalconry\Http\Client
 	 */
-	public function getClient() {
-		return this->getDI()->get("httpClient");
+	public function getClient() -> <Client>
+	{
+		return this->getDI()->getShared("httpClient");
 	}
 
 	/**
@@ -26,8 +29,8 @@ abstract class Service extends Injectable implements ServiceInterface
 	 * @param array headers [Optional] Request headers
 	 * @return \Phalconry\Http\Client\Request
 	 */
-	public function createRequest(var url = null, var method = null, array! headers = []) {
-
+	public function createRequest(var url = null, var method = null, array! headers = []) -> <Request>
+	{
         var request;
 
 		if typeof url == "array" {
@@ -53,7 +56,8 @@ abstract class Service extends Injectable implements ServiceInterface
 	 * @param \Phalconry\Http\Client\Request request
 	 * @return \Phalconry\Http\Client\Response
 	 */
-	public function send(<Request> request) {
+	public function send(<Request> request) -> <Response>
+	{
 		return this->getClient()->send(request)->getResponse();
 	}
 

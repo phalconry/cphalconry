@@ -74,5 +74,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_request_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Request, getClient, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Request, send, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Request, __invoke, NULL, ZEND_ACC_PUBLIC)
-  PHP_FE_END
+	PHP_FE_END
 };

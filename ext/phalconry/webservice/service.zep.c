@@ -17,7 +17,6 @@
 #include "kernel/operators.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
-#include "kernel/object.h"
 
 
 /**
@@ -44,11 +43,11 @@ PHP_METHOD(Phalconry_WebService_Service, getClient) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL, 0);
 	zephir_check_call_status();
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_STRING(_1, "httpClient", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_METHOD(_0, "get", NULL, _1);
+	ZEPHIR_RETURN_CALL_METHOD(_0, "getshared", NULL, 0, _1);
 	zephir_check_temp_parameter(_1);
 	zephir_check_call_status();
 	RETURN_MM();
@@ -90,20 +89,20 @@ PHP_METHOD(Phalconry_WebService_Service, createRequest) {
 
 
 	if (Z_TYPE_P(url) == IS_ARRAY) {
-		ZEPHIR_CALL_METHOD(&_0, this_ptr, "buildurl", NULL, url);
+		ZEPHIR_CALL_METHOD(&_0, this_ptr, "buildurl", NULL, 0, url);
 		zephir_check_call_status();
 		ZEPHIR_CPY_WRT(url, _0);
 	}
 	ZEPHIR_INIT_VAR(request);
 	object_init_ex(request, phalconry_http_client_request_ce);
-	ZEPHIR_CALL_METHOD(NULL, request, "__construct", NULL, url);
+	ZEPHIR_CALL_METHOD(NULL, request, "__construct", NULL, 11, url);
 	zephir_check_call_status();
 	if (Z_TYPE_P(method) == IS_STRING) {
-		ZEPHIR_CALL_METHOD(NULL, request, "setmethod", NULL, method);
+		ZEPHIR_CALL_METHOD(NULL, request, "setmethod", NULL, 12, method);
 		zephir_check_call_status();
 	}
 	if (!(ZEPHIR_IS_EMPTY(headers))) {
-		ZEPHIR_CALL_METHOD(NULL, request, "addheaders", NULL, headers);
+		ZEPHIR_CALL_METHOD(NULL, request, "addheaders", NULL, 14, headers);
 		zephir_check_call_status();
 	}
 	RETURN_CCTOR(request);
@@ -126,15 +125,11 @@ PHP_METHOD(Phalconry_WebService_Service, send) {
 
 
 
-	if (!(zephir_instance_of_ev(request, phalconry_http_client_request_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Parameter 'request' must be an instance of 'Phalconry\\Http\\Client\\Request'", "", 0);
-		return;
-	}
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getclient", NULL);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getclient", NULL, 0);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(&_1, _0, "send", NULL, request);
+	ZEPHIR_CALL_METHOD(&_1, _0, "send", NULL, 0, request);
 	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(_1, "getresponse", NULL);
+	ZEPHIR_RETURN_CALL_METHOD(_1, "getresponse", NULL, 0);
 	zephir_check_call_status();
 	RETURN_MM();
 

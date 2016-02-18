@@ -103,5 +103,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_adapter_stream_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Adapter_Stream, send, arginfo_phalconry_http_client_adapter_stream_send, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalconry_Http_Client_Adapter_Stream, initPostFields, arginfo_phalconry_http_client_adapter_stream_initpostfields, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalconry_Http_Client_Adapter_Stream, initOptions, NULL, ZEND_ACC_PROTECTED)
-  PHP_FE_END
+	PHP_FE_END
 };

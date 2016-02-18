@@ -121,5 +121,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_adapter_curl_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Adapter_Curl, send, arginfo_phalconry_http_client_adapter_curl_send, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalconry_Http_Client_Adapter_Curl, initPostFields, arginfo_phalconry_http_client_adapter_curl_initpostfields, ZEND_ACC_PROTECTED)
 	PHP_ME(Phalconry_Http_Client_Adapter_Curl, initOptions, NULL, ZEND_ACC_PROTECTED)
-  PHP_FE_END
+	PHP_FE_END
 };

@@ -1,0 +1,937 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/style.css" />
+        
+        
+        <script src="../../../asset/static/jquery.min.js"></script>
+        <script src="../../../asset/static/prettify.js"></script>
+        <script src="../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../'</script>
+
+        <script src="../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../index.html">Home</a></li>
+        
+                <li><a href="../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Mvc\HmvcRequest</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../source/Phalconry/Mvc/HmvcRequest.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <h1 class="class-name">HmvcRequest</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__construct">__construct</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$args</span>)
+                <div class="summary-text">HmvcRequest constructor.</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../class/Phalconry/Mvc/HmvcRequest.html'>Phalconry\Mvc\HmvcRequest</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setLocation">setLocation</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$args</span>)
+                <div class="summary-text">Sets module, controller, action, and/or params from an array.</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../class/Phalconry/Mvc/HmvcRequest.html'>Phalconry\Mvc\HmvcRequest</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setModuleName">setModuleName</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Sets the module name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-hasModuleName">hasModuleName</a></span>()
+                <div class="summary-text">Whether a module name is set</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string|null
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getModuleName">getModuleName</a></span>()
+                <div class="summary-text">Returns the module name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../class/Phalconry/Mvc/HmvcRequest.html'>Phalconry\Mvc\HmvcRequest</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setControllerName">setControllerName</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$controller</span>)
+                <div class="summary-text">Sets the controller name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-hasControllerName">hasControllerName</a></span>()
+                <div class="summary-text">Whether the controller name is set</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string|null
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getControllerName">getControllerName</a></span>()
+                <div class="summary-text">Returns the controller name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../class/Phalconry/Mvc/HmvcRequest.html'>Phalconry\Mvc\HmvcRequest</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setActionName">setActionName</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$action</span>)
+                <div class="summary-text">Sets the action name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-hasActionName">hasActionName</a></span>()
+                <div class="summary-text">Whether the action name is set</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string|null
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getActionName">getActionName</a></span>()
+                <div class="summary-text">Returns the action name</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../class/Phalconry/Mvc/HmvcRequest.html'>Phalconry\Mvc\HmvcRequest</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setParams">setParams</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$params</span>)
+                <div class="summary-text">Sets the request parameters</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-hasParams">hasParams</a></span>()
+                <div class="summary-text">Whether any parameters are set</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        array
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getParams">getParams</a></span>()
+                <div class="summary-text">Returns the request parameters</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__invoke">__invoke</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$args</span>)
+                <div class="summary-text">Dispatches the request and returns a response</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getResponse">getResponse</a></span>()
+                <div class="summary-text">Returns the response</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-prepareModule">prepareModule</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$dispatcher</span>,<span class="param-data-type">string</span>  <span class="param-name">$moduleName</span>)
+                <div class="summary-text">Prepares to dispatch to a module</div>
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__construct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__construct</h3>(<span class="param-data-type">array</span>  <span class="param-name">$args</span>)
+                
+                                
+                    <div>
+                    HmvcRequest constructor.                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setLocation"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setLocation</h3>(<span class="param-data-type">array</span>  <span class="param-name">$args</span>)
+                
+                                
+                    <div>
+                    Sets module, controller, action, and/or params from an array.                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setModuleName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setModuleName</h3>(<span class="param-data-type">string</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Sets the module name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-hasModuleName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">hasModuleName</h3>()
+                
+                                
+                    <div>
+                    Whether a module name is set                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getModuleName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getModuleName</h3>()
+                
+                                
+                    <div>
+                    Returns the module name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setControllerName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setControllerName</h3>(<span class="param-data-type">string</span>  <span class="param-name">$controller</span>)
+                
+                                
+                    <div>
+                    Sets the controller name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-hasControllerName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">hasControllerName</h3>()
+                
+                                
+                    <div>
+                    Whether the controller name is set                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getControllerName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getControllerName</h3>()
+                
+                                
+                    <div>
+                    Returns the controller name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setActionName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setActionName</h3>(<span class="param-data-type">string</span>  <span class="param-name">$action</span>)
+                
+                                
+                    <div>
+                    Sets the action name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-hasActionName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">hasActionName</h3>()
+                
+                                
+                    <div>
+                    Whether the action name is set                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getActionName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getActionName</h3>()
+                
+                                
+                    <div>
+                    Returns the action name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setParams"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setParams</h3>(<span class="param-data-type">array</span>  <span class="param-name">$params</span>)
+                
+                                
+                    <div>
+                    Sets the request parameters                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-hasParams"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">hasParams</h3>()
+                
+                                
+                    <div>
+                    Whether any parameters are set                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getParams"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getParams</h3>()
+                
+                                
+                    <div>
+                    Returns the request parameters                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__invoke"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__invoke</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$args</span>)
+                
+                                
+                    <div>
+                    Dispatches the request and returns a response                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getResponse"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getResponse</h3>()
+                
+                                
+                    <div>
+                    Returns the response                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-prepareModule"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-protected">protected</span>
+                
+                                
+                function <h3 class="method-name">prepareModule</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$dispatcher</span>,<span class="param-data-type">string</span>  <span class="param-name">$moduleName</span>)
+                
+                                
+                    <div>
+                    Prepares to dispatch to a module                    </div>
+                    <div>
+                    The module is loaded if not already. If it's not the primary module, the
+	 default controller namespace is reset on the cloned dispatcher.                    </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

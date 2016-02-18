@@ -21,5 +21,5 @@ ZEPHIR_INIT_FUNCS(phalconry_webservice_service_method_entry) {
 	PHP_ME(Phalconry_WebService_Service, getClient, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_WebService_Service, createRequest, arginfo_phalconry_webservice_service_createrequest, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_WebService_Service, send, arginfo_phalconry_webservice_service_send, ZEND_ACC_PUBLIC)
-  PHP_FE_END
+	PHP_FE_END
 };

@@ -29,5 +29,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_message_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Message, hasParent, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Message, setParent, arginfo_phalconry_http_client_message_setparent, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Message, __get, arginfo_phalconry_http_client_message___get, ZEND_ACC_PUBLIC)
-  PHP_FE_END
+	PHP_FE_END
 };

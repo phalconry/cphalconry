@@ -1,57 +1,64 @@
 namespace Phalconry\Mvc;
 
-use Phalcon\Mvc\ModuleDefinitionInterface;
-use Phalcon\Mvc\View;
+use Phalcon\Di\InjectionAwareInterface;
 use Phalcon\DiInterface;
-use Phalcon\DI as DiContainer;
-use RuntimeException;
+use Phalconry\Mvc\Module\ManagerInterface;
 
-/**
- * Module
- *
- * This class is "pseudo-DI-aware" in that its getDI() method returns the
- * default DI container using DI::getDefault()
- */
-abstract class Module implements ModuleDefinitionInterface
+abstract class Module implements ModuleInterface, InjectionAwareInterface
 {
 
 	/**
-	 * The module name
+	 * Dependency injector.
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	protected _dependencyInjector;
+
+	/**
+	 * Module name.
+	 *
 	 * @var string
 	 */
 	protected _name;
 
 	/**
-	 * The application
-	 * @var \Phalconry\Mvc\Application
+	 * Application.
+	 *
+	 * @var \Phalconry\Mvc\ApplicationInterface
 	 */
 	protected _application;
 
 	/**
-	 * Returns the DI container
+	 * Module manager.
+	 *
+	 * @var \Phalconry\Mvc\Module\ManagerInterface
+	 */
+	protected _manager;
+
+	/**
+	 * Sets the dependency injector.
+	 *
+	 * @param \Phalcon\DiInterface di
+	 */
+	public function setDI(<DiInterface> di) -> void
+	{
+		let this->_dependencyInjector = di;
+	}
+
+	/**
+	 * Returns the dependency injector.
 	 *
 	 * @return \Phalcon\DiInterface
 	 */
 	public function getDI() -> <DiInterface>
 	{
-		return DiContainer::getDefault();
+		return this->_dependencyInjector;
 	}
 
 	/**
-	 * Returns a shared item from the DI container
+	 * Sets the module's name.
 	 *
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function __get(string! key)
-	{
-		return this->getDI()->getShared(key);
-	}
-
-	/**
-	 * Sets the module name
-	 *
-	 * @param string $name
+	 * @param string name
 	 */
 	public function setName(string! name) -> void
 	{
@@ -59,7 +66,7 @@ abstract class Module implements ModuleDefinitionInterface
 	}
 
 	/**
-	 * Returns the module name
+	 * Returns the module's name.
 	 *
 	 * @return string
 	 */
@@ -69,119 +76,101 @@ abstract class Module implements ModuleDefinitionInterface
 	}
 
 	/**
-	 * Sets the application
+	 * Sets the module manager.
 	 *
-	 * @param \Phalconry\Mvc\Application $app
+	 * @param \Phalconry\Mvc\Module\ManagerInterface manager
 	 */
-	public function setApp(<Application> app) -> void
+	public function setManager(<ManagerInterface> manager) -> void
+	{
+		let this->_manager = manager;
+	}
+
+	/**
+	 * Returns the module manager.
+	 *
+	 * @return \Phalconry\Mvc\Module\ManagerInterface
+	 */
+	public function getManager() -> <ManagerInterface>
+	{
+		return this->_manager;
+	}
+
+	/**
+	 * Sets the application.
+	 *
+	 * @param \Phalconry\Mvc\ApplicationInterface app
+	 */
+	public function setApp(<ApplicationInterface> app) -> void
 	{
 		let this->_application = app;
 	}
 
 	/**
-	 * Returns the application
+	 * Returns the application.
 	 *
-	 * @return \Phalconry\Mvc\Application
-	 * @throws \RuntimeException if app is not set
+	 * @return \Phalconry\Mvc\ApplicationInterface
 	 */
-	public function getApp() -> <Application>
+	public function getApp() -> <ApplicationInterface>
 	{
-
-		if typeof this->_application == "null" {
-			throw new RuntimeException("Module is not active");
-		}
-
 		return this->_application;
 	}
 
 	/**
-	 * Whether the module has been loaded
+	 * Checks whether the module is loaded.
 	 *
 	 * @return boolean
 	 */
 	public function isLoaded() -> boolean
 	{
-		return (typeof this->_application == "object");
+		return typeof this->_application == "object";
 	}
 
 	/**
-	 * Whether this is the primary module
+	 * Checks whether the module is primary.
 	 *
 	 * @return boolean
 	 */
 	public function isPrimary() -> boolean
 	{
+		var manager;
+		let manager = <ManagerInterface> this->_manager;
 
-		if typeof this->_application == "object" {
-			return this === this->_application->getModuleObject();
+		if typeof manager != "object" {
+			return false;
 		}
 
-		return false;
+		return manager->getPrimaryModuleName() === this->_name;
 	}
 
 	/**
-	 * Whether this is the default module
+	 * Checks whether the module is the default.
 	 *
 	 * @return boolean
 	 */
 	public function isDefault() -> boolean
 	{
+		var manager;
+		let manager = <ManagerInterface> this->_manager;
 
-		if typeof this->_application == "object" {
-			return this->_name === this->_application->getDefaultModule();
+		if typeof manager != "object" {
+			return false;
 		}
 
-		return false;
+		return manager->getDefaultModuleName() === this->_name;
 	}
 
 	/**
-	 * Returns the default namespace to use for controllers
-	 *
-	 * Called in Application on "application:afterStartModule"
-	 *
-	 * @return string
+	 * Registers the module autoloaders.
 	 */
-	abstract public function getControllerNamespace();
-
-	/**
-	 * Register separate autoloaders for the module, if any
-	 *
-	 * @param \Phalcon\DiInterface
-	 */
-	public function registerAutoloaders(<DiInterface> di = null) -> void
+	public function registerAutoloaders(<DiInterface> di = null)
 	{
 
 	}
 
 	/**
-	 * Register services for the module
-	 *
-	 * @param \Phalcon\DiInterface
+	 * Registers the module services.
 	 */
-	public function registerServices(<DiInterface> di = null) -> void
-	{
-
-	}
-
-	/**
-	 * Allows the module to perform start-up tasks
-	 *
-	 * Called in Application on "application:afterStartModule"
-	 */
-	public function onLoad() -> void
-	{
-
-	}
-
-	/**
-	 * Allows the PRIMARY module to perform additional operations when responding with a view
-	 *
-	 * Called in Application on "application:afterHandleRequest"
-	 * ONLY IF respondse mode is 'view' - otherwise, the view is disabled
-	 *
-	 * @param \Phalcon\Mvc\View $view
-	 */
-	public function onView(<View> view) -> void
+	public function registerServices(<DiInterface> di)
 	{
 
 	}

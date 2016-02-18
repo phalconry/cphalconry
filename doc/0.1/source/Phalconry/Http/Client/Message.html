@@ -1,0 +1,191 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a href="../../../../class/Phalconry/Http/Client/Message.html">Phalconry\Http\Client\Message</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../class/Phalconry/Http/Client/Message.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <h1 class="class-name">Message</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Http\Client;
+
+use OutOfBoundsException;
+
+/**
+ * Represents an HTTP message
+ */
+abstract class Message
+{
+
+	/**
+	 * The message's header object
+	 *
+	 * @var \Phalconry\Http\Client\Header
+	 */
+	protected header;
+
+	/**
+	 * The message's parent message.
+	 *
+	 * @var \Phalconry\Http\Client\Message
+	 */
+	protected parentMessage;
+
+	/**
+	 * Constructor.
+	 */
+    public function __construct()
+	{
+        let this->header = new Header();
+    }
+
+	/**
+	 * Returns the header object, or a specific header value if a name is given
+	 *
+	 * @param string name [Optional]
+	 * @return \Phalconry\Http\Client\Header|string|null
+	 */
+	public function getHeader(var name = null)
+	{
+		if typeof name == "string" {
+			return this->header->get(name);
+		}
+
+		return this->header;
+	}
+
+	/**
+	 * Returns the message's parent message, if any
+	 *
+	 * @return \Phalconry\Http\Client\Message|null
+	 */
+	public function getParent()
+	{
+		return this->parentMessage;
+	}
+
+	/**
+	 * Whether the message has a parent message
+	 *
+	 * @return boolean
+	 */
+	public function hasParent() -> boolean
+	{
+		return (typeof this->parentMessage == "object");
+	}
+
+	/**
+	 * Sets the message's parent message
+	 *
+	 * @param \Phalconry\Http\Client\Message parentMessage
+	 */
+	public function setParent(<Message> parentMessage) -> void
+	{
+		let this->parentMessage = parentMessage;
+	}
+
+	/**
+	 * Read-only access to properties
+	 *
+	 * @param string prop Property name
+	 * @throws \OutOfBoundsException if invalid property requested
+	 */
+	public function __get(var prop)
+	{
+        if isset this->{prop} {
+			return this->{prop};
+		}
+
+		throw new OutOfBoundsException("Invalid property");
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

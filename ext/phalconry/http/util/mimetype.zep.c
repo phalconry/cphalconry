@@ -13,8 +13,8 @@
 
 #include "kernel/main.h"
 #include "kernel/memory.h"
-#include "kernel/object.h"
 #include "kernel/array.h"
+#include "kernel/object.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/operators.h"
@@ -89,7 +89,7 @@ PHP_METHOD(Phalconry_Http_Util_MimeType, get) {
 
 	if (!((0 == 0))) {
 		ZEPHIR_INIT_VAR(_0);
-		array_init_size(_0, 51);
+		zephir_create_array(_0, 40, 0 TSRMLS_CC);
 		add_assoc_stringl_ex(_0, SS("txt"), SL("text/plain"), 1);
 		add_assoc_stringl_ex(_0, SS("htm"), SL("text/html"), 1);
 		add_assoc_stringl_ex(_0, SS("html"), SL("text/html"), 1);
@@ -153,8 +153,7 @@ PHP_METHOD(Phalconry_Http_Util_MimeType, get) {
 PHP_METHOD(Phalconry_Http_Util_MimeType, getForFile) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
-	zval *filename_param = NULL, _0, *_1 = NULL, *_3;
+	zval *filename_param = NULL, _0, *_1 = NULL, *_2;
 	zval *filename = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -175,12 +174,12 @@ PHP_METHOD(Phalconry_Http_Util_MimeType, getForFile) {
 
 	ZEPHIR_SINIT_VAR(_0);
 	ZVAL_LONG(&_0, 4);
-	ZEPHIR_CALL_FUNCTION(&_1, "pathinfo", &_2, filename, &_0);
+	ZEPHIR_CALL_FUNCTION(&_1, "pathinfo", NULL, 49, filename, &_0);
 	zephir_check_call_status();
-	ZEPHIR_INIT_VAR(_3);
-	ZVAL_STRING(_3, "application/octet-stream", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_SELF("get", NULL, _1, _3);
-	zephir_check_temp_parameter(_3);
+	ZEPHIR_INIT_VAR(_2);
+	ZVAL_STRING(_2, "application/octet-stream", ZEPHIR_TEMP_PARAM_COPY);
+	ZEPHIR_RETURN_CALL_SELF("get", NULL, 0, _1, _2);
+	zephir_check_temp_parameter(_2);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -216,7 +215,7 @@ PHP_METHOD(Phalconry_Http_Util_MimeType, getForHttp) {
 
 	ZEPHIR_INIT_VAR(_0);
 	ZVAL_STRING(_0, "text/html", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_RETURN_CALL_SELF("get", NULL, extension, _0);
+	ZEPHIR_RETURN_CALL_SELF("get", NULL, 0, extension, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	RETURN_MM();

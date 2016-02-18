@@ -1,0 +1,270 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Mvc\Application\Bootstrap</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../source/Phalconry/Mvc/Application/Bootstrap.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc/Application.html">Application</a>
+        </span>
+                <h1 class="class-name">Bootstrap</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-boot">boot</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$nothing</span>)
+                <div class="summary-text">application:boot event callback</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-afterStartModule">afterStartModule</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">application:afterStartModule event callback</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-afterHandleRequest">afterHandleRequest</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$controller</span>)
+                <div class="summary-text">application:afterHandleRequest event callback</div>
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-boot"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">boot</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$nothing</span>)
+                
+                                
+                    <div>
+                    application:boot event callback                    </div>
+                    <div>
+                    Boots the application using values from Env (DI key: "env").
+	 	 Loader is set using the optional "loader" (array) arguments:
+	 		"namespaces" (array)
+	 		"dirs" (array)
+	 		"classes" (array)
+	 If no "loader" argument is set, the file "loader.php" in directory "config" MUST exist, as it will be
+	 "require"-ed.
+	 	 Application::setDefaultServices() is called, passing the DI as the only argument.
+	 	 If "modules" (array) argument exists, they are registered and autoloaded. Otherwise, the file "modules.php" in
+	 directory "config" MUST exist and will be "require"-ed.
+	 	 If a "default_module" (string) argument exists, it will be used to set the default module
+	 (via Application::setDefaultModule())                    </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-afterStartModule"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">afterStartModule</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    application:afterStartModule event callback                    </div>
+                    <div>
+                    The active Module object will be set as the "primary" module with the module manager (DI key: "moduleManager").
+	 	 The default "dispatch" namespace will be set on the dispatcher (DI key: "dispatcher")
+	 using the module's `getControllerNamespace()` method.
+	 Finally the module receives the Application and its `onLoad()` method is called.                    </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-afterHandleRequest"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">afterHandleRequest</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$event</span>,<span class="param-data-type">variable</span>  <span class="param-name">$app</span>,<span class="param-data-type">variable</span>  <span class="param-name">$controller</span>)
+                
+                                
+                    <div>
+                    application:afterHandleRequest event callback                    </div>
+                    <div>
+                    The view is retrieved from the DI (key: "view").
+	 	 If "view" == response type, as given by the responder (DI key: "responder"), the `onView()` method
+	 is called on the "primary" module.
+	 	 If the response type is not "view", the view component is disabled (via View::disable()).                    </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

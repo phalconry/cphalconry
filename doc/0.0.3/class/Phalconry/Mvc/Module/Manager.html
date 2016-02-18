@@ -1,0 +1,547 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Mvc\Module\Manager</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../source/Phalconry/Mvc/Module/Manager.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc/Module.html">Module</a>
+        </span>
+                <h1 class="class-name">Manager</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__construct">__construct</a></span>()
+                <div class="summary-text">Constructor.</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-set">set</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Sets a module in the registry</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Mvc/Module/Module.html'>Phalconry\Mvc\Module\Module</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-get">get</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                <div class="summary-text">Returns a module by name, or the primary module if no name is given</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setPrimary">setPrimary</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Sets the primary module in the registry</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Mvc/Module/Module.html'>Phalconry\Mvc\Module\Module</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getPrimary">getPrimary</a></span>()
+                <div class="summary-text">Returns the primary module</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Mvc/Module/Module.html'>Phalconry\Mvc\Module\Module</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-load">load</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Loads a module</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        bool
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-isLoaded">isLoaded</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Whether a module has been loaded</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getName">getName</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                <div class="summary-text">Returns the name of a module from an object</div>
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Mvc/Module/Module.html'>Phalconry\Mvc\Module\Module</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-create">create</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                <div class="summary-text">Creates a module object from its name</div>
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__construct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__construct</h3>()
+                
+                                
+                    <div>
+                    Constructor.                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-set"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">set</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Sets a module in the registry                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-get"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">get</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                
+                                
+                    <div>
+                    Returns a module by name, or the primary module if no name is given                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setPrimary"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setPrimary</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Sets the primary module in the registry                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getPrimary"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getPrimary</h3>()
+                
+                                
+                    <div>
+                    Returns the primary module                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-load"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">load</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Loads a module                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-isLoaded"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">isLoaded</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Whether a module has been loaded                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getName"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getName</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$module</span>)
+                
+                                
+                    <div>
+                    Returns the name of a module from an object                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-create"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-protected">protected</span>
+                
+                                
+                function <h3 class="method-name">create</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>)
+                
+                                
+                    <div>
+                    Creates a module object from its name                    </div>
+                    <div>
+                                        </div>
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

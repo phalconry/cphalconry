@@ -1,0 +1,5 @@
+
+extern zend_class_entry *phalconry_mvc_application_exception_ce;
+
+ZEPHIR_INIT_CLASS(Phalconry_Mvc_Application_Exception);
+

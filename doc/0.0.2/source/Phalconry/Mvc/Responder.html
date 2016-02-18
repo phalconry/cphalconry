@@ -1,0 +1,247 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/style.css" />
+        
+        
+        <script src="../../../asset/static/jquery.min.js"></script>
+        <script src="../../../asset/static/prettify.js"></script>
+        <script src="../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../'</script>
+
+        <script src="../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../index.html">Home</a></li>
+        
+                <li><a href="../../../classes.html">Classes</a></li>
+                <li><a href="../../../class/Phalconry/Mvc/Responder.html">Phalconry\Mvc\Responder</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../class/Phalconry/Mvc/Responder.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <h1 class="class-name">Responder</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Mvc;
+
+use Phalcon\Mvc\User\Component;
+use Phalcon\Http\ResponseInterface;
+
+class Responder extends Component
+{
+
+	/**
+	 * Disables the responder
+	 * @var boolean
+	 */
+	const TYPE_NONE = "";
+
+	/**
+	 * Designates a "text" response
+	 * @var string
+	 */
+	const TYPE_TEXT = "text";
+
+	/**
+	 * Designates a "view" response
+	 * @var string
+	 */
+	const TYPE_VIEW = "view";
+
+	/**
+	 * Designates a "json" response
+	 * @var string
+	 */
+	const TYPE_JSON = "json";
+
+	/**
+	 * Designates an "xml" response
+	 * @var string
+	 */
+	const TYPE_XML = "xml";
+
+	/**
+	 * Response type
+	 * @var string
+	 */
+	protected _type = "view";
+
+	/**
+	 * Response type classes
+	 * @var array
+	 */
+	protected _typeClasses = [
+		"": "Phalconry\\Mvc\\Response\\TypeNone",
+		"view": "Phalconry\\Mvc\\Response\\TypeView",
+		"text": "Phalconry\\Mvc\\Response\\TypeText",
+		"json": "Phalconry\\Mvc\\Response\\TypeJson",
+		"xml": "Phalconry\\Mvc\\Response\\TypeXml"
+	];
+
+	/**
+	 * Response types that send structured data
+	 * @var array
+	 */
+	protected _dataTypes = ["json", "xml"];
+
+	/**
+	 * Whether to fill empty content with the retuned value
+	 * @var boolean
+	 */
+	protected _fillEmptyContent = true;
+
+	public function setType(string type) -> void
+    {
+		let this->_type = type;
+	}
+
+	public function getType() -> string
+    {
+		return this->_type;
+	}
+
+	public function isType(string type) -> boolean
+    {
+		return this->_type === type;
+	}
+
+	public function isDataType(var type = null) -> boolean
+    {
+
+        if typeof type == "null" {
+			let type = this->_type;
+		}
+
+		return in_array(type, this->_dataTypes, true);
+	}
+
+	public function setTypeClass(string type, string! className) -> void
+    {
+		let this->_typeClasses[type] = className;
+	}
+
+	public function getTypeClass(string type) -> string|null
+    {
+		return isset this->_typeClasses[type] ? this->_typeClasses[type] : null;
+	}
+
+	public function fillEmptyContent(var value = null) -> boolean
+    {
+        if typeof value != "null" {
+			let this->_fillEmptyContent = (bool)value;
+		}
+
+		return this->_fillEmptyContent;
+	}
+
+	/**
+	 * Modifies and sends the response
+	 *
+	 * @param \Phalcon\Http\ResponseInterface response
+	 */
+	public function respond(<ResponseInterface> response) -> void
+    {
+        var typeClass, responseType, returnedValue, content;
+
+		let typeClass = this->getTypeClass(this->getType());
+		let responseType = new {typeClass}();
+		let returnedValue = response->{"getDI"}()->getShared("dispatcher")->getReturnedValue();
+
+		// If controller returns boolean false or the response object, no modification takes place
+		if returnedValue !== false {
+            if returnedValue !== response {
+
+                if this->fillEmptyContent() {
+
+        			let content = response->getContent();
+
+        			// If content is empty, use the returned value
+        			if empty content {
+                        if ! empty returnedValue {
+                            responseType->setModifiedContent(response, returnedValue);
+                        }
+                    }
+                }
+
+    			// Allow the response type to format the response
+    			responseType->formatResponse(response);
+            }
+		}
+
+		response->setContentType(responseType->getContentType());
+
+		response->send();
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

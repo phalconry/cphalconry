@@ -16,10 +16,12 @@
  */
 namespace Phalconry\Http\Client\Adapter;
 
+use Phalconry\Http\Uri;
 use Phalconry\Http\Client;
 use Phalconry\Http\Client\Request;
 use Phalconry\Http\Client\Response;
 use Phalconry\Http\Client\Exception as HttpException;
+use InvalidArgumentException;
 
 class Curl implements AdapterInterface
 {
@@ -30,51 +32,59 @@ class Curl implements AdapterInterface
 	 */
 	protected handle;
 
-	public static function isAvailable() {
+	public static function isAvailable()
+	{
 		return extension_loaded("curl");
 	}
 
-	public function __construct(var curlHandle = null) {
+	public function __construct(var curlHandle = null)
+	{
 
 		if typeof curlHandle == "null" {
 			let this->handle = curl_init();
-
-		} elseif is_resource(curlHandle) {
-			let this->handle = curlHandle;
-
-        } else {
-			throw new \InvalidArgumentException("Handle must be cURL resource");
+		} else {
+			if is_resource(curlHandle) {
+				let this->handle = curlHandle;
+        	} else {
+				throw new InvalidArgumentException("Handle must be cURL resource");
+			}
 		}
 
 		this->initOptions();
 	}
 
-	public function __destruct() {
+	public function __destruct()
+	{
 		curl_close(this->handle);
 	}
 
-	public function __clone() {
+	public function __clone()
+	{
 		return new Curl(curl_copy_handle(this->handle));
 	}
 
-	public function setOption(var option, var value) {
+	public function setOption(var option, var value)
+	{
 		return curl_setopt(this->handle, option, value);
 	}
 
-	public function setOptions(var options) {
+	public function setOptions(var options)
+	{
 		return curl_setopt_array(this->handle, options);
 	}
 
-	public function setTimeout(var timeout) {
+	public function setTimeout(var timeout)
+	{
 		this->setOption(CURLOPT_TIMEOUT, timeout);
 	}
 
-	public function setConnectTimeout(var timeout) {
+	public function setConnectTimeout(var timeout)
+	{
 		this->setOption(CURLOPT_CONNECTTIMEOUT, timeout);
 	}
 
-	public function setProxy(var host, var port = 8080, var user = null, var pass = null) {
-
+	public function setProxy(var host, var port = 8080, var user = null, var pass = null)
+	{
 		this->setOptions([
 			CURLOPT_PROXY: host,
 			CURLOPT_PROXYPORT: port
@@ -93,8 +103,8 @@ class Curl implements AdapterInterface
 		}
 	}
 
-	public function get(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false) {
-
+	public function get(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false)
+	{
 		if ! empty params {
 			request->getUri()->extendQuery(params);
 		}
@@ -108,8 +118,8 @@ class Curl implements AdapterInterface
 		return this->send(request, customHeader, fullResponse);
 	}
 
-	public function head(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false) {
-
+	public function head(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false)
+	{
 		if ! empty params {
 			request->getUri()->extendQuery(params);
 		}
@@ -123,8 +133,8 @@ class Curl implements AdapterInterface
 		return this->send(request, customHeader, fullResponse);
 	}
 
-	public function delete(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false) {
-
+	public function delete(<Request> request, var params = [], var customHeader = [], boolean fullResponse = false)
+	{
 		if ! empty params {
 			request->getUri()->extendQuery(params);
 		}
@@ -138,8 +148,8 @@ class Curl implements AdapterInterface
 		return this->send(customHeader, fullResponse);
 	}
 
-	public function post(<Request> request, var params = [], boolean urlEncode = true, var customHeader = [], boolean fullResponse = false) {
-
+	public function post(<Request> request, var params = [], boolean urlEncode = true, var customHeader = [], boolean fullResponse = false)
+	{
 		this->setOptions([
 			CURLOPT_URL: request->getUri()->build(),
 			CURLOPT_POST: true,
@@ -151,8 +161,8 @@ class Curl implements AdapterInterface
 		return this->send(customHeader, fullResponse);
 	}
 
-	public function put(<Request> request, var params = [], boolean urlEncode = true, var customHeader = [], boolean fullResponse = false) {
-
+	public function put(<Request> request, var params = [], boolean urlEncode = true, var customHeader = [], boolean fullResponse = false)
+	{
 		this->setOptions([
 			CURLOPT_URL: request->getUri()->build(),
 			CURLOPT_POST: true,
@@ -164,8 +174,8 @@ class Curl implements AdapterInterface
 		return this->send(customHeader, fullResponse);
 	}
 
-	public function __invoke(<Request> request) {
-
+	public function __invoke(<Request> request)
+	{
         var method;
 		let method = strtolower(request->getMethod());
 
@@ -176,13 +186,12 @@ class Curl implements AdapterInterface
 		throw new Exception("Unknown HTTP method");
 	}
 
-	protected function send(<Request> request, var customHeader = [], boolean fullResponse = false) {
-
+	protected function send(<Request> request, var customHeader = [], boolean fullResponse = false) -> <Response>
+	{
         var header, content, errorNo, headerSize, response;
 
 		if ! empty customHeader {
 			let header = customHeader;
-
 		} else {
 
 			let header = [];
@@ -225,8 +234,8 @@ class Curl implements AdapterInterface
 	 *
 	 * @return void
 	 */
-	protected function initPostFields(var params, boolean urlEncode = true) {
-
+	protected function initPostFields(var params, boolean urlEncode = true)
+	{
 		if typeof params == "array" {
             var param;
 			for param in params {
@@ -246,7 +255,8 @@ class Curl implements AdapterInterface
 		}
 	}
 
-	protected function initOptions() {
+	protected function initOptions() -> void
+	{
 		this->setOptions([
 			CURLOPT_RETURNTRANSFER: true,
 			CURLOPT_AUTOREFERER: true,

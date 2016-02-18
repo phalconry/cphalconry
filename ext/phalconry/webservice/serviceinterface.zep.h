@@ -22,5 +22,5 @@ ZEPHIR_INIT_FUNCS(phalconry_webservice_serviceinterface_method_entry) {
 	PHP_ABSTRACT_ME(Phalconry_WebService_ServiceInterface, buildUrl, arginfo_phalconry_webservice_serviceinterface_buildurl)
 	PHP_ABSTRACT_ME(Phalconry_WebService_ServiceInterface, createRequest, arginfo_phalconry_webservice_serviceinterface_createrequest)
 	PHP_ABSTRACT_ME(Phalconry_WebService_ServiceInterface, buildResponseBody, arginfo_phalconry_webservice_serviceinterface_buildresponsebody)
-  PHP_FE_END
+	PHP_FE_END
 };

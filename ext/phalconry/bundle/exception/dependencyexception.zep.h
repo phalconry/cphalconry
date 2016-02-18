@@ -1,0 +1,17 @@
+
+extern zend_class_entry *phalconry_bundle_exception_dependencyexception_ce;
+
+ZEPHIR_INIT_CLASS(Phalconry_Bundle_Exception_DependencyException);
+
+PHP_METHOD(Phalconry_Bundle_Exception_DependencyException, setMissing);
+PHP_METHOD(Phalconry_Bundle_Exception_DependencyException, getMissing);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_bundle_exception_dependencyexception_setmissing, 0, 0, 1)
+	ZEND_ARG_ARRAY_INFO(0, missing, 0)
+ZEND_END_ARG_INFO()
+
+ZEPHIR_INIT_FUNCS(phalconry_bundle_exception_dependencyexception_method_entry) {
+	PHP_ME(Phalconry_Bundle_Exception_DependencyException, setMissing, arginfo_phalconry_bundle_exception_dependencyexception_setmissing, ZEND_ACC_PUBLIC)
+	PHP_ME(Phalconry_Bundle_Exception_DependencyException, getMissing, NULL, ZEND_ACC_PUBLIC)
+  PHP_FE_END
+};

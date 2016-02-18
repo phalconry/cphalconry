@@ -1,0 +1,297 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../../asset/static/prettify.js"></script>
+        <script src="../../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../../'</script>
+
+        <script src="../../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../../classes.html">Classes</a></li>
+                <li><a href="../../../../../class/Phalconry/Http/Client/Adapter/Stream.html">Phalconry\Http\Client\Adapter\Stream</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../../class/Phalconry/Http/Client/Adapter/Stream.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../../namespace/Phalconry/Http/Client/Adapter.html">Adapter</a>
+        </span>
+                <h1 class="class-name">Stream</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">/*
+ +------------------------------------------------------------------------+
+ | Phalcon Framework                                                      |
+ +------------------------------------------------------------------------+
+ | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
+ +------------------------------------------------------------------------+
+ | This source file is subject to the New BSD License that is bundled     |
+ | with this package in the file docs/LICENSE.txt.                        |
+ |                                                                        |
+ | If you did not receive a copy of the license and are unable to         |
+ | obtain it through the world-wide-web, please send an email             |
+ | to license@phalconphp.com so we can send you a copy immediately.       |
+ +------------------------------------------------------------------------+
+ | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
+ +------------------------------------------------------------------------+
+ */
+namespace Phalconry\Http\Client\Adapter;
+
+use Phalconry\Http\Uri;
+use Phalconry\Http\Client;
+use Phalconry\Http\Client\Request;
+use Phalconry\Http\Client\Response;
+use Phalconry\Http\Client\Exception as HttpException;
+
+class Stream implements AdapterInterface
+{
+
+	/**
+	 * Stream context
+	 * @var resource
+	 */
+	protected context;
+
+	public static function isAvailable() {
+		var wrappers;
+        let wrappers = stream_get_wrappers();
+		return in_array("http", wrappers) && in_array("https", wrappers);
+	}
+
+	public function __construct() {
+		let this->context = stream_context_create();
+		this->initOptions();
+	}
+
+	public function __destruct() {
+		let this->context = null;
+	}
+
+	public function setOption(var option, var value) {
+		return stream_context_set_option(this->context, "http", option, value);
+	}
+
+	public function setOptions(var options) {
+		return stream_context_set_option(this->context, ["http": options], null, null);
+	}
+
+	public function setTimeout(var timeout) {
+		this->setOption("timeout", timeout);
+	}
+
+	public function setProxy(var host, var port = 8080, var user = null, var pass = null) {
+
+        var uri;
+
+		let uri = new Uri([
+			"scheme": "tcp",
+			"host": host,
+			"port": port
+		]);
+
+		if typeof user == "string" {
+
+            let uri->user = user;
+
+			if typeof pass == "string" {
+				let uri->pass = pass;
+			}
+		}
+
+		this->setOption("proxy", uri->build());
+	}
+
+	public function get(<Request> request, var params = []) {
+
+		if ! empty params {
+			request->getUri()->extendQuery(params);
+		}
+
+		this->setOptions([
+			"method": "GET",
+			"content": ""
+		]);
+
+		request->header->remove("Content-Type");
+
+		return this->send(request);
+	}
+
+	public function head(<Request> request, var params = []) {
+
+		if ! empty params {
+			request->getUri()->extendQuery(params);
+		}
+
+		this->setOptions([
+			"method": "HEAD",
+			"content": ""
+		]);
+
+		request->header->remove("Content-Type");
+
+		return this->send(request);
+	}
+
+	public function delete(<Request> request, var params = []) {
+
+		if ! empty params {
+			request->getUri()->extendQuery(params);
+		}
+
+		this->setOptions([
+			"method": "DELETE",
+			"content": ""
+		]);
+
+		request->header->remove("Content-Type");
+
+		return this->send(request);
+	}
+
+	public function post(<Request> request, var params = []) {
+		this->setOption("method", "POST");
+		this->initPostFields(request, params);
+		return this->send(request);
+	}
+
+	public function put(<Request> request, var params = []) {
+		this->setOption("method", "PUT");
+		this->initPostFields(request, params);
+		return this->send(request);
+	}
+
+	public function __invoke(<Request> request, var params = []) {
+
+        var method;
+		let method = strtolower(request->getMethod());
+
+		if method_exists(this, method) {
+			return this->{method}(request, params);
+		}
+
+		throw new Exception("Unknown HTTP method");
+	}
+
+	protected function errorHandler(var errorNumber, var errorString) {
+		throw new HttpException(errorString, errorNumber);
+	}
+
+	protected function send(<Request> request) {
+
+        var content, response, http_response_header;
+		let http_response_header = "";
+
+		if count(request->header) > 0 {
+			this->setOption("header", request->buildHeaderFields());
+		}
+
+		set_error_handler([this, "errorHandler"]);
+		let content = file_get_contents(request->getUri()->build(), false, this->context);
+		restore_error_handler();
+
+		let response = new Response();
+		response->parseHeaders(http_response_header);
+		response->setBody(content);
+
+		return response;
+	}
+
+	protected function initPostFields(<Request> request, var params = []) {
+
+		if (typeof params == "array" && ! empty params) {
+			request->setHeader("Content-Type", "application/x-www-form-urlencoded");
+			this->setOption("content", http_build_query(params));
+		}
+	}
+
+	protected function initOptions() {
+		this->setOptions([
+			"user_agent": "Phalcon HTTP/" . Client::VERSION . " (Stream)",
+			"follow_location": 1,
+			"max_redirects": 20,
+			"timeout": 30
+		]);
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

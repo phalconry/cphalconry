@@ -63,5 +63,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_adapter_adapterinterface_method_entry) {
 	PHP_ABSTRACT_ME(Phalconry_Http_Client_Adapter_AdapterInterface, post, arginfo_phalconry_http_client_adapter_adapterinterface_post)
 	PHP_ABSTRACT_ME(Phalconry_Http_Client_Adapter_AdapterInterface, put, arginfo_phalconry_http_client_adapter_adapterinterface_put)
 	PHP_ABSTRACT_ME(Phalconry_Http_Client_Adapter_AdapterInterface, __invoke, arginfo_phalconry_http_client_adapter_adapterinterface___invoke)
-  PHP_FE_END
+	PHP_FE_END
 };

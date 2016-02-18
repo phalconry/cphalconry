@@ -12,14 +12,19 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
+#include "ext/spl/spl_iterators.h"
 #include "kernel/object.h"
-#include "kernel/exception.h"
 #include "ext/spl/spl_exceptions.h"
+#include "kernel/exception.h"
 #include "kernel/operators.h"
 #include "kernel/memory.h"
 #include "kernel/fcall.h"
 #include "kernel/array.h"
 
+
+/**
+ * Manager manages web services
+ */
 ZEPHIR_INIT_CLASS(Phalconry_WebService_Manager) {
 
 	ZEPHIR_REGISTER_CLASS_EX(Phalconry\\WebService, Manager, phalconry, webservice_manager, zephir_get_internal_ce(SS("phalcon\\di\\injectable") TSRMLS_CC), phalconry_webservice_manager_method_entry, 0);
@@ -38,6 +43,8 @@ ZEPHIR_INIT_CLASS(Phalconry_WebService_Manager) {
 	 * @var array
 	 */
 	zend_declare_property_null(phalconry_webservice_manager_ce, SL("_services"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
+	phalconry_webservice_manager_ce->create_object = zephir_init_properties_Phalconry_WebService_Manager;
 
 	zend_class_implements(phalconry_webservice_manager_ce TSRMLS_CC, 1, spl_ce_Countable);
 	return SUCCESS;
@@ -71,10 +78,6 @@ PHP_METHOD(Phalconry_WebService_Manager, set) {
 	}
 
 
-	if (!(zephir_instance_of_ev(service, phalconry_webservice_serviceinterface_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Parameter 'service' must be an instance of 'Phalconry\\WebService\\ServiceInterface'", "", 0);
-		return;
-	}
 	zephir_update_property_array(this_ptr, SL("_services"), name, service TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
@@ -89,7 +92,6 @@ PHP_METHOD(Phalconry_WebService_Manager, set) {
 PHP_METHOD(Phalconry_WebService_Manager, has) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_nts_static zephir_fcall_cache_entry *_1 = NULL;
 	zval *service, *_0;
 
 	ZEPHIR_MM_GROW();
@@ -99,7 +101,7 @@ PHP_METHOD(Phalconry_WebService_Manager, has) {
 
 	if (Z_TYPE_P(service) == IS_OBJECT) {
 		_0 = zephir_fetch_nproperty_this(this_ptr, SL("_services"), PH_NOISY_CC);
-		ZEPHIR_RETURN_CALL_FUNCTION("in_array", &_1, service, _0, ZEPHIR_GLOBAL(global_true));
+		ZEPHIR_RETURN_CALL_FUNCTION("in_array", NULL, 61, service, _0, ZEPHIR_GLOBAL(global_true));
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -144,13 +146,13 @@ PHP_METHOD(Phalconry_WebService_Manager, get) {
 			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(phalconry_webservice_exception_ce, "Service not available", "phalconry/webservice/manager.zep", 65);
 			return;
 		}
-		ZEPHIR_CALL_METHOD(&_2, this_ptr, "getfactory", NULL);
+		ZEPHIR_CALL_METHOD(&_2, this_ptr, "getfactory", NULL, 0);
 		zephir_check_call_status();
 		_4 = zephir_fetch_nproperty_this(this_ptr, SL("_definitions"), PH_NOISY_CC);
 		zephir_array_fetch(&_5, _4, name, PH_NOISY | PH_READONLY, "phalconry/webservice/manager.zep", 68 TSRMLS_CC);
-		ZEPHIR_CALL_METHOD(&_3, _2, "create", NULL, _5);
+		ZEPHIR_CALL_METHOD(&_3, _2, "create", NULL, 0, _5);
 		zephir_check_call_status();
-		ZEPHIR_CALL_METHOD(NULL, this_ptr, "set", NULL, name, _3);
+		ZEPHIR_CALL_METHOD(NULL, this_ptr, "set", NULL, 0, name, _3);
 		zephir_check_call_status();
 	}
 	_1 = zephir_fetch_nproperty_this(this_ptr, SL("_services"), PH_NOISY_CC);
@@ -291,11 +293,11 @@ PHP_METHOD(Phalconry_WebService_Manager, isAvailable) {
 	}
 
 
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "hasdefinition", NULL, service);
+	ZEPHIR_CALL_METHOD(&_0, this_ptr, "hasdefinition", NULL, 0, service);
 	zephir_check_call_status();
 	_1 = zephir_is_true(_0);
 	if (!(_1)) {
-		ZEPHIR_CALL_METHOD(&_2, this_ptr, "has", NULL, service);
+		ZEPHIR_CALL_METHOD(&_2, this_ptr, "has", NULL, 0, service);
 		zephir_check_call_status();
 		_1 = zephir_is_true(_2);
 	}
@@ -316,10 +318,6 @@ PHP_METHOD(Phalconry_WebService_Manager, setFactory) {
 
 
 
-	if (!(zephir_instance_of_ev(factory, phalconry_webservice_factory_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'factory' must be an instance of 'Phalconry\\WebService\\Factory'", "", 0);
-		return;
-	}
 	zephir_update_property_this(this_ptr, SL("_factory"), factory TSRMLS_CC);
 
 }
@@ -342,11 +340,11 @@ PHP_METHOD(Phalconry_WebService_Manager, getFactory) {
 	if (Z_TYPE_P(_1) == IS_OBJECT) {
 		zephir_read_property_this(&_0, this_ptr, SL("_factory"), PH_NOISY_CC);
 	} else {
-		ZEPHIR_CALL_METHOD(&_2, this_ptr, "getdi", NULL);
+		ZEPHIR_CALL_METHOD(&_2, this_ptr, "getdi", NULL, 0);
 		zephir_check_call_status();
 		ZEPHIR_INIT_VAR(_3);
 		ZVAL_STRING(_3, "webServiceFactory", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(&_0, _2, "getshared", NULL, _3);
+		ZEPHIR_CALL_METHOD(&_0, _2, "getshared", NULL, 0, _3);
 		zephir_check_temp_parameter(_3);
 		zephir_check_call_status();
 	}
@@ -369,19 +367,30 @@ PHP_METHOD(Phalconry_WebService_Manager, count) {
 
 }
 
-PHP_METHOD(Phalconry_WebService_Manager, __construct) {
+static zend_object_value zephir_init_properties_Phalconry_WebService_Manager(zend_class_entry *class_type TSRMLS_DC) {
 
-	zval *_0, *_1;
+		zval *_0, *_1 = NULL, *_2;
 
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_INIT_VAR(_0);
-	array_init(_0);
-	zephir_update_property_this(this_ptr, SL("_services"), _0 TSRMLS_CC);
-	ZEPHIR_INIT_VAR(_1);
-	array_init(_1);
-	zephir_update_property_this(this_ptr, SL("_definitions"), _1 TSRMLS_CC);
-	ZEPHIR_MM_RESTORE();
+		ZEPHIR_MM_GROW();
+	
+	{
+		zval *this_ptr = NULL;
+		ZEPHIR_CREATE_OBJECT(this_ptr, class_type);
+		_0 = zephir_fetch_nproperty_this(this_ptr, SL("_services"), PH_NOISY_CC);
+		if (Z_TYPE_P(_0) == IS_NULL) {
+			ZEPHIR_INIT_VAR(_1);
+			array_init(_1);
+			zephir_update_property_this(this_ptr, SL("_services"), _1 TSRMLS_CC);
+		}
+		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_definitions"), PH_NOISY_CC);
+		if (Z_TYPE_P(_2) == IS_NULL) {
+			ZEPHIR_INIT_NVAR(_1);
+			array_init(_1);
+			zephir_update_property_this(this_ptr, SL("_definitions"), _1 TSRMLS_CC);
+		}
+		ZEPHIR_MM_RESTORE();
+		return Z_OBJVAL_P(this_ptr);
+	}
 
 }
 

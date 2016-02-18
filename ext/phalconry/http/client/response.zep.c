@@ -18,22 +18,6 @@
 #include "kernel/string.h"
 
 
-/*
- +------------------------------------------------------------------------+
- | Phalcon Framework                                                      |
- +------------------------------------------------------------------------+
- | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
- +------------------------------------------------------------------------+
- | This source file is subject to the New BSD License that is bundled     |
- | with this package in the file docs/LICENSE.txt.                        |
- |                                                                        |
- | If you did not receive a copy of the license and are unable to         |
- | obtain it through the world-wide-web, please send an email             |
- | to license@phalconphp.com so we can send you a copy immediately.       |
- +------------------------------------------------------------------------+
- | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
- +------------------------------------------------------------------------+
- */
 /**
  * Represents an incoming HTTP message (in response to a sent Request).
  */
@@ -98,7 +82,7 @@ PHP_METHOD(Phalconry_Http_Client_Response, parseHeaders) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("header"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(NULL, _0, "parse", NULL, headers);
+	ZEPHIR_CALL_METHOD(NULL, _0, "parse", NULL, 0, headers);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -125,7 +109,7 @@ PHP_METHOD(Phalconry_Http_Client_Response, getBodyDecoded) {
 
 	ZEPHIR_INIT_VAR(_0);
 	ZVAL_STRING(_0, "Content-Type", ZEPHIR_TEMP_PARAM_COPY);
-	ZEPHIR_CALL_METHOD(&contentType, this_ptr, "getheader", NULL, _0);
+	ZEPHIR_CALL_METHOD(&contentType, this_ptr, "getheader", NULL, 0, _0);
 	zephir_check_temp_parameter(_0);
 	zephir_check_call_status();
 	if (zephir_start_with_str(contentType, SL("application/json"))) {
@@ -139,7 +123,7 @@ PHP_METHOD(Phalconry_Http_Client_Response, getBodyDecoded) {
 	}
 	if (_2) {
 		_1 = zephir_fetch_nproperty_this(this_ptr, SL("body"), PH_NOISY_CC);
-		ZEPHIR_RETURN_CALL_FUNCTION("simplexml_load_string", NULL, _1);
+		ZEPHIR_RETURN_CALL_FUNCTION("simplexml_load_string", NULL, 42, _1);
 		zephir_check_call_status();
 		RETURN_MM();
 	}

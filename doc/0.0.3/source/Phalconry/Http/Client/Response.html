@@ -1,0 +1,149 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a href="../../../../class/Phalconry/Http/Client/Response.html">Phalconry\Http\Client\Response</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../class/Phalconry/Http/Client/Response.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <h1 class="class-name">Response</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">/*
+ +------------------------------------------------------------------------+
+ | Phalcon Framework                                                      |
+ +------------------------------------------------------------------------+
+ | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
+ +------------------------------------------------------------------------+
+ | This source file is subject to the New BSD License that is bundled     |
+ | with this package in the file docs/LICENSE.txt.                        |
+ |                                                                        |
+ | If you did not receive a copy of the license and are unable to         |
+ | obtain it through the world-wide-web, please send an email             |
+ | to license@phalconphp.com so we can send you a copy immediately.       |
+ +------------------------------------------------------------------------+
+ | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
+ +------------------------------------------------------------------------+
+ */
+namespace Phalconry\Http\Client;
+
+class Response extends Message
+{
+
+	protected body;
+
+	public function setBody(body) {
+		let this->body = body;
+		return this;
+	}
+
+	public function getBody() {
+		return this->body;
+	}
+
+	public function parseHeaders(headerStr) {
+		this->header->parse(headerStr);
+		return this;
+	}
+
+	public function getBodyDecoded() {
+
+        var contentType;
+        let contentType = this->getHeader("Content-Type");
+
+		if starts_with(contentType, "application/json") {
+			return json_decode(this->body);
+		}
+
+		// ...
+
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

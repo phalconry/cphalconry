@@ -1,4 +1,4 @@
-namespace Phalconry\DI;
+namespace Phalconry\Di;
 
 use Phalcon\DiInterface;
 

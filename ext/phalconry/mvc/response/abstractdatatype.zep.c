@@ -351,11 +351,10 @@ PHP_METHOD(Phalconry_Mvc_Response_AbstractDataType, getContent) {
 
 PHP_METHOD(Phalconry_Mvc_Response_AbstractDataType, valueToArray) {
 
-	zval *_3 = NULL;
-	zephir_nts_static zephir_fcall_cache_entry *_2 = NULL;
+	zval *_1 = NULL;
+	zephir_nts_static zephir_fcall_cache_entry *_0 = NULL;
 	int ZEPHIR_LAST_CALL_STATUS;
-	zend_class_entry *util_util_typecast;
-	zval *value, _0, *_1 = NULL;
+	zval *value;
 
 	ZEPHIR_MM_GROW();
 	zephir_fetch_params(1, 1, 0, &value);
@@ -366,27 +365,23 @@ PHP_METHOD(Phalconry_Mvc_Response_AbstractDataType, valueToArray) {
 		RETVAL_ZVAL(value, 1, 0);
 		RETURN_MM();
 	}
-	ZEPHIR_SINIT_VAR(_0);
-	ZVAL_STRING(&_0, "Util\\Typecast", 0);
-	if (zephir_class_exists(&_0, 1 TSRMLS_CC)) {
-		util_util_typecast = zend_fetch_class(SL("\\Util\\Typecast"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-		ZEPHIR_RETURN_CALL_CE_STATIC(util_util_typecast, "toarray", NULL, value);
+	if (Z_TYPE_P(value) == IS_OBJECT) {
+		if ((zephir_method_exists_ex(value, SS("toarray") TSRMLS_CC) == SUCCESS)) {
+			ZEPHIR_RETURN_CALL_METHOD(value, "toarray", NULL);
+			zephir_check_call_status();
+			RETURN_MM();
+		}
+		if (zephir_is_instance_of(value, SL("Traversable") TSRMLS_CC)) {
+			ZEPHIR_RETURN_CALL_FUNCTION("iterator_to_array", NULL, value);
+			zephir_check_call_status();
+			RETURN_MM();
+		}
+		ZEPHIR_RETURN_CALL_FUNCTION("get_object_vars", &_0, value);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
-	if (Z_TYPE_P(value) == IS_OBJECT) {
-		ZEPHIR_INIT_VAR(_1);
-		if (zephir_is_instance_of(value, SL("Traversable") TSRMLS_CC)) {
-			ZEPHIR_CALL_FUNCTION(&_1, "iterator_to_array", NULL, value);
-			zephir_check_call_status();
-		} else {
-			ZEPHIR_CALL_FUNCTION(&_1, "get_object_vars", &_2, value);
-			zephir_check_call_status();
-		}
-		RETURN_CCTOR(_1);
-	}
-	zephir_get_arrval(_3, value);
-	RETURN_CTOR(_3);
+	zephir_get_arrval(_1, value);
+	RETURN_CTOR(_1);
 
 }
 

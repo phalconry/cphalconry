@@ -1,9 +1,10 @@
 namespace Phalconry\Mvc;
 
-use Phalcon\Config;
 use Phalcon\Registry;
+use Phalcon\Exception;
+use Phalconry\Config;
 
-class Env extends Config
+class Env extends Config implements EnvironmentInterface
 {
 
 	/**
@@ -12,13 +13,6 @@ class Env extends Config
 	 * @var string
 	 */
 	const DEFAULT_ENVIRONMENT = "production";
-
-	/**
-	 * Default locale identifier
-	 *
-	 * @var string
-	 */
-	const DEFAULT_LOCALE = "en_US";
 
 	/**
 	 * Default timezone identifier
@@ -32,81 +26,61 @@ class Env extends Config
 	 *
 	 * @var string
 	 */
-	public env;
-
-	/**
-	 * Locale identifier
-	 *
-	 * @var string
-	 */
-	public locale;
+	protected env;
 
 	/**
 	 * Timezone identifier
 	 *
 	 * @var string
 	 */
-	public timezone;
+	protected timezone;
 
 	/**
 	 * Named directory paths
 	 *
 	 * @var \Phalcon\Registry
 	 */
-	public paths;
+	protected paths;
 
 	/**
-	 * Constructor
+	 * Whether in command line mode.
 	 *
-	 * @param array $config
+	 * @var boolean
 	 */
-	public function __construct(array! config = [])
+	protected cli;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param array config
+	 */
+	public function __construct(array! config = []) -> void
 	{
-		var environment, locale, timezone;
+		var environment, timezone;
 
 		if ! isset config["env"] {
 			let environment = getenv("ENVIRONMENT");
 			let config["env"] = environment ? environment : Env::DEFAULT_ENVIRONMENT;
 		}
 
-		if ! isset config["locale"] {
-			let locale = getenv("LOCALE");
-			let config["locale"] = locale ? locale : Env::DEFAULT_LOCALE;
-		}
-
-		if ! isset config["timezone"] {
+		if ! fetch timezone, config["timezone"] {
 			let timezone = getenv("TZ");
 			let config["timezone"] = timezone ? timezone : Env::DEFAULT_TIMEZONE;
 		}
 
-		if ! isset config["paths"] {
-			let config["paths"] = new Registry();
-		}
+		let config["cli"] = php_sapi_name() === "cli";
 
 		parent::__construct(config);
 
-		// Set locale
-		setlocale(LC_ALL, config["locale"]);
+		date_default_timezone_set(timezone);
 
-		// Set timezone
-		date_default_timezone_set(config["timezone"]);
+		if typeof this->paths == "null" {
+			let this->paths = new Registry();
+		}
 	}
 
 	/**
-	 * Sets the environment name
-	 *
-	 * @param string env
-	 * @return \Phalconry\Mvc\Env
-	 */
-	public function setEnvironment(string! env) -> <Env>
-	{
-		let this->env = env;
-
-		return this;
-	}
-
-	/**
-	 * Returns the environment name
+	 * Returns the environment name.
 	 *
 	 * @return string
 	 */
@@ -116,20 +90,7 @@ class Env extends Config
 	}
 
 	/**
-	 * Sets the timezone
-	 *
-	 * @param string timezone
-	 * @return \Phalconry\Mvc\Env
-	 */
-	public function setTimezone(string! timezone) -> <Env>
-	{
-		let this->timezone = timezone;
-
-		return this;
-	}
-
-	/**
-	 * Returns the timezone
+	 * Returns the timezone.
 	 *
 	 * @return string
 	 */
@@ -139,35 +100,37 @@ class Env extends Config
 	}
 
 	/**
-	 * Sets the locale
+	 * Sets the locale.
 	 *
 	 * @param string locale
-	 * @return \Phalconry\Mvc\Env
+	 * @return \Phalconry\Mvc\EnvironmentInterface
 	 */
-	public function setLocale(string! locale) -> <Env>
+	public function setLocale(string! locale) -> <EnvironmentInterface>
 	{
-		let this->locale = locale;
+		this->offsetSet("locale", locale);
+
+		setlocale(LC_ALL, locale);
 
 		return this;
 	}
 
 	/**
-	 * Returns the environment name
+	 * Returns the locale name.
 	 *
 	 * @return string
 	 */
-	public function getLocale() -> string
+	public function getLocale() -> string | null
 	{
-		return this->locale;
+		return this->offsetGet("locale");
 	}
 
 	/**
-	 * Sets the directory paths
+	 * Sets the directory paths.
 	 *
-	 * @param array $paths Array of directory paths
-	 * @return \Phalconry\Mvc\Env
+	 * @param mixed paths Directory paths
+	 * @return \Phalconry\Mvc\EnvironmentInterface
 	 */
-	public function setPaths(array paths) -> <Env>
+	public function setPaths(var paths) -> <EnvironmentInterface>
 	{
 		var key, value;
 		for key, value in paths {
@@ -178,7 +141,7 @@ class Env extends Config
 	}
 
 	/**
-	 * Returns the directory path registry
+	 * Returns the directory paths.
 	 *
 	 * @return \Phalcon\Registry
 	 */
@@ -188,40 +151,93 @@ class Env extends Config
 	}
 
 	/**
-	 * Sets a directory path by name
+	 * Sets a directory path by name.
 	 *
-	 * @param string $name
-	 * @param string $path
-	 * @return \Phalconry\Mvc\Env
+	 * @param string name
+	 * @param string path
+	 * @return \Phalconry\Mvc\EnvironmentInterface
 	 */
-	public function setPath(string name, string path) -> <Env>
+	public function setPath(string! name, string! path) -> <EnvironmentInterface>
 	{
-		let this->paths[name] = realpath(path).DIRECTORY_SEPARATOR;
-
+		let this->paths[name] = realpath(path) . DIRECTORY_SEPARATOR;
 		return this;
 	}
 
 	/**
-	 * Returns a directory path by name
+	 * Returns a directory path by name.
 	 *
-	 * @param string $name
+	 * @param string name
 	 * @return string
 	 */
-	public function getPath(string name) -> string|null
+	public function getPath(string! name) -> string | null
 	{
 		return this->paths[name];
 	}
 
 	/**
-	 * Returns an entry value from a given section.
+	 * Returns a Config object for a given section.
 	 *
-	 * @param string $section Section name
-	 * @param string $key Item key in section
-	 * @return mixed Item value if exists, otherwise null
+	 * @param string section Section name.
+	 * @return \Phalcon\Config
+	 *
+	 * @throws \Phalcon\Exception if section exists but isn't a Config.
 	 */
-	public function getFrom(string section, string key)
+	public function getConfig(string! section) -> <Config>
 	{
-		return (typeof this->{section} == "object") ? this->{section}->get(key) : null;
+		var config;
+
+		if fetch config, this->{section} {
+
+			if typeof config != "object" {
+				throw new Exception("Config section '" . section . "' is not an object");
+			}
+
+		} else {
+			let config = new Config();
+			let this->{section} = config;
+		}
+
+		return config;
+	}
+	
+	/**
+	 * Whether currently using command line.
+	 *
+	 * @return boolean
+	 */
+	public function isCli() -> boolean
+	{
+		return this->cli;
+	}
+
+	/**
+	 * Allow read-only access to protected properties.
+	 *
+	 * @param string key
+	 * @return mixed
+	 */
+	public function __get(var key) -> var | null
+	{
+		let key = strval(key);
+
+		if isset this->{key} {
+			return this->{key};
+		}
+
+		return null;
+	}
+
+	/**
+	 * Allow read-only access to protected properties.
+	 *
+	 * @param string key
+	 * @return boolean
+	 */
+	public function __isset(var key) -> boolean
+	{
+		let key = strval(key);
+
+		return isset this->{key};
 	}
 
 	/**
@@ -232,6 +248,20 @@ class Env extends Config
 		if ends_with(func, "Path") {
 			return this->getPath(substr(func, 0, strlen(func) - 4));
 		}
+
+		if starts_with(func, "get") {
+			return this->offsetGet(lcfirst(substr(func, 3)));
+		}
+	}
+
+	/**
+	 * Returns the environment name.
+	 *
+	 * @return string
+	 */
+	public function __toString() -> string
+	{
+		return this->env;
 	}
 
 }

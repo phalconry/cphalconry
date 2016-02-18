@@ -15,7 +15,7 @@ class Client extends \Phalcon\Di\Injectable
 	 * HTTP client library version
 	 * @var string
 	 */
-	const VERSION = "0.0.2";
+	const VERSION = "0.1";
 
 	/**
 	 * The last request sent
@@ -37,8 +37,6 @@ class Client extends \Phalcon\Di\Injectable
 	 */
     public static function getAdapter() -> <AdapterInterface>
 	{
-        var className;
-
 		if typeof self::adapterClass == "string" {
 			return create_instance(self::adapterClass);
 		}
@@ -94,7 +92,6 @@ class Client extends \Phalcon\Di\Injectable
 	 */
 	public function createRequest(var uri, string! method = "GET", array params = [], array headers = []) -> <Request>
 	{
-
         var request;
 		let request = self::createHttpRequest(uri, method, params, headers);
 
@@ -115,10 +112,20 @@ class Client extends \Phalcon\Di\Injectable
 	 */
 	public function send(<Request> request) -> <Client>
 	{
-		request->setResponse(self::getAdapter()->__invoke(request));
+		var eventsManager, response;
 
-		if typeof this->{"_eventsManager"} == "object" {
-			this->{"_eventsManager"}->fire("http-client:send", this, request);
+		let eventsManager = this->{"_eventsManager"};
+
+		if typeof eventsManager == "object" {
+			eventsManager->fire("http-client:beforeSend", this, request);
+		}
+
+		let response = self::getAdapter()->__invoke(request);
+
+		request->setResponse(response);
+
+		if eventsManager == "object" {
+			eventsManager->fire("http-client:afterSend", this, request);
 		}
 
 		let this->_lastRequest = request;

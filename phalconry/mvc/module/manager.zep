@@ -1,31 +1,103 @@
 namespace Phalconry\Mvc\Module;
 
 use Phalcon\Di\Injectable;
-use Phalcon\Mvc\Exception;
-use Phalconry\Mvc\Module;
+use Phalcon\Di\InjectionAwareInterface;
+use Phalcon\Mvc\Application\Exception;
+use Phalconry\Mvc\ModuleInterface;
 use InvalidArgumentException;
 
-class Manager extends Injectable
+class Manager extends Injectable implements ManagerInterface
 {
 
     /**
-     * Primary module name
-     * @var string
-     */
-    protected _primary;
-
-    /**
-     * Module registry
+     * Modules
+     *
      * @var array
      */
     protected _modules = [];
 
     /**
+     * Primary module name
+     *
+     * @var string
+     */
+    protected _primaryName;
+
+    /**
+     * Default module name
+     *
+     * @var string
+     */
+    protected _defaultName;
+
+    /**
+     * Sets the name of the primary module.
+     *
+     * @param string moduleName
+     */
+    public function setPrimaryModuleName(string moduleName) -> void
+    {
+        let this->_primaryName = moduleName;
+    }
+
+    /**
+     * Returns the name of the primary module.
+     *
+     * @return string
+     */
+	public function getPrimaryModuleName() -> string
+    {
+		return this->_primaryName;
+	}
+
+    /**
+     * Sets the name of the default module.
+     *
+     * @param string moduleName
+     */
+	public function setDefaultModuleName(string moduleName) -> void
+    {
+		let this->_defaultName = moduleName;
+	}
+
+    /**
+     * Returns the name of the default module.
+     *
+     * @return string
+     */
+	public function getDefaultModuleName() -> string
+    {
+		return this->_defaultName;
+	}
+
+    /**
+     * Registers an array of module definitions.
+     *
+     * @param array definitions
+     * @return void
+     */
+	public function registerModules(array! definitions) -> void
+    {
+        var name, def, module;
+
+		for name, def in definitions {
+
+            let module = this->createFromDefinition(def);
+
+			if typeof module == "object" {
+				module->setName(name);
+				module->setManager(this);
+				this->addModule(module);
+			}
+		}
+	}
+
+    /**
      * Sets a module in the registry
      *
-     * @param \Phalconry\Mvc\Module $module
+     * @param \Phalconry\Mvc\ModuleInterface module
      */
-    public function set(<Module> module) -> void
+    public function addModule(<ModuleInterface> module) -> void
     {
         let this->_modules[module->getName()] = module;
     }
@@ -33,78 +105,89 @@ class Manager extends Injectable
 	/**
 	 * Returns a module by name, or the primary module if no name is given
 	 *
-	 * @param string $name [Optional] Module name
-	 * @return \Phalconry\Mvc\Module
+	 * @param string name Module name
+	 * @return \Phalconry\Mvc\ModuleInterface
 	 */
-    public function get(string name = null) -> <Module>
+    public function getModule(string name) -> <ModuleInterface> | null
     {
-        return "" == name ? this->getPrimary() : this->_modules[name];
+        var module;
+
+        if fetch module, this->_modules[name] {
+            return module;
+        }
+
+        return null;
     }
 
     /**
-     * Sets the primary module in the registry
+     * Checks whether a module exists
      *
-     * @param \Phalconry\Mvc\Module $module
-     * @throws \Phalcon\Mvc\Exception if primary module is already set
+     * @param string|\Phalconry\Mvc\ModuleInterface name
+     * @return boolean
      */
-    public function setPrimary(<Module> module) -> void
+    public function hasModule(var name) -> boolean
     {
-        if unlikely typeof this->_primary == "string" {
-            throw new Exception("Primary module already set");
+        if typeof name == "string" {
+            return isset this->_modules[name];
         }
 
-        this->set(module);
-
-        let this->_primary = module->getName();
+        return typeof name == "object" ? in_array(name, this->_modules, true) : false;
     }
 
 	/**
 	 * Returns the primary module
 	 *
-	 * @return \Phalconry\Mvc\Module
+	 * @return \Phalconry\Mvc\ModuleInterface
+	 *
      * @throws \Phalcon\Mvc\Exception if primary module is not set
 	 */
-    public function getPrimary() -> <Module>
+    public function getPrimaryModule() -> <ModuleInterface>
     {
-        if unlikely typeof this->_primary != "string" {
+        if unlikely typeof this->_primaryName != "string" {
             throw new Exception("No primary module set");
         }
 
-        return this->_modules[this->_primary];
+        return this->_modules[this->_primaryName];
     }
 
 	/**
 	 * Loads a module
 	 *
-	 * @param string|\Phalconry\Mvc\Module $module
-	 * @return \Phalconry\Mvc\Module
-     * @throws \InvalidArgumentException if module is not a string or object
+	 * @param \Phalconry\Mvc\ModuleInterface module
+	 * @return \Phalconry\Mvc\ModuleInterface
+	 *
      * @throws \Phalcon\Mvc\Exception if module has already been loaded
 	 */
-	public function load(var module) -> <Module>
+	public function loadModule(<ModuleInterface> module) -> <ModuleInterface>
 	{
-        var di;
-
-		if typeof module == "string" {
-            let module = this->create(module);
-		}
-
-		if typeof module != "object" {
-            throw new InvalidArgumentException("Invalid module given");
-		}
+        var moduleName, di;
 
         if module->isLoaded() {
             throw new Exception("Cannot reload module");
         }
 
-		this->set(module);
+        if ! this->hasModule(module) {
+            this->addModule(module);
+        }
 
-		let di = this->getDI();
+        let moduleName = module->getName();
+        let di = this->getDI();
+
+        if typeof this->_primaryName != "string" {
+            let this->_primaryName = moduleName;
+        }
+
+		if (module instanceof InjectionAwareInterface) {
+			module->setDI(di);
+		}
 
 		module->setApp(di->getShared("app"));
         module->registerAutoloaders(di);
 		module->registerServices(di);
-		module->onLoad();
+
+        if method_exists(module, "onLoad") {
+            module->{"onLoad"}();
+        }
 
 		return module;
 	}
@@ -114,6 +197,7 @@ class Manager extends Injectable
 	 *
 	 * @param string|\Phalconry\Mvc\Module $module
 	 * @return boolean
+	 *
 	 * @throws \InvalidArgumentException if not given a Module object or string
 	 */
 	public function isLoaded(var module) -> boolean
@@ -124,58 +208,58 @@ class Manager extends Injectable
 		}
 
 		if typeof module == "string" {
-            return isset this->_modules[module];
+
+            var moduleObject;
+
+            if fetch moduleObject, this->_modules[module] {
+                return moduleObject->isLoaded();
+            }
+
+            return false;
 		}
 
         throw new InvalidArgumentException("Expecting string or Module");
-	}
-
-	/**
-	 * Returns the name of a module from an object
-	 *
-	 * @param \Phalconry\Mvc\Module $module [Optional]
-	 * @return string
-     * @throws \Phalcon\Mvc\Exception if module name not found
-	 */
-	public function getName(<Module> module = null) -> string
-	{
-		if typeof module == "null" {
-			return this->_primary;
-		}
-
-		var className, key, value;
-		let className = get_class(module);
-
-		for key, value in this->getDI()->getShared("app")->getModules() {
-			if value["className"] === className {
-				return key;
-			}
-		}
-
-		throw new Exception("Invalid module name");
 	}
 
     /**
      * Creates a module object from its name
      *
      * @param string $name Module name
-     * @return \Phalconry\Mvc\Module
+     * @return \Phalconry\Mvc\ModuleInterface
      * @throws \Phalcon\Mvc\Exception if module is not defined
      */
-    protected function create(string! name) -> <Module>
+    protected function createFromDefinition(var definition) -> <ModuleInterface>
     {
-        var moduleList, className, moduleObject;
+        var di, className, filePath, moduleObject;
 
-        let moduleList = this->getDI()->getShared("app")->getModules();
+        let di = this->getDI();
 
-		if ! isset moduleList[name] {
-			throw new Exception("Unknown module");
-		}
+        if typeof definition == "array" {
 
-    	let className = moduleList[name]["className"];
-		let moduleObject = new {className}();
+            if !fetch className, definition["className"] {
+                let className = "Module";
+            }
 
-        moduleObject->setName(name);
+            if fetch filePath, definition["path"] {
+                if ! class_exists(className, false) {
+                    if file_exists(filePath) {
+                        require filePath;
+                    } else {
+                        throw new Exception("Invalid module file path: " . filePath);
+                    }
+                }
+            }
+
+            let moduleObject = di->get(className);
+
+        } else {
+
+            if ! (definition instanceof \Closure) {
+                throw new Exception("Invalid module definition.");
+            }
+
+            let moduleObject = call_user_func(definition, di);
+        }
 
         return moduleObject;
     }

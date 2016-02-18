@@ -1,167 +1,387 @@
 namespace Phalconry\Mvc;
 
-use Phalcon\Registry;
 use Phalcon\DiInterface;
-use Phalcon\Loader;
-use Phalcon\Events\Event;
-use Phalcon\Events\Manager as EventsManager;
-use Phalcon\DI\FactoryDefault;
-use Phalcon\Mvc\Application\Exception;
+use Phalcon\Config;
+use Phalcon\Di\Injectable;
+use Phalcon\Di\FactoryDefault;
+use Phalcon\Http\ResponseInterface;
+use Phalcon\Mvc\DispatcherInterface;
+use Phalcon\Events\ManagerInterface as EventsManagerInterface;
+use Phalconry\Mvc\Application\BootstrapInterface;
+use Phalconry\Mvc\Application\HandlerInterface;
 use Phalconry\Mvc\Application\Bootstrap;
+use Phalconry\Mvc\Application\Handler;
+use Phalconry\Mvc\Application\Exception;
+use Phalconry\Di\ServiceProviderInterface;
 
-class Application extends \Phalcon\Mvc\Application
+class Application implements ApplicationInterface
 {
+
+	/**
+	 * Dependency injection container.
+	 *
+	 * @var \Phalcon\DiInterface
+	 */
+	protected _dependencyInjector;
+
+	/**
+	 * Events manager.
+	 *
+	 * @var \Phalcon\Events\ManagerInterface
+	 */
+	protected _eventsManager;
+
+	/**
+	 * Application bootstrap.
+	 *
+	 * @var \Phalconry\Mvc\Application\BootstrapInterface
+	 */
+	protected _bootstrap;
+
+	/**
+	 * Main request handler.
+	 *
+	 * @var \Phalconry\Mvc\Application\HandlerInterface
+	 */
+	protected _handler;
+
+	/**
+	 * Whether the app has been booted.
+	 *
+	 * @var boolean
+	 */
+	protected _booted = false;
 
 	/**
 	 * Application constructor.
 	 *
-	 * @param \Phalcon\DiInterface $di [Optional]
-	 * @param \Phalconry\Mvc\Env $env [Optional]
+	 * @param \Phalcon\DiInterface di [Optional]
+	 * @param \Phalconry\Mvc\EnvironmentInterface env [Optional]
 	 */
-	public function __construct(<DiInterface> di = null, <Env> env = null)
+	public function __construct(<DiInterface> di = null, <EnvironmentInterface> env = null)
 	{
-		var eventsManager;
-
-		if typeof di == "null" {
+		if typeof di != "object" {
 			let di = new FactoryDefault();
 		}
-
-		di->setShared("app", this);
 
 		if typeof env == "object" {
 			di->setShared("env", env);
 		}
 
-		if ! di->has("moduleManager") {
-			di->setShared("moduleManager", "Phalconry\\Mvc\\Module\\Manager");
+		di->setShared("app", this);
+
+		this->setDI(di);
+	}
+
+	/**
+	 * Sets the dependency injector
+	 *
+	 * @param \Phalcon\DiInterface dependencyInjector
+	 */
+	public function setDI(<DiInterface> dependencyInjector)
+	{
+		let this->_dependencyInjector = dependencyInjector;
+	}
+
+	/**
+	 * Returns the internal dependency injector
+	 *
+	 * @return \Phalcon\DiInterface
+	 */
+	public function getDI() -> <DiInterface>
+	{
+		return this->_dependencyInjector;
+	}
+
+	/**
+	 * Sets the events manager.
+	 *
+	 * @param \Phalcon\Events\ManagerInterface eventsManager
+	 */
+	public function setEventsManager(<EventsManagerInterface> eventsManager)
+	{
+		let this->_eventsManager = eventsManager;
+	}
+
+	/**
+	 * Returns the internal event manager.
+	 *
+	 * @return \Phalcon\Events\ManagerInterface
+	 */
+	public function getEventsManager() -> <EventsManagerInterface>
+	{
+		return this->_eventsManager;
+	}
+
+	/**
+	 * Returns the module manager.
+	 *
+	 * @return \Phalconry\Mvc\Module\ManagerInterface
+	 */
+	public function getModuleManager() -> <Module\ManagerInterface>
+	{
+		return this->getDI()->getShared("moduleManager");
+	}
+
+	/**
+	 * Returns the primary module.
+	 *
+	 * @return \Phalconry\Mvc\ModuleInterface
+	 */
+	public function getPrimaryModule() -> <ModuleInterface>
+	{
+		return this->getModuleManager()->getPrimaryModule();
+	}
+
+	/**
+	 * Returns the dispatcher.
+	 *
+	 * @return \Phalcon\Mvc\DispatcherInterface
+	 */
+	public function getDispatcher() -> <DispatcherInterface>
+	{
+		return this->getDI()->getShared("dispatcher");
+	}
+
+	/**
+	 * Returns the Env object.
+	 *
+	 * @return \Phalconry\Mvc\EnvironmentInterface
+	 */
+	public function getEnvironment() -> <EnvironmentInterface>
+	{
+		return this->getDI()->getShared("env");
+	}
+
+	/**
+	 * Returns the application Config object.
+	 *
+	 * @return \Phalcon\Config
+	 */
+	public function getConfig() -> <Config>
+	{
+		var env;
+		let env = this->getEnvironment();
+
+		if ! env->has("application") {
+			env->set("application", new Config());
 		}
 
-		if ! di->has("responder") {
-			di->setShared("responder", "Phalconry\\Mvc\\Responder");
-		}
-
-		if ! di->has("view") {
-			di->setShared("view", "Phalcon\\Mvc\\View");
-		}
-
-		if ! di->has("viewEvents") {
-			di->setShared("viewEvents", "Phalcon\\Events\\Manager");
-		}
-
-		if ! di->has("hmvcRequest") {
-			di->setShared("hmvcRequest", "Phalconry\\Mvc\\HmvcRequest");
-		}
-
-		if ! di->has("httpClient") {
-			di->setShared("httpClient", "Phalconry\\Http\\Client");
-		}
-
-		let eventsManager = new EventsManager();
-
-		eventsManager->attach("application", new Bootstrap());
-
-		this->setEventsManager(eventsManager);
-
-		parent::__construct(di);
+		return env->get("application");
 	}
 
 	/**
 	 * Returns the global environment instance or an item from it
 	 *
 	 * @param string key [Optional] Item to fetch from Env. If omitted, the Env object is returned.
-	 * @return \Phalconry\Mvc\Env|\Phalcon\Config|mixed
+	 * @return \Phalconry\Mvc\EnvironmentInterface|\Phalcon\Config|mixed
 	 */
 	public function env(var key = null)
 	{
 		if typeof key == "null" {
-			return this->getDI()->getShared("env");
+			return this->getEnvironment();
 		}
 
-		return this->getDI()->getShared("env")->get(key);
+		return this->getEnvironment()->get(key);
 	}
 
 	/**
 	 * Returns a directory path
 	 *
-	 * @param string $name Path name.
+	 * @param string name Path name.
 	 * @return string
 	 */
-	public function getPath(string name) -> string|null
+	public function getPath(string name) -> string | null
 	{
-		return this->getDI()->getShared("env")->getPath(name);
+		return this->getEnvironment()->getPath(name);
 	}
 
 	/**
 	 * Sets a named directory path.
 	 *
-	 * @param string $name Path name.
-	 * @param string $value Absolute directory path.
+	 * @param string name Path name.
+	 * @param string value Absolute directory path.
 	 */
 	public function setPath(string name, string value) -> void
 	{
-		this->getDI()->getShared("env")->setPath(name, value);
+		this->getEnvironment()->setPath(name, value);
 	}
 
 	/**
-	 * Returns a module by name, or the primary module if none given.
+	 * Sets the bootstrap object.
 	 *
-	 * @param string $name [Optional] Module name
-	 * @return \Phalconry\Mvc\Module
+	 * @param \Phalconry\Mvc\Application\BootstrapInterface bootstrap
 	 */
-	public function getModuleObject(string name = null) -> <Module>
+	public function setBootstrap(<BootstrapInterface> bootstrap) -> void
 	{
-		return this->getDI()->getShared("moduleManager")->get(name);
+		let this->_bootstrap = bootstrap;
 	}
 
 	/**
-	 * Sets the type of response
+	 * Sets the request handler.
 	 *
-	 * @see \Phalconry\Mvc\Responder
-	 *
-	 * @param string
+	 * @param \Phalconry\Mvc\Application\HandlerInterface handler
 	 */
-	public function setResponseType(string responseType) -> void
+	public function setHandler(<HandlerInterface> handler) -> void
 	{
-		this->getDI()->getShared("responder")->setType(responseType);
+		let this->_handler = handler;
 	}
 
 	/**
-	 * Returns the type of response
+	 * Whether the application has booted.
 	 *
-	 * @see \Phalconry\Mvc\Responder
-	 *
-	 * @return string
+	 * @return boolean
 	 */
-	public function getResponseType() -> string
+	public function isBooted() -> boolean
 	{
-		return this->getDI()->getShared("responder")->getType();
+		return this->_booted;
+	}
+
+	/**
+	 * Loads a service through its provider.
+	 *
+	 * @param \Phalconry\Di\ServiceProviderInterface provider
+	 * @return \Phalconry\Mvc\ApplicationInterface
+	 */
+	public function loadService(<ServiceProviderInterface> provider) -> <ApplicationInterface>
+	{
+		provider->register(this->getDI());
+		return this;
+	}
+
+	/**
+	 * Loads an array of service providers.
+	 *
+	 * @param array providers
+	 * @return \Phalconry\Mvc\ApplicationInterface
+	 */
+	public function loadServices(array! providers) -> <ApplicationInterface>
+	{
+		var dependencyInjector, provider;
+
+		let dependencyInjector = this->getDI();
+
+		for provider in providers {
+			provider->register(dependencyInjector);
+		}
+
+		return this;
 	}
 
 	/**
 	 * Runs the application and sends the response.
+	 *
+	 * @return void
 	 */
 	public function run() -> void
 	{
 		var response;
 
-		if unlikely ! this->getDI()->has("env") {
-			throw new Exception("Env instance not set in DI container");
+		if ! this->isBooted() {
+			this->bootstrap();
 		}
 
 		// this->handle(null) avoids errors in Zephir
 		let response = this->handle(null);
 
-		this->getDI()->getShared("responder")->respond(response);
+		if typeof response == "object" {
+			this->respond(response);
+		}
 	}
 
 	/**
-	 * Adds the default services to the DI
+	 * Boot the application.
 	 *
-	 * @param \Phalcon\DiInterface $di
+	 * @return boolean
 	 */
-	public function setDefaultServices(<DiInterface> di) -> void
+	public function bootstrap() -> void
 	{
+		var dependencyInjector, bootstrap, eventsManager, eventsConfig;
 
+		if this->_booted === true {
+			throw new Exception("Application has already booted.");
+		}
+
+		let this->_booted = true;
+
+		let dependencyInjector = this->getDI();
+		let bootstrap = <BootstrapInterface> this->_bootstrap;
+
+		// Locate or create bootstrap if necessary
+		if typeof bootstrap != "object" {
+			if dependencyInjector->has("bootstrap") {
+				let bootstrap = dependencyInjector->get("bootstrap");
+			} else {
+				let bootstrap = new Bootstrap();
+			}
+		}
+
+		// Bootstrap the application
+		bootstrap->boot(this);
+
+		let eventsManager = <EventsManagerInterface> this->_eventsManager;
+
+        if typeof eventsManager != "object" {
+			// Inject global events manager
+			if ! dependencyInjector->has("events") {
+				return;
+			}
+			let eventsManager = dependencyInjector->getShared("events");
+			this->setEventsManager(eventsManager);
+		}
+
+		let eventsConfig = this->getConfig()->get("events");
+
+		if typeof eventsConfig == "object" {
+			if eventsConfig->get("attach", false) {
+				// Attach application to own events
+				eventsManager->attach("application", this);
+			}
+		}
+
+		// Call application:boot event
+		eventsManager->fire("application:boot", this);
+	}
+
+	/**
+	 * Handles a MVC request
+	 *
+	 * @param string uri
+	 * @return mixed|\Phalcon\Http\ResponseInterface|boolean
+	 */
+	public function handle(uri = null) -> var | <ResponseInterface> | boolean
+	{
+		var handler;
+		let handler = <HandlerInterface> this->_handler;
+
+		if typeof handler != "object" {
+			let handler = new Handler(this);
+		}
+
+		return handler->handle(uri);
+	}
+
+	/**
+	 * Sends the response.
+	 *
+	 * @param mixed|\Phalcon\Http\ResponseInterface response
+	 */
+	public function respond(var response = null)
+	{
+		var eventsManager;
+
+		if typeof response == "object" {
+
+			let eventsManager = this->getEventsManager();
+
+			// Call beforeSendResponse event
+			if typeof eventsManager == "object" {
+	            eventsManager->fire("application:beforeSendResponse", this, response);
+	        }
+
+			// Send the response
+			this->getDI()->getShared("responder")->respond(response);
+		}
 	}
 
 }

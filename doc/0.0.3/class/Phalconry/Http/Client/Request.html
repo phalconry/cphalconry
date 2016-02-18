@@ -1,0 +1,778 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a >Phalconry\Http\Client\Request</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header clearfix">
+    
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../source/Phalconry/Http/Client/Request.html">Source</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http.html">Http</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Http/Client.html">Client</a>
+        </span>
+                <h1 class="class-name">Request</h1>
+    </div>
+
+</div>
+
+
+<div class="hidden-anchor"  id="methods"></div>
+<div class="methods-summary standard-bandeau">Methods</div>
+<ul class="method-summary-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__construct">__construct</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$baseUri</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setMethod">setMethod</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$httpMethod</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        string
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getMethod">getMethod</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setResponse">setResponse</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$response</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Response.html'>Phalconry\Http\Client\Response</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getResponse">getResponse</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setUri">setUri</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$uri</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Uri.html'>Phalconry\Http\Client\Uri</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getUri">getUri</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Uri.html'>Phalconry\Http\Client\Uri</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-resolveUri">resolveUri</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$uri</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-addQueryParams">addQueryParams</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$params</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-addHeaders">addHeaders</a></span>(<span class="param-data-type">array</span>  <span class="param-name">$headers</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setHeader">setHeader</a></span>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>,<span class="param-data-type">string</span>  <span class="param-name">$value</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-buildHeaderFields">buildHeaderFields</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-setClient">setClient</a></span>(<span class="param-data-type">variable</span>  <span class="param-name">$client</span>)
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Client.html'>Phalconry\Http\Client\Client</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-getClient">getClient</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-send">send</a></span>()
+            </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="method-return">
+
+        <a href='../../../../class/Phalconry/Http/Client/Request.html'>Phalconry\Http\Client\Request</a>
+                
+    </div>
+    <div class="method-summary">
+        <span class="method-name"><a href="#method-details-__invoke">__invoke</a></span>()
+            </div>
+
+</li>
+    </ul>
+
+<div class="hidden-anchor"  id="methods-details"></div>
+<div class="methods-summary standard-bandeau">Methods Details</div>
+<ul class="method-details-list">
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__construct"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__construct</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$baseUri</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setMethod"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setMethod</h3>(<span class="param-data-type">string</span>  <span class="param-name">$httpMethod</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getMethod"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getMethod</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setResponse"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setResponse</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$response</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getResponse"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getResponse</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setUri"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setUri</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$uri</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getUri"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getUri</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-resolveUri"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">resolveUri</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$uri</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-addQueryParams"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">addQueryParams</h3>(<span class="param-data-type">array</span>  <span class="param-name">$params</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-addHeaders"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">addHeaders</h3>(<span class="param-data-type">array</span>  <span class="param-name">$headers</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setHeader"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setHeader</h3>(<span class="param-data-type">string</span>  <span class="param-name">$name</span>,<span class="param-data-type">string</span>  <span class="param-name">$value</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-buildHeaderFields"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">buildHeaderFields</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-setClient"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">setClient</h3>(<span class="param-data-type">variable</span>  <span class="param-name">$client</span>)
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-getClient"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">getClient</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-send"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">send</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    
+        
+<li class="class-method clearfix">
+
+    <div class="hidden-anchor"  id="method-details-__invoke"></div>
+    
+    <div class="method-details">
+        
+
+        
+
+        <div class="method-details-details">
+            <div class="method-signature">
+
+                
+                                    
+                <span class="visibility-public">public</span>
+                
+                                
+                function <h3 class="method-name">__invoke</h3>()
+                
+                                
+            </div>
+        </div>
+
+    </div>
+
+</li>
+    </ul>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

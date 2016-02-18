@@ -16,6 +16,7 @@
 #include "kernel/fcall.h"
 #include "kernel/object.h"
 #include "kernel/exception.h"
+#include "ext/spl/spl_exceptions.h"
 
 
 /**
@@ -55,8 +56,10 @@ PHP_METHOD(Phalconry_Http_Client_Message, __construct) {
 
 	ZEPHIR_INIT_VAR(_0);
 	object_init_ex(_0, phalconry_http_client_header_ce);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL);
-	zephir_check_call_status();
+	if (zephir_has_constructor(_0 TSRMLS_CC)) {
+		ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 0);
+		zephir_check_call_status();
+	}
 	zephir_update_property_this(this_ptr, SL("header"), _0 TSRMLS_CC);
 	ZEPHIR_MM_RESTORE();
 
@@ -81,9 +84,9 @@ PHP_METHOD(Phalconry_Http_Client_Message, getHeader) {
 	}
 
 
-	if (Z_TYPE_P(name) == IS_STRING) {
+	if (Z_TYPE_P(name) != IS_NULL) {
 		_0 = zephir_fetch_nproperty_this(this_ptr, SL("header"), PH_NOISY_CC);
-		ZEPHIR_RETURN_CALL_METHOD(_0, "get", NULL, name);
+		ZEPHIR_RETURN_CALL_METHOD(_0, "get", NULL, 0, name);
 		zephir_check_call_status();
 		RETURN_MM();
 	}
@@ -133,10 +136,6 @@ PHP_METHOD(Phalconry_Http_Client_Message, setParent) {
 
 
 
-	if (!(zephir_instance_of_ev(parentMessage, phalconry_http_client_message_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'parentMessage' must be an instance of 'Phalconry\\Http\\Client\\Message'", "", 0);
-		return;
-	}
 	zephir_update_property_this(this_ptr, SL("parentMessage"), parentMessage TSRMLS_CC);
 
 }
@@ -145,6 +144,8 @@ PHP_METHOD(Phalconry_Http_Client_Message, setParent) {
  * Read-only access to properties
  *
  * @param string prop Property name
+ * @return mixed
+ *
  * @throws \OutOfBoundsException if invalid property requested
  */
 PHP_METHOD(Phalconry_Http_Client_Message, __get) {
@@ -161,7 +162,7 @@ PHP_METHOD(Phalconry_Http_Client_Message, __get) {
 		zephir_read_property_zval(&_0, this_ptr, prop, PH_NOISY_CC);
 		RETURN_CCTOR(_0);
 	}
-	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_OutOfBoundsException, "Invalid property", "phalconry/http/client/message.zep", 90);
+	ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_OutOfBoundsException, "Invalid property", "phalconry/http/client/message.zep", 92);
 	return;
 
 }

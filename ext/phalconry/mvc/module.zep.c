@@ -12,100 +12,85 @@
 #include <Zend/zend_interfaces.h>
 
 #include "kernel/main.h"
-#include "kernel/fcall.h"
+#include "kernel/object.h"
 #include "kernel/memory.h"
 #include "ext/spl/spl_exceptions.h"
 #include "kernel/exception.h"
 #include "kernel/operators.h"
-#include "kernel/object.h"
+#include "kernel/fcall.h"
 
 
-/**
- * Module
- *
- * This class is "pseudo-DI-aware" in that its getDI() method returns the
- * default DI container using DI::getDefault()
- */
 ZEPHIR_INIT_CLASS(Phalconry_Mvc_Module) {
 
 	ZEPHIR_REGISTER_CLASS(Phalconry\\Mvc, Module, phalconry, mvc_module, phalconry_mvc_module_method_entry, ZEND_ACC_EXPLICIT_ABSTRACT_CLASS);
 
 	/**
-	 * The module name
+	 * Dependency injector.
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	zend_declare_property_null(phalconry_mvc_module_ce, SL("_dependencyInjector"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
+	/**
+	 * Module name.
+	 *
 	 * @var string
 	 */
 	zend_declare_property_null(phalconry_mvc_module_ce, SL("_name"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	/**
-	 * The application
-	 * @var \Phalconry\Mvc\Application
+	 * Application.
+	 *
+	 * @var \Phalconry\Mvc\ApplicationInterface
 	 */
 	zend_declare_property_null(phalconry_mvc_module_ce, SL("_application"), ZEND_ACC_PROTECTED TSRMLS_CC);
 
-	zend_class_implements(phalconry_mvc_module_ce TSRMLS_CC, 1, zephir_get_internal_ce(SS("phalcon\\mvc\\moduledefinitioninterface") TSRMLS_CC));
+	/**
+	 * Module manager.
+	 *
+	 * @var \Phalconry\Mvc\Module\ManagerInterface
+	 */
+	zend_declare_property_null(phalconry_mvc_module_ce, SL("_manager"), ZEND_ACC_PROTECTED TSRMLS_CC);
+
+	zend_class_implements(phalconry_mvc_module_ce TSRMLS_CC, 1, phalconry_mvc_moduleinterface_ce);
+	zend_class_implements(phalconry_mvc_module_ce TSRMLS_CC, 1, zephir_get_internal_ce(SS("phalcon\\di\\injectionawareinterface") TSRMLS_CC));
 	return SUCCESS;
 
 }
 
 /**
- * Returns the DI container
+ * Sets the dependency injector.
+ *
+ * @param \Phalcon\DiInterface di
+ */
+PHP_METHOD(Phalconry_Mvc_Module, setDI) {
+
+	zval *di;
+
+	zephir_fetch_params(0, 1, 0, &di);
+
+
+
+	zephir_update_property_this(this_ptr, SL("_dependencyInjector"), di TSRMLS_CC);
+
+}
+
+/**
+ * Returns the dependency injector.
  *
  * @return \Phalcon\DiInterface
  */
 PHP_METHOD(Phalconry_Mvc_Module, getDI) {
 
-	int ZEPHIR_LAST_CALL_STATUS;
-	zend_class_entry *phalcon_phalcon_di;
 
-	ZEPHIR_MM_GROW();
-
-	phalcon_phalcon_di = zend_fetch_class(SL("\\Phalcon\\Di"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-	ZEPHIR_RETURN_CALL_CE_STATIC(phalcon_phalcon_di, "getdefault", NULL);
-	zephir_check_call_status();
-	RETURN_MM();
+	RETURN_MEMBER(this_ptr, "_dependencyInjector");
 
 }
 
 /**
- * Returns a shared item from the DI container
+ * Sets the module's name.
  *
- * @param string $key
- * @return mixed
- */
-PHP_METHOD(Phalconry_Mvc_Module, __get) {
-
-	int ZEPHIR_LAST_CALL_STATUS;
-	zval *key_param = NULL, *_0 = NULL;
-	zval *key = NULL;
-
-	ZEPHIR_MM_GROW();
-	zephir_fetch_params(1, 1, 0, &key_param);
-
-	if (unlikely(Z_TYPE_P(key_param) != IS_STRING && Z_TYPE_P(key_param) != IS_NULL)) {
-		zephir_throw_exception_string(spl_ce_InvalidArgumentException, SL("Parameter 'key' must be a string") TSRMLS_CC);
-		RETURN_MM_NULL();
-	}
-
-	if (likely(Z_TYPE_P(key_param) == IS_STRING)) {
-		zephir_get_strval(key, key_param);
-	} else {
-		ZEPHIR_INIT_VAR(key);
-		ZVAL_EMPTY_STRING(key);
-	}
-
-
-	ZEPHIR_CALL_METHOD(&_0, this_ptr, "getdi", NULL);
-	zephir_check_call_status();
-	ZEPHIR_RETURN_CALL_METHOD(_0, "getshared", NULL, key);
-	zephir_check_call_status();
-	RETURN_MM();
-
-}
-
-/**
- * Sets the module name
- *
- * @param string $name
+ * @param string name
  */
 PHP_METHOD(Phalconry_Mvc_Module, setName) {
 
@@ -134,7 +119,7 @@ PHP_METHOD(Phalconry_Mvc_Module, setName) {
 }
 
 /**
- * Returns the module name
+ * Returns the module's name.
  *
  * @return string
  */
@@ -146,9 +131,38 @@ PHP_METHOD(Phalconry_Mvc_Module, getName) {
 }
 
 /**
- * Sets the application
+ * Sets the module manager.
  *
- * @param \Phalconry\Mvc\Application $app
+ * @param \Phalconry\Mvc\Module\ManagerInterface manager
+ */
+PHP_METHOD(Phalconry_Mvc_Module, setManager) {
+
+	zval *manager;
+
+	zephir_fetch_params(0, 1, 0, &manager);
+
+
+
+	zephir_update_property_this(this_ptr, SL("_manager"), manager TSRMLS_CC);
+
+}
+
+/**
+ * Returns the module manager.
+ *
+ * @return \Phalconry\Mvc\Module\ManagerInterface
+ */
+PHP_METHOD(Phalconry_Mvc_Module, getManager) {
+
+
+	RETURN_MEMBER(this_ptr, "_manager");
+
+}
+
+/**
+ * Sets the application.
+ *
+ * @param \Phalconry\Mvc\ApplicationInterface app
  */
 PHP_METHOD(Phalconry_Mvc_Module, setApp) {
 
@@ -158,38 +172,24 @@ PHP_METHOD(Phalconry_Mvc_Module, setApp) {
 
 
 
-	if (!(zephir_instance_of_ev(app, phalconry_mvc_application_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'app' must be an instance of 'Phalconry\\Mvc\\Application'", "", 0);
-		return;
-	}
 	zephir_update_property_this(this_ptr, SL("_application"), app TSRMLS_CC);
 
 }
 
 /**
- * Returns the application
+ * Returns the application.
  *
- * @return \Phalconry\Mvc\Application
- * @throws \RuntimeException if app is not set
+ * @return \Phalconry\Mvc\ApplicationInterface
  */
 PHP_METHOD(Phalconry_Mvc_Module, getApp) {
 
-	zval *_0;
 
-	ZEPHIR_MM_GROW();
-
-	ZEPHIR_OBS_VAR(_0);
-	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
-	if (Z_TYPE_P(_0) == IS_NULL) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Module is not active", "phalconry/mvc/module.zep", 91);
-		return;
-	}
-	RETURN_MM_MEMBER(this_ptr, "_application");
+	RETURN_MEMBER(this_ptr, "_application");
 
 }
 
 /**
- * Whether the module has been loaded
+ * Checks whether the module is loaded.
  *
  * @return boolean
  */
@@ -206,73 +206,58 @@ PHP_METHOD(Phalconry_Mvc_Module, isLoaded) {
 }
 
 /**
- * Whether this is the primary module
+ * Checks whether the module is primary.
  *
  * @return boolean
  */
 PHP_METHOD(Phalconry_Mvc_Module, isPrimary) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0, *_1, *_2 = NULL;
+	zval *manager = NULL, *_0, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_OBS_VAR(_0);
-	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
-	if (Z_TYPE_P(_0) == IS_OBJECT) {
-		_1 = zephir_fetch_nproperty_this(this_ptr, SL("_application"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(&_2, _1, "getmoduleobject", NULL);
-		zephir_check_call_status();
-		RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(this_ptr, _2));
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_manager"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(manager, _0);
+	if (Z_TYPE_P(manager) != IS_OBJECT) {
+		RETURN_MM_BOOL(0);
 	}
-	RETURN_MM_BOOL(0);
+	ZEPHIR_CALL_METHOD(&_1, manager, "getprimarymodulename", NULL, 0);
+	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_name"), PH_NOISY_CC);
+	RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(_1, _0));
 
 }
 
 /**
- * Whether this is the default module
+ * Checks whether the module is the default.
  *
  * @return boolean
  */
 PHP_METHOD(Phalconry_Mvc_Module, isDefault) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zval *_0, *_1, *_2, *_3 = NULL;
+	zval *manager = NULL, *_0, *_1 = NULL;
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_OBS_VAR(_0);
-	zephir_read_property_this(&_0, this_ptr, SL("_application"), PH_NOISY_CC);
-	if (Z_TYPE_P(_0) == IS_OBJECT) {
-		_1 = zephir_fetch_nproperty_this(this_ptr, SL("_name"), PH_NOISY_CC);
-		_2 = zephir_fetch_nproperty_this(this_ptr, SL("_application"), PH_NOISY_CC);
-		ZEPHIR_CALL_METHOD(&_3, _2, "getdefaultmodule", NULL);
-		zephir_check_call_status();
-		RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(_1, _3));
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_manager"), PH_NOISY_CC);
+	ZEPHIR_CPY_WRT(manager, _0);
+	if (Z_TYPE_P(manager) != IS_OBJECT) {
+		RETURN_MM_BOOL(0);
 	}
-	RETURN_MM_BOOL(0);
+	ZEPHIR_CALL_METHOD(&_1, manager, "getdefaultmodulename", NULL, 0);
+	zephir_check_call_status();
+	_0 = zephir_fetch_nproperty_this(this_ptr, SL("_name"), PH_NOISY_CC);
+	RETURN_MM_BOOL(ZEPHIR_IS_IDENTICAL(_1, _0));
 
 }
 
 /**
- * Returns the default namespace to use for controllers
- *
- * Called in Application on "application:afterStartModule"
- *
- * @return string
- */
-PHP_METHOD(Phalconry_Mvc_Module, getControllerNamespace) {
-
-}
-
-/**
- * Register separate autoloaders for the module, if any
- *
- * @param \Phalcon\DiInterface
+ * Registers the module autoloaders.
  */
 PHP_METHOD(Phalconry_Mvc_Module, registerAutoloaders) {
 
-	zend_bool _0;
 	zval *di = NULL;
 
 	zephir_fetch_params(0, 0, 1, &di);
@@ -282,76 +267,20 @@ PHP_METHOD(Phalconry_Mvc_Module, registerAutoloaders) {
 	}
 
 
-	_0 = Z_TYPE_P(di) != IS_NULL;
-	if (_0) {
-		_0 = !(zephir_is_instance_of(di, SL("Phalcon\\DiInterface") TSRMLS_CC));
-	}
-	if (_0) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'di' must be an instance of 'Phalcon\\DiInterface'", "", 0);
-		return;
-	}
 
 }
 
 /**
- * Register services for the module
- *
- * @param \Phalcon\DiInterface
+ * Registers the module services.
  */
 PHP_METHOD(Phalconry_Mvc_Module, registerServices) {
 
-	zend_bool _0;
-	zval *di = NULL;
+	zval *di;
 
-	zephir_fetch_params(0, 0, 1, &di);
-
-	if (!di) {
-		di = ZEPHIR_GLOBAL(global_null);
-	}
-
-
-	_0 = Z_TYPE_P(di) != IS_NULL;
-	if (_0) {
-		_0 = !(zephir_is_instance_of(di, SL("Phalcon\\DiInterface") TSRMLS_CC));
-	}
-	if (_0) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'di' must be an instance of 'Phalcon\\DiInterface'", "", 0);
-		return;
-	}
-
-}
-
-/**
- * Allows the module to perform start-up tasks
- *
- * Called in Application on "application:afterStartModule"
- */
-PHP_METHOD(Phalconry_Mvc_Module, onLoad) {
+	zephir_fetch_params(0, 1, 0, &di);
 
 
 
-}
-
-/**
- * Allows the PRIMARY module to perform additional operations when responding with a view
- *
- * Called in Application on "application:afterHandleRequest"
- * ONLY IF respondse mode is 'view' - otherwise, the view is disabled
- *
- * @param \Phalcon\Mvc\View $view
- */
-PHP_METHOD(Phalconry_Mvc_Module, onView) {
-
-	zval *view;
-
-	zephir_fetch_params(0, 1, 0, &view);
-
-
-
-	if (!(zephir_instance_of_ev(view, zephir_get_internal_ce(SS("phalcon\\mvc\\view") TSRMLS_CC) TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'view' must be an instance of 'Phalcon\\Mvc\\View'", "", 0);
-		return;
-	}
 
 }
 

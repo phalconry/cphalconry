@@ -72,5 +72,5 @@ ZEPHIR_INIT_FUNCS(phalconry_mvc_hmvcrequest_method_entry) {
 	PHP_ME(Phalconry_Mvc_HmvcRequest, __invoke, arginfo_phalconry_mvc_hmvcrequest___invoke, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_HmvcRequest, getResponse, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Mvc_HmvcRequest, prepareModule, arginfo_phalconry_mvc_hmvcrequest_preparemodule, ZEND_ACC_PROTECTED)
-  PHP_FE_END
+	PHP_FE_END
 };

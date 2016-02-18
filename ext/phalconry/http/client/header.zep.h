@@ -14,7 +14,7 @@ PHP_METHOD(Phalconry_Http_Client_Header, parse);
 PHP_METHOD(Phalconry_Http_Client_Header, build);
 PHP_METHOD(Phalconry_Http_Client_Header, count);
 PHP_METHOD(Phalconry_Http_Client_Header, getStatusMessage);
-PHP_METHOD(Phalconry_Http_Client_Header, __construct);
+static zend_object_value zephir_init_properties_Phalconry_Http_Client_Header(zend_class_entry *class_type TSRMLS_DC);
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_phalconry_http_client_header_set, 0, 0, 2)
 	ZEND_ARG_INFO(0, name)
@@ -65,6 +65,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_client_header_method_entry) {
 	PHP_ME(Phalconry_Http_Client_Header, build, arginfo_phalconry_http_client_header_build, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Header, count, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(Phalconry_Http_Client_Header, getStatusMessage, arginfo_phalconry_http_client_header_getstatusmessage, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-	PHP_ME(Phalconry_Http_Client_Header, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
-  PHP_FE_END
+	PHP_FE_END
 };

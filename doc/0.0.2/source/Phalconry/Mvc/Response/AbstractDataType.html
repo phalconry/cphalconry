@@ -1,0 +1,239 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../../asset/static/style.css" />
+        
+        
+        <script src="../../../../asset/static/jquery.min.js"></script>
+        <script src="../../../../asset/static/prettify.js"></script>
+        <script src="../../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../../'</script>
+
+        <script src="../../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../../index.html">Home</a></li>
+        
+                <li><a href="../../../../classes.html">Classes</a></li>
+                <li><a href="../../../../class/Phalconry/Mvc/Response/AbstractDataType.html">Phalconry\Mvc\Response\AbstractDataType</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../../class/Phalconry/Mvc/Response/AbstractDataType.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../../namespace/Phalconry/Mvc/Response.html">Response</a>
+        </span>
+                <h1 class="class-name">AbstractDataType</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Mvc\Response;
+
+use Phalcon\Http\ResponseInterface;
+
+abstract class AbstractDataType extends AbstractType
+{
+
+	/**
+	 * Name of key to use for response data
+	 * @var string
+	 */
+	const RESPONSE_DATA_KEY = "data";
+
+	/**
+	 * Response options
+	 * @var int
+	 */
+	protected options;
+
+	/**
+	 * Response content data
+	 * @var array
+	 */
+	protected data;
+
+	/**
+	 * Extra response content
+	 * @var array
+	 */
+	protected extra;
+
+	public function __construct(var data = null)
+    {
+		let this->options = 0;
+		let this->extra = [
+			"meta": [],
+			"prepend": [],
+			"append": []
+		];
+
+		if typeof data != "null" {
+			this->setData(data);
+		}
+	}
+
+	public function setModifiedContent(<ResponseInterface> response, var content)
+    {
+		this->setData(content);
+	}
+
+	public function setData(var data) -> <AbstractDataType>
+    {
+		let this->data = this->valueToArray(data);
+
+		return this;
+	}
+
+	public function getData()
+    {
+		return this->data;
+	}
+
+	public function prepend(string! key, var value)  -> <AbstractDataType>
+    {
+		let this->extra["prepend"][key] = value;
+
+		return this;
+	}
+
+	public function append(string! key, var value) -> <AbstractDataType>
+    {
+		let this->extra["append"][key] = value;
+
+		return this;
+	}
+
+	public function setMeta(string! key, var value) -> <AbstractDataType>
+    {
+		let this->extra["meta"][key] = value;
+
+		return this;
+	}
+
+	public function getMeta()
+    {
+		return this->extra["meta"];
+	}
+
+	public function setOptions(var options) -> <AbstractDataType>
+    {
+		let this->options = options;
+
+        return this;
+	}
+
+	public function getOptions()
+    {
+		return this->options;
+	}
+
+	public function addOption(int option) -> <AbstractDataType>
+    {
+		let this->options = this->options|option;
+
+        return this;
+	}
+
+	public function clearOptions() -> <AbstractDataType>
+    {
+		let this->options = 0;
+
+        return this;
+	}
+
+	public function getContent() -> array
+    {
+		var content, key, value;
+        let content = [];
+
+        for key, value in this->extra["prepend"] {
+			let content[key] = is_callable(value) ? call_user_func(value) : value;
+		}
+
+        for key, value in this->extra["meta"] {
+			let content[key] = is_callable(value) ? call_user_func(value) : value;
+		}
+
+		let content[self::RESPONSE_DATA_KEY] = this->getData();
+
+        for key, value in this->extra["append"] {
+			let content[key] = is_callable(value) ? call_user_func(value) : value;
+		}
+
+    	return content;
+	}
+
+	protected function valueToArray(value) {
+		return \Utils\Typecast::toArray(value);
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

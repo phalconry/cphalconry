@@ -21,22 +21,6 @@
 #include "kernel/operators.h"
 
 
-/*
- +------------------------------------------------------------------------+
- | Phalcon Framework                                                      |
- +------------------------------------------------------------------------+
- | Copyright (c) 2011-2012 Phalcon Team (http://www.phalconphp.com)       |
- +------------------------------------------------------------------------+
- | This source file is subject to the New BSD License that is bundled     |
- | with this package in the file docs/LICENSE.txt.                        |
- |                                                                        |
- | If you did not receive a copy of the license and are unable to         |
- | obtain it through the world-wide-web, please send an email             |
- | to license@phalconphp.com so we can send you a copy immediately.       |
- +------------------------------------------------------------------------+
- | Author: Tuğrul Topuz <tugrultopuz@gmail.com>                           |
- +------------------------------------------------------------------------+
- */
 /**
  * Represents an outgoing HTTP message
  */
@@ -76,7 +60,7 @@ ZEPHIR_INIT_CLASS(Phalconry_Http_Client_Request) {
 PHP_METHOD(Phalconry_Http_Client_Request, __construct) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zephir_nts_static zephir_fcall_cache_entry *_0 = NULL;
+	zephir_fcall_cache_entry *_0 = NULL;
 	zval *baseUri = NULL;
 
 	ZEPHIR_MM_GROW();
@@ -87,9 +71,9 @@ PHP_METHOD(Phalconry_Http_Client_Request, __construct) {
 	}
 
 
-	ZEPHIR_CALL_PARENT(NULL, phalconry_http_client_request_ce, this_ptr, "__construct", &_0);
+	ZEPHIR_CALL_PARENT(NULL, phalconry_http_client_request_ce, this_ptr, "__construct", &_0, 26);
 	zephir_check_call_status();
-	ZEPHIR_CALL_METHOD(NULL, this_ptr, "seturi", NULL, baseUri);
+	ZEPHIR_CALL_METHOD(NULL, this_ptr, "seturi", NULL, 0, baseUri);
 	zephir_check_call_status();
 	ZEPHIR_MM_RESTORE();
 
@@ -159,11 +143,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, setResponse) {
 
 
 
-	if (!(zephir_instance_of_ev(response, phalconry_http_client_response_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_InvalidArgumentException, "Parameter 'response' must be an instance of 'Phalconry\\Http\\Client\\Response'", "", 0);
-		return;
-	}
-	ZEPHIR_CALL_METHOD(NULL, response, "setparent", NULL, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, response, "setparent", NULL, 0, this_ptr);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("response"), response TSRMLS_CC);
 	RETURN_THIS();
@@ -200,7 +180,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, setUri) {
 
 	ZEPHIR_INIT_VAR(_0);
 	object_init_ex(_0, phalconry_http_uri_ce);
-	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, uri);
+	ZEPHIR_CALL_METHOD(NULL, _0, "__construct", NULL, 33, uri);
 	zephir_check_call_status();
 	zephir_update_property_this(this_ptr, SL("uri"), _0 TSRMLS_CC);
 	RETURN_THIS();
@@ -238,7 +218,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, resolveUri) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
-	ZEPHIR_RETURN_CALL_METHOD(_0, "resolve", NULL, uri);
+	ZEPHIR_RETURN_CALL_METHOD(_0, "resolve", NULL, 0, uri);
 	zephir_check_call_status();
 	RETURN_MM();
 
@@ -263,7 +243,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, addQueryParams) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("uri"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(NULL, _0, "extendquery", NULL, params);
+	ZEPHIR_CALL_METHOD(NULL, _0, "extendquery", NULL, 0, params);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -288,7 +268,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, addHeaders) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("header"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(NULL, _0, "addmultiple", NULL, headers);
+	ZEPHIR_CALL_METHOD(NULL, _0, "addmultiple", NULL, 0, headers);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -315,7 +295,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, setHeader) {
 
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("header"), PH_NOISY_CC);
-	ZEPHIR_CALL_METHOD(NULL, _0, "set", NULL, name, value);
+	ZEPHIR_CALL_METHOD(NULL, _0, "set", NULL, 0, name, value);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -336,7 +316,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, buildHeaderFields) {
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("header"), PH_NOISY_CC);
 	ZEPHIR_INIT_VAR(_1);
 	ZVAL_LONG(_1, 2);
-	ZEPHIR_CALL_METHOD(NULL, _0, "build", NULL, _1);
+	ZEPHIR_CALL_METHOD(NULL, _0, "build", NULL, 0, _1);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -356,10 +336,6 @@ PHP_METHOD(Phalconry_Http_Client_Request, setClient) {
 
 
 
-	if (!(zephir_instance_of_ev(client, phalconry_http_client_ce TSRMLS_CC))) {
-		ZEPHIR_THROW_EXCEPTION_DEBUG_STRW(spl_ce_InvalidArgumentException, "Parameter 'client' must be an instance of 'Phalconry\\Http\\Client'", "", 0);
-		return;
-	}
 	zephir_update_property_this(this_ptr, SL("client"), client TSRMLS_CC);
 	RETURN_THISW();
 
@@ -386,28 +362,28 @@ PHP_METHOD(Phalconry_Http_Client_Request, getClient) {
 PHP_METHOD(Phalconry_Http_Client_Request, send) {
 
 	int ZEPHIR_LAST_CALL_STATUS;
-	zend_class_entry *phalcon_phalcon_di;
-	zval *client = NULL, *_0, *_1 = NULL, *_2;
+	zend_class_entry *_2;
+	zval *client = NULL, *_0, *_1 = NULL, *_3;
 
 	ZEPHIR_MM_GROW();
 
 	_0 = zephir_fetch_nproperty_this(this_ptr, SL("client"), PH_NOISY_CC);
 	ZEPHIR_CPY_WRT(client, _0);
 	if (Z_TYPE_P(client) != IS_OBJECT) {
-		phalcon_phalcon_di = zend_fetch_class(SL("\\Phalcon\\Di"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
-		ZEPHIR_CALL_CE_STATIC(&_1, phalcon_phalcon_di, "getdefault", NULL);
+		_2 = zend_fetch_class(SL("Phalcon\\Di"), ZEND_FETCH_CLASS_AUTO TSRMLS_CC);
+		ZEPHIR_CALL_CE_STATIC(&_1, _2, "getdefault", NULL, 0);
 		zephir_check_call_status();
-		ZEPHIR_INIT_VAR(_2);
-		ZVAL_STRING(_2, "httpClient", ZEPHIR_TEMP_PARAM_COPY);
-		ZEPHIR_CALL_METHOD(&client, _1, "getshared", NULL, _2);
-		zephir_check_temp_parameter(_2);
+		ZEPHIR_INIT_VAR(_3);
+		ZVAL_STRING(_3, "httpClient", ZEPHIR_TEMP_PARAM_COPY);
+		ZEPHIR_CALL_METHOD(&client, _1, "getshared", NULL, 0, _3);
+		zephir_check_temp_parameter(_3);
 		zephir_check_call_status();
 		if (Z_TYPE_P(client) != IS_OBJECT) {
-			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot locate Client", "phalconry/http/client/request.zep", 229);
+			ZEPHIR_THROW_EXCEPTION_DEBUG_STR(spl_ce_RuntimeException, "Cannot locate Client", "phalconry/http/client/request.zep", 228);
 			return;
 		}
 	}
-	ZEPHIR_CALL_METHOD(NULL, client, "send", NULL, this_ptr);
+	ZEPHIR_CALL_METHOD(NULL, client, "send", NULL, 0, this_ptr);
 	zephir_check_call_status();
 	RETURN_THIS();
 
@@ -423,7 +399,7 @@ PHP_METHOD(Phalconry_Http_Client_Request, __invoke) {
 
 	ZEPHIR_MM_GROW();
 
-	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "send", NULL);
+	ZEPHIR_RETURN_CALL_METHOD(this_ptr, "send", NULL, 0);
 	zephir_check_call_status();
 	RETURN_MM();
 

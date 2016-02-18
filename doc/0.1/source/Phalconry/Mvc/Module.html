@@ -1,0 +1,283 @@
+<html>
+
+
+    <head>
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/prettify.css" />
+        <link rel="stylesheet" type="text/css" href="../../../asset/static/style.css" />
+        
+        
+        <script src="../../../asset/static/jquery.min.js"></script>
+        <script src="../../../asset/static/prettify.js"></script>
+        <script src="../../../asset/api_definition.js"></script>
+
+        <script>var ZepCurrentPath = '../../../'</script>
+
+        <script src="../../../asset/static/script.js"></script>
+
+                
+    </head>
+
+
+    <body onload="prettyPrint()">
+        <div id="top-bar">
+            <div id="top-left">
+                Zephir Documentation <span class="version">v1.0.1</span>
+            </div>
+            <div id="top-right">
+
+            </div>
+        </div>
+
+        <div id="body">
+
+            <div id="body-left">
+
+                <div class="header-search">
+
+                    <input class="search-box" placeholder="Search for a class or namespace " type="text" />
+             
+                    <div id="menu-wrapper">
+
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div id="body-right">
+                <div class="content">
+                    
+<div class="breadcrumb">
+    
+    <ul>
+        
+        <li><a href="../../../index.html">Home</a></li>
+        
+                <li><a href="../../../classes.html">Classes</a></li>
+                <li><a href="../../../class/Phalconry/Mvc/Module.html">Phalconry\Mvc\Module</a></li>
+                <li><a >Source</a></li>
+                
+    </ul>
+    
+</div>
+<div class="class-header source clearfix">
+    
+    <div class="access-buttons">
+        <a class="zep-button" href="../../../class/Phalconry/Mvc/Module.html">Class</a>
+
+            </div>
+    
+    <div class="class-full-name">
+        
+        <span class="class-type">Class</span>
+        
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry.html">Phalconry</a>
+        </span>
+                <span class="namespace-piece">
+            <a href="../../../namespace/Phalconry/Mvc.html">Mvc</a>
+        </span>
+                <h1 class="class-name">Module</h1>
+    </div>
+    
+</div>
+
+
+<pre class="zephir-source-file prettyprint linenums">namespace Phalconry\Mvc;
+
+use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Mvc\View;
+use Phalcon\DiInterface;
+use Phalcon\DI as DiContainer;
+use RuntimeException;
+
+/**
+ * Module
+ *
+ * This class is "pseudo-DI-aware" in that its getDI() method returns the
+ * default DI container using DI::getDefault()
+ */
+abstract class Module implements ModuleDefinitionInterface
+{
+
+	/**
+	 * The module name
+	 * @var string
+	 */
+	protected _name;
+
+	/**
+	 * The application
+	 * @var \Phalconry\Mvc\Application
+	 */
+	protected _application;
+
+	/**
+	 * Returns the DI container
+	 *
+	 * @return \Phalcon\DiInterface
+	 */
+	public function getDI() -> <DiInterface>
+	{
+		return DiContainer::getDefault();
+	}
+
+	/**
+	 * Returns a shared item from the DI container
+	 *
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function __get(string! key)
+	{
+		return this->getDI()->getShared(key);
+	}
+
+	/**
+	 * Sets the module name
+	 *
+	 * @param string $name
+	 */
+	public function setName(string! name) -> void
+	{
+		let this->_name = name;
+	}
+
+	/**
+	 * Returns the module name
+	 *
+	 * @return string
+	 */
+	public function getName() -> string
+	{
+		return this->_name;
+	}
+
+	/**
+	 * Sets the application
+	 *
+	 * @param \Phalconry\Mvc\Application $app
+	 */
+	public function setApp(<Application> app) -> void
+	{
+		let this->_application = app;
+	}
+
+	/**
+	 * Returns the application
+	 *
+	 * @return \Phalconry\Mvc\Application
+	 * @throws \RuntimeException if app is not set
+	 */
+	public function getApp() -> <Application>
+	{
+		if typeof this->_application == "null" {
+			throw new RuntimeException("Module is not active");
+		}
+
+		return this->_application;
+	}
+
+	/**
+	 * Whether the module has been loaded
+	 *
+	 * @return boolean
+	 */
+	public function isLoaded() -> boolean
+	{
+		return (typeof this->_application == "object");
+	}
+
+	/**
+	 * Whether this is the primary module
+	 *
+	 * @return boolean
+	 */
+	public function isPrimary() -> boolean
+	{
+
+		if typeof this->_application == "object" {
+			return this === this->_application->getModuleObject();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Whether this is the default module
+	 *
+	 * @return boolean
+	 */
+	public function isDefault() -> boolean
+	{
+
+		if typeof this->_application == "object" {
+			return this->_name === this->_application->getDefaultModule();
+		}
+
+		return false;
+	}
+
+	/**
+	 * Returns the default namespace to use for controllers
+	 *
+	 * Called in Application on "application:afterStartModule"
+	 *
+	 * @return string
+	 */
+	abstract public function getControllerNamespace();
+
+	/**
+	 * Register separate autoloaders for the module, if any
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	public function registerAutoloaders(<DiInterface> di = null) -> void
+	{
+
+	}
+
+	/**
+	 * Register services for the module
+	 *
+	 * @param \Phalcon\DiInterface
+	 */
+	public function registerServices(<DiInterface> di = null) -> void
+	{
+
+	}
+
+	/**
+	 * Allows the module to perform start-up tasks
+	 *
+	 * Called in Application on "application:afterStartModule"
+	 */
+	public function onLoad() -> void
+	{
+
+	}
+
+	/**
+	 * Allows the PRIMARY module to perform additional operations when responding with a view
+	 *
+	 * Called in Application on "application:afterHandleRequest"
+	 * ONLY IF respondse mode is 'view' - otherwise, the view is disabled
+	 *
+	 * @param \Phalcon\Mvc\View $view
+	 */
+	public function onView(<View> view) -> void
+	{
+
+	}
+
+}
+</pre>                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+
+
+</html>

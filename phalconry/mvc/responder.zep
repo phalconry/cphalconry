@@ -2,28 +2,23 @@ namespace Phalconry\Mvc;
 
 use Phalcon\Mvc\User\Component;
 use Phalcon\Http\ResponseInterface;
+use Phalconry\Http\Util\MimeType;
 use InvalidArgumentException;
+use Util\Xml;
 
 class Responder extends Component
 {
-
 	/**
-	 * Disables the responder
-	 * @var boolean
+	 * Designates a "view" response
+	 * @var string
 	 */
-	const TYPE_NONE = "";
+	const TYPE_VIEW = "view";
 
 	/**
 	 * Designates a "text" response
 	 * @var string
 	 */
 	const TYPE_TEXT = "text";
-
-	/**
-	 * Designates a "view" response
-	 * @var string
-	 */
-	const TYPE_VIEW = "view";
 
 	/**
 	 * Designates a "json" response
@@ -44,41 +39,48 @@ class Responder extends Component
 	protected _type = "view";
 
 	/**
-	 * Response type classes
-	 * @var array
-	 */
-	protected _typeClasses = [
-		"": "Phalconry\\Mvc\\Response\\TypeNone",
-		"view": "Phalconry\\Mvc\\Response\\TypeView",
-		"text": "Phalconry\\Mvc\\Response\\TypeText",
-		"json": "Phalconry\\Mvc\\Response\\TypeJson",
-		"xml": "Phalconry\\Mvc\\Response\\TypeXml"
-	];
-
-	/**
 	 * Response types that send structured data
 	 * @var array
 	 */
 	protected _dataTypes = ["json", "xml"];
 
 	/**
-	 * Whether to fill empty content with the retuned value
-	 * @var boolean
+	 * The response
+	 * @var \Phalcon\Http\ResponseInterface
 	 */
-	protected _fillEmptyContent = true;
+	protected _response;
+
+	/**
+	 * Response data
+	 * @var mixed
+	 */
+	protected _responseData;
+
+	/**
+	 * Prepended response data
+	 * @var array
+	 */
+	protected _beforeData = [];
+
+	/**
+	 * Appended response data
+	 * @var array
+	 */
+	protected _afterData = [];
+
+	/**
+	 * Response options
+	 * @var int
+	 */
+	protected _options = 0;
 
 	/**
 	 * Sets the type of response
 	 *
 	 * @param string type Response type
-	 * @throws \InvalidArgumentException if type does not have an associated class
 	 */
 	public function setType(string type) -> void
     {
-		if ! isset this->_typeClasses[type] {
-			throw new InvalidArgumentException();
-		}
-
 		let this->_type = type;
 	}
 
@@ -117,45 +119,6 @@ class Responder extends Component
 	}
 
 	/**
-	 * Sets the classname for a given response type
-	 *
-	 * @param string type
-	 * @param string className
-	 */
-	public function setTypeClass(string type, string! className) -> void
-    {
-		let this->_typeClasses[type] = className;
-	}
-
-	/**
-	 * Returns the classname for a given response type, or null if none exists
-	 *
-	 * @param string type
-	 * @return string|null
-	 */
-	public function getTypeClass(string type) -> string|null
-    {
-		return isset this->_typeClasses[type] ? this->_typeClasses[type] : null;
-	}
-
-	/**
-	 * Gets/sets whether to try to fill empty response content
-	 *
-	 * If true (default), attempts to fill empty response content with the value returned by the controller.
-	 *
-	 * @param bool value [Optional] New value
-	 * @return bool Current value
-	 */
-	public function fillEmptyContent(var value = null) -> boolean
-    {
-        if typeof value != "null" {
-			let this->_fillEmptyContent = (bool)value;
-		}
-
-		return this->_fillEmptyContent;
-	}
-
-	/**
 	 * Modifies and sends the response
 	 *
 	 * If the controller returns boolean false or the response object, no modification takes place.
@@ -167,36 +130,33 @@ class Responder extends Component
 	 */
 	public function respond(<ResponseInterface> response) -> void
     {
-        var eventsManager, typeClass, responseType, returnedValue, content;
+        var eventsManager, rtnVal, content;
 
+		let this->_response = response;
 		let eventsManager = this->getEventsManager();
-		let typeClass = this->_typeClasses[this->_type];
-		let responseType = new {typeClass}();
-		let returnedValue = response->{"getDI"}()->getShared("dispatcher")->getReturnedValue();
+		let rtnVal = response->{"getDI"}()->getShared("dispatcher")->getReturnedValue();
 
 		if typeof eventsManager == "object" {
 			eventsManager->fire("responder:beforeRespond", this, response);
 		}
 
 		// If controller returns boolean false or the response object, no modification takes place
-		if returnedValue !== false && returnedValue !== response {
+		if rtnVal !== false && rtnVal !== response {
 
-            if this->_fillEmptyContent {
+			let content = response->getContent();
 
-    			let content = response->getContent();
+			// If content is empty, use the returned value
+			if empty content && !empty rtnVal {
 
-				// If content is empty, use the returned value
-    			if empty content {
-					if ! empty returnedValue {
-	                    responseType->setModifiedContent(response, returnedValue);
-					}
-                }
+				if "view" === this->_type {
+					response->setContent(rtnVal);
+				} else {
+					let this->_responseData = rtnVal;
+				}
             }
 
-			// Allow the response type to format the response
-			responseType->formatResponse(response);
-
-			response->setContentType(responseType->getContentType());
+			// Format the response
+			this->formatResponse(response);
 		}
 
 		if typeof eventsManager == "object" {
@@ -204,6 +164,117 @@ class Responder extends Component
 		}
 
 		response->send();
+	}
+
+	public function setOptions(var options) -> void
+    {
+		let this->_options = options;
+	}
+
+	public function getOptions()
+    {
+		return this->_options;
+	}
+
+	public function addOption(int option) -> void
+    {
+		let this->_options = this->_options | option;
+	}
+
+	public function prependResponseData(string! key, var value) -> void
+    {
+		let this->_beforeData[key] = value;
+	}
+
+	public function appendResponseData(string! key, var value) -> void
+    {
+		let this->_afterData[key] = value;
+	}
+
+	protected function formatResponse(<ResponseInterface> response) -> void
+	{
+		string method;
+
+		let method = "format" . ucfirst(this->_type);
+
+		if method_exists(this, method) {
+			this->{method}(response);
+		}
+	}
+
+	protected function formatText(<ResponseInterface> response) -> void
+	{
+		response->setContentType(MimeType::TEXT);
+	}
+
+	protected function formatJson(<ResponseInterface> response) -> void
+	{
+		this->formatDataResponse(response);
+		this->addOption(JSON_NUMERIC_CHECK);
+		response->setContentType(MimeType::JSON);
+		response->setContent(json_encode(this->buildDataResponseContent(), this->_options));
+	}
+
+	protected function formatXml(<ResponseInterface> response) -> void
+	{
+		this->formatDataResponse(response);
+		response->setContentType(MimeType::XML);
+		response->setContent(Xml::writeDocument(this->buildDataResponseContent()));
+	}
+
+	protected function formatDataResponse(<ResponseInterface> response) -> void
+	{
+		var data, status, di;
+
+		let data = this->_responseData;
+
+		if typeof data == "null" {
+			let data = response->getContent();
+		}
+
+        let status = response->getHeaders()->get("Status");
+
+		if ! status {
+			response->setStatusCode(200, "OK");
+			let status = "200 OK";
+		}
+
+		this->prependResponseData("status", (int)substr(status, 0, 3));
+		this->prependResponseData("message", substr(status, 4));
+
+		let di = response->{"getDI"}();
+
+		if typeof di == "object" {
+
+			if di->getShared("request")->hasQuery("dev") {
+
+				if "json" === this->_type {
+					this->addOption(JSON_PRETTY_PRINT);
+				}
+
+				if di->has("diagnostics") {
+					this->appendResponseData("diagnostics", di->getShared("diagnostics")->getAll());
+				}
+			}
+		}
+	}
+
+	protected function buildDataResponseContent() -> array
+    {
+		var content, key, value;
+        let content = [];
+
+        for key, value in this->_beforeData {
+			let content[key] = is_callable(value) ? call_user_func(value) : value;
+		}
+
+		let content["data"] = this->_responseData;
+
+        for key, value in this->_afterData {
+			let content[key] = is_callable(value) ? call_user_func(value) : value;
+		}
+
+    	return content;
 	}
 
 }

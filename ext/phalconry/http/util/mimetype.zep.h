@@ -24,5 +24,5 @@ ZEPHIR_INIT_FUNCS(phalconry_http_util_mimetype_method_entry) {
 	PHP_ME(Phalconry_Http_Util_MimeType, get, arginfo_phalconry_http_util_mimetype_get, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalconry_Http_Util_MimeType, getForFile, arginfo_phalconry_http_util_mimetype_getforfile, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
 	PHP_ME(Phalconry_Http_Util_MimeType, getForHttp, arginfo_phalconry_http_util_mimetype_getforhttp, ZEND_ACC_PUBLIC|ZEND_ACC_STATIC)
-  PHP_FE_END
+	PHP_FE_END
 };

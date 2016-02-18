@@ -6,13 +6,15 @@
     "api": {
         "path": "doc\/%version%",
         "theme": {
-            "name": "zephir",
+            "name": "wells",
             "options": {
                 "github": null,
                 "analytics": null,
-                "main_color": "#3E6496",
-                "link_color": "#3E6496",
-                "link_hover_color": "#5F9AE7"
+                "main_color": "#215E8D",
+                "secondary_color": "#DCAF28",
+                "tertiary_color": "#DC5B28",
+                "link_color": "#116DB3",
+                "link_hover_color": "#2A4E6A"
             }
         }
     },
@@ -55,7 +57,7 @@
     "name": "phalconry",
     "description": "A PHP extension for PhalconPHP providing additional MVC components and an HTTP client library.",
     "author": "wells5609",
-    "version": "0.0.4",
+    "version": "0.4.6",
     "verbose": false,
     "requires": {
         "extensions": [
